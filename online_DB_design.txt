@@ -1,0 +1,30 @@
+Table: product {
+	barcode	int(11) PK 
+	name	varchar(45) 
+	type	int(3) 
+	Related Tables:product_type (type → type_id)
+}
+
+Table: product_store {
+	product_code	int(11) PK 
+	store_id	int(11) PK 
+	price	decimal(10,2) 
+	qtty	int(11) 
+	Related Tables:product (product_code → barcode)
+	stores (store_id → store_id)
+}
+
+
+Table: product_type {
+	type_id	int(3) PK AI
+	type_name	varchar(45) 
+}
+
+
+Table: stores {
+	store_id	int(11) PK AI
+	store_name	varchar(45) 
+	latitude	decimal(10,0) 
+	longitude	decimal(10,0) 
+	store_address	varchar(100) 
+}
