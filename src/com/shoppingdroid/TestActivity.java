@@ -1,5 +1,7 @@
 package com.shoppingdroid;
 
+import com.example.shd1.R;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
