@@ -117,7 +117,7 @@ function store($store_id){
         }
 
 
-        $result = json_encode($res); 
+        $result = json_encode($res, JSON_PRETTY_PRINT); 
         return $result;
         
         
@@ -151,7 +151,7 @@ function product_global($barcode){
 
         array_push($res["product"],$productdata);
 
-        $result = json_encode($res);
+        $result = json_encode($res, JSON_PRETTY_PRINT);
         return $result;
     } else{
         die('Query failed: ' . mysql_error());
@@ -180,7 +180,7 @@ function product($barcode, $store_id){
             array_push($res["product"], $productdata);                   
         }
         
-        $result = json_encode($res);
+        $result = json_encode($res, JSON_PRETTY_PRINT);
         return $result;
     } else{
         die('Query failed: ' . mysqli_error($this->db));
@@ -209,7 +209,7 @@ function stores(){
             array_push($res["stores"],$currstore);                   
         }
 
-        $result = json_encode($res); 
+        $result = json_encode($res, JSON_PRETTY_PRINT); 
         return $result;
 
 
@@ -238,7 +238,7 @@ function stores_locations(){
             array_push($res["stores"],$currstore);                   
         }
 
-        $result = json_encode($res); 
+        $result = json_encode($res, JSON_PRETTY_PRINT); 
         return $result;
 
 
@@ -288,7 +288,7 @@ function product_range($barcode, $store_id, $diff_amount){
 
         array_push($res["store"],$typedata);
 
-        $result = json_encode($res);
+        $result = json_encode($res, JSON_PRETTY_PRINT);
         return $result;
     } 
     else
@@ -338,7 +338,7 @@ function product_range_global($barcode, $store_id, $diff_amount){
 
         array_push($res["type"],$typedata);
 
-        $result = json_encode($res);
+        $result = json_encode($res, JSON_PRETTY_PRINT);
         return $result;
     } 
     else

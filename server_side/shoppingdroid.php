@@ -3,7 +3,6 @@
 include_once 'db_config.php';
 include_once 'db_connection.php';
 
-echo "ana hena";
 
 $baseUrl = "http://localhost/shoppingdroid/";
 $db = new DB_CONNECTION();
@@ -24,7 +23,6 @@ prodcut_range_global // select products of same type that are from a threshold f
 
 $q_type = $parts[2];
 
-echo $q_type."   "."batee5a  ";
 // route to the target method 
 if ($q_type=="product") {
 
