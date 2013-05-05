@@ -25,7 +25,25 @@
         android:layout_marginTop="30dp"
         android:onClick="scanNow"
         android:text="Scan" />
-    
-   
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="15dp"
+        android:onClick="testDB"
+        android:text="testDB" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="40dp"
+        android:text="el o/p haytla3 hena isA" />
 
 </RelativeLayout>

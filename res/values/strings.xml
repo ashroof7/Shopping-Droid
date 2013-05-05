@@ -16,8 +16,8 @@
  -->
 <resources>
   <string name="app_name">Shopping-Droid</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+  <string name="action_settings">Settings</string>
+  <string name="hello_world">Hello world!</string>
   <string name="app_picker_name">Applications</string>
   <string name="bookmark_picker_name">Bookmarks</string>
   <string name="button_add_calendar">Add to calendar</string>
@@ -138,4 +138,42 @@
   <string name="wifi_changing_network">Requesting connection to network\u2026</string>
   <string name="wifi_ssid_label">Network Name</string>
   <string name="wifi_type_label">Type</string>
-</resources>
+  
+  
+  
+<!-- type and param names -->
+<string name="DB_product_barcode">barcode</string>
+<string name="DB_product_name">name</string>
+<string name="DB_diff_amount">diff_amount</string>
+<string name="DB_product_price">price</string>
+
+<string name="DB_type_id">type_id</string>
+<string name="DB_type_name">type_name</string>
+
+<string name="DB_store_id">store_id</string>
+<string name="DB_store_name">store_name</string>
+<string name="DB_store_longitude">longitude</string>
+<string name="DB_store_latidude">latitude</string>
+<string name="DB_store_address">address</string>
+
+<!-- Methods names -->
+<string name="DB_stores">stores</string>
+<string name="DB_stores_locations">stores_locations</string>
+<string name="DB_product">product</string>
+<string name="DB_product_global">product_global</string>
+<string name="DB_product_range_global">product_range_global</string>
+<string name="DB_product_range">product_range</string>
+
+<!-- Returned objects names -->
+<string name="DB_return_stores">stores</string>
+<string name="DB_return_stores_locations">stores</string>
+<string name="DB_return_product">product</string>
+<string name="DB_return_global">product</string>
+<string name="DB_return_range_global">type</string>
+<string name="DB_return_product_range">store</string>
+
+<string name="DB_return_encoding">utf-8"</string>
+  
+  
+  
+</resources> 

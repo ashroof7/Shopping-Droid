@@ -1,5 +1,11 @@
 package com.example.shd1;
 
+import java.util.concurrent.ExecutionException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import onlineDB.DBDispatcher;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,14 +17,38 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
 	private TextView scanState;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         scanState =  (TextView) findViewById(R.id.textView1);
+        //TODO swap withe R.string
         scanState.setText("Press on the button to start scan");
     }
-
+	
+	
+	public void testDB(View view){
+		DBDispatcher d = new DBDispatcher(this);
+		JSONObject ob ;
+		String ret ;
+		
+		try {
+			ob = d.stores();
+			ret = ob.toString(4);
+			System.out.println(ret);
+			((TextView)findViewById(R.id.textView2)).setText(ret);
+			 						
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		
+	} 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
