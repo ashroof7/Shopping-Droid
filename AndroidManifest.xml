@@ -32,7 +32,10 @@
             android:label="@string/app_name" >
     
         </activity>
-        
+        <activity
+            android:name="com.example.shd1.OfflineDBTestActivity"
+            android:label="@string/app_name" >
+        </activity>
         <activity
 			android:name="com.google.zxing.client.android.CaptureActivity"
 			android:label="Scan Barcode"
