@@ -77,5 +77,5 @@ if ($q_type=="product") {
 } else {
 
 	sendResponseAndExit(false, 404, "Not Found");
-
 }
+$db->close();

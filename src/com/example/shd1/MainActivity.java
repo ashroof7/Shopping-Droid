@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         scanState =  (TextView) findViewById(R.id.textView1);
-        //TODO swap withe R.string
+
         scanState.setText("Press on the button to start scan");
     }
 	
@@ -36,8 +36,11 @@ public class MainActivity extends Activity {
 		try {
 			ob = d.stores();
 			ret = ob.toString(4);
-			System.out.println(ret);
-			((TextView)findViewById(R.id.textView2)).setText(ret);
+			
+			Intent intent = new Intent(this, DB_test.class);
+			intent.putExtra("stores", ret);
+			startActivity(intent);
+
 			 						
 		} catch (InterruptedException e) {
 			e.printStackTrace();

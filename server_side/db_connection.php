@@ -51,38 +51,41 @@ class DB_CONNECTION {
     
     $this->stores_locations_stmt = $this->db->prepare("select store_name, latitude, longitude from stores ;");
     
-    $this->product_global_stmt = $this->db->prepare("select name, type_name, price, store_name 
-        from product, product_type, product_store, stores 
-        where product_code = barcode and type = type_id and 
-        product_store.store_id = stores.store_id  and barcode = ?;") ;
-    $this->product_global_stmt->bind_param('i', $this->barcode_);
-    
-    $this->product_stmt = $this->db->prepare("select name, type_name, price
-        from product, product_type, product_store 
-        where product_code = barcode and type = type_id and
-        product_store.store_id = ? and barcode = ? ;") ;
 
-    $this->product_stmt->bind_param('ii',$this->storeid ,$this->barcode_);
+    $this->product_global_stmt = $this->db->prepare("select product_name, type_name, price, store_name 
+from product p, product_type, product_store ps, stores 
+where p.product_id = ps.product_id and p.product_type = type_id and 
+ps.store_id = stores.store_id  and product_barcode = ?;") ;
 
-    $this->product_range_pivot_stmt =  $this->db->prepare("select price, type 
-        from product, product_store where  product_code = barcode and barcode = ? and store_id = ?;");
-    
-    $this->product_range_pivot_stmt->bind_param('ii',$this->barcode_ ,$this->storeid);      
+    $this->product_global_stmt->bind_param('s', $this->barcode_);
     
 
-    $this->product_range_stmt = $this->db->prepare(" select name, type_name, price, store_name
-      from product, stores, product_type, product_store 
-      where barcode = product_code and type_id = type and product_store.store_id = stores.store_id 
+    $this->product_stmt = $this->db->prepare("select product_name, type_name, price
+        from product p, product_type, product_store ps
+        where p.product_id = ps.product_id and product_type = type_id 
+        and ps.store_id = ? and product_barcode = ? ;") ;
+
+    $this->product_stmt->bind_param('is',$this->storeid ,$this->barcode_);
+
+    $this->product_range_pivot_stmt =  $this->db->prepare("select price, product_type 
+        from product p, product_store ps 
+        where  p.product_id = ps.product_id and product_barcode = ? and store_id = ?;");
+    
+    $this->product_range_pivot_stmt->bind_param('si',$this->barcode_ ,$this->storeid);      
+    
+
+    $this->product_range_stmt = $this->db->prepare("select product_name, price
+        from product p, stores, product_type, product_store ps
+      where p.product_id = ps.product_id  and type_id = product_type and ps.store_id = stores.store_id 
       and stores.store_id = ? and type_id = ? and price between ? - ? and ? + ?;");
 
     $this->product_range_stmt->bind_param('iidddd',$this->storeid ,$this->pivot_type,
         $this->pivot_price, $this->diffamount, $this->pivot_price, $this->diffamount);      
     
-    
-
-    $this->product_range_global_stmt = $this->db->prepare(" select name, type_name, price, store_name
-      from product, stores, product_type, product_store 
-      where barcode = product_code and type_id = type and product_store.store_id = stores.store_id 
+   
+    $this->product_range_global_stmt = $this->db->prepare(" select product_name, price, store_name
+        from product p, stores, product_type, product_store ps
+      where p.product_id = ps.product_id  and type_id = product_type and ps.store_id = stores.store_id 
       and type_id = ? and price between ? - ? and ? + ?;");
 
     $this->product_range_global_stmt->bind_param('idddd',$this->pivot_type,
@@ -117,12 +120,13 @@ function store($store_id){
         }
 
 
-        $result = json_encode($res, JSON_PRETTY_PRINT); 
+        $result = json_encode($res, JSON_PRETTY_PRINT);
+        $this->store_stmt->close(); 
         return $result;
         
         
     } else {
-        die('Query failed: ' . mysql_error());
+        die('Query failed: ' . mysqli_error($this->DB));
     }
 }
 
@@ -143,18 +147,19 @@ function product_global($barcode){
 
         while($this->product_global_stmt->fetch()) {
             $currstore["store_name"] = $store_name; 
-            $currstore["price"] = $price;
+            $currstore["product_price"] = $price;
             array_push($productdata["stores"],$currstore);                   
         }            
-        $productdata["name"] = $p_name;
-        $productdata["type"] = $type_name;
+        $productdata["product_name"] = $p_name;
+        $productdata["product_type"] = $type_name;
 
         array_push($res["product"],$productdata);
 
         $result = json_encode($res, JSON_PRETTY_PRINT);
+        $this->product_global_stmt->close();
         return $result;
     } else{
-        die('Query failed: ' . mysql_error());
+        die('Query failed: ' . mysqli_error($this->DB));
     }
 
 }
@@ -174,13 +179,14 @@ function product($barcode, $store_id){
 
         while($this->product_stmt->fetch())
         {
-            $productdata["name"] = $p_name;
-            $productdata["type"] = $type_name;
-            $productdata["price"] = $price;         
+            $productdata["product_name"] = $p_name;
+            $productdata["product_type"] = $type_name;
+            $productdata["product_price"] = $price;         
             array_push($res["product"], $productdata);                   
         }
         
         $result = json_encode($res, JSON_PRETTY_PRINT);
+        $this->product_stmt->close();
         return $result;
     } else{
         die('Query failed: ' . mysqli_error($this->db));
@@ -210,12 +216,14 @@ function stores(){
         }
 
         $result = json_encode($res, JSON_PRETTY_PRINT); 
+        $this->stores_stmt->close();
         return $result;
 
 
     } else {
         die('Query failed: ' . mysqli_error($this->db));
     }    
+
 }
 
 
@@ -239,11 +247,12 @@ function stores_locations(){
         }
 
         $result = json_encode($res, JSON_PRETTY_PRINT); 
+        $this->stores_locations_stmt->close();
         return $result;
 
 
     } else {
-        die('Query failed: ' . mysql_error());
+        die('Query failed: ' . mysqli_error($this->DB));
     }
 }
 
@@ -265,30 +274,20 @@ function product_range($barcode, $store_id, $diff_amount){
         $this->product_range_pivot_stmt->close();
         
         $this->product_range_stmt->execute();
-        $this->product_range_stmt->bind_result($p_name, $type_name , $price, $store_name);
+        $this->product_range_stmt->bind_result($p_name , $price);
         
         $res = array();
-        $res["store"] = array();
+        $res["products"] = array();
         
-        $typedata = array();
-        $typedata["store_name"] = "";
-        $typedata["type_name"] = "";
-        $typedata["products"] = array();
-
         $currproduct = array();
-        
         while($this->product_range_stmt->fetch()) 
         {
             $currproduct["product_name"] = $p_name;
-            $currproduct["price"] = $price;
-            array_push($typedata["products"],$currproduct);                   
+            $currproduct["product_price"] = $price;
+            array_push($res["products"],$currproduct);                   
         }
-        $typedata["store_name"] = $store_name; 
-        $typedata["type_name"] = $type_name;
-
-        array_push($res["store"],$typedata);
-
         $result = json_encode($res, JSON_PRETTY_PRINT);
+        $this->product_range_stmt->close();
         return $result;
     } 
     else
@@ -315,14 +314,10 @@ function product_range_global($barcode, $store_id, $diff_amount){
         $this->product_range_pivot_stmt->close();
 
         $this->product_range_global_stmt->execute();
-        $this->product_range_global_stmt->bind_result($p_name, $type_name , $price, $store_name);
+        $this->product_range_global_stmt->bind_result($p_name , $price, $store_name);
 
         $res = array();
-        $res["type"] = array();
-
-        $typedata = array();
-        $typedata["type_name"] = "";
-        $typedata["products"] = array();
+        $res["products"] = array();
 
         $currproduct = array();
 
@@ -330,15 +325,12 @@ function product_range_global($barcode, $store_id, $diff_amount){
         {
             $currproduct["store_name"] = $store_name; 
             $currproduct["product_name"] = $p_name;
-            $currproduct["price"] = $price;
+            $currproduct["product_price"] = $price;
 
-            array_push($typedata["products"],$currproduct);                   
+            array_push($res["products"],$currproduct);                   
         }
-        $typedata["type_name"] = $type_name;
-
-        array_push($res["type"],$typedata);
-
         $result = json_encode($res, JSON_PRETTY_PRINT);
+        $this->product_range_global_stmt->close();
         return $result;
     } 
     else
@@ -355,12 +347,6 @@ function product_range_global($barcode, $store_id, $diff_amount){
      */
     function close() {
         // closing db connection
-        $this->stores_stmt->close();
-        $this->store_stmt->close();
-        $this->this->stores_locations_stmt->close();
-        $this->product_global_stmt->close();
-        $this->product_stmt->close();
-        $this->product_range_global_stmt->close();
         $this->db->close();
     }       
 
