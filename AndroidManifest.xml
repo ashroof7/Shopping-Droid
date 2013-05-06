@@ -43,12 +43,12 @@
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 			android:windowSoftInputMode="stateAlwaysHidden"
 			android:screenOrientation="sensorLandscape">
-			
+
 			<intent-filter>
 				<action android:name="com.google.zxing.client.android.SCAN"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
-		
+
 		</activity>
     </application>
 

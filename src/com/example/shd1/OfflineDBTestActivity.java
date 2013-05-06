@@ -5,13 +5,12 @@ import java.util.List;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
-import android.view.Menu;
 
 public class OfflineDBTestActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_offlineDB);
+		setContentView(R.layout.activity_offline_db);
 
 		Database db = new Database(this);
 		Product p1 = new Product(8, "lambada", "biscuits", 1, 5, "carfore",

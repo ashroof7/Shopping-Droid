@@ -106,16 +106,17 @@ public final class R {
     public static final class layout {
         public static final int activity_db_test=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int activity_test=0x7f030002;
-        public static final int bookmark_picker_list_item=0x7f030003;
-        public static final int capture=0x7f030004;
-        public static final int encode=0x7f030005;
-        public static final int help=0x7f030006;
-        public static final int history_list_item=0x7f030007;
-        public static final int search_book_contents=0x7f030008;
-        public static final int search_book_contents_header=0x7f030009;
-        public static final int search_book_contents_list_item=0x7f03000a;
-        public static final int share=0x7f03000b;
+        public static final int activity_offline_db=0x7f030002;
+        public static final int activity_test=0x7f030003;
+        public static final int bookmark_picker_list_item=0x7f030004;
+        public static final int capture=0x7f030005;
+        public static final int encode=0x7f030006;
+        public static final int help=0x7f030007;
+        public static final int history_list_item=0x7f030008;
+        public static final int search_book_contents=0x7f030009;
+        public static final int search_book_contents_header=0x7f03000a;
+        public static final int search_book_contents_list_item=0x7f03000b;
+        public static final int share=0x7f03000c;
     }
     public static final class menu {
         public static final int capture=0x7f0c0000;
