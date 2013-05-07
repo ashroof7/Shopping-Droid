@@ -44,6 +44,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/button2"
         android:layout_marginTop="40dp"
+        android:onClick="getLocations"
         android:text="el o/p haytla3 hena isA" />
+
 
 </RelativeLayout>

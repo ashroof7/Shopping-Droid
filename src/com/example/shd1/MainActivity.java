@@ -2,10 +2,14 @@ package com.example.shd1;
 
 import java.util.concurrent.ExecutionException;
 
+import location.LocationFetcher;
+import location.LocationFetcher.LocationResult;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import onlineDB.DBDispatcher;
+import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -57,6 +61,17 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        LocationResult locationResult = new LocationResult(){
+    	    @Override
+    	    public void gotLocation(Location location){
+    	    	Log.w("Location", "el mafroud la2eet el location");
+    	    	((TextView)( findViewById(R.id.textView2))).setText(
+    	    			"enta makanak feen ?? \n"+
+    	    			location.toString());
+    	    }
+    	};
+    	LocationFetcher myLocation = new LocationFetcher();
+    	myLocation.getLocation(this, locationResult);
         return true;
     }
     
@@ -67,6 +82,7 @@ public class MainActivity extends Activity {
 	Log.i("xZing", "Start Scan");
     startActivityForResult(intent, 0);
     }
+    
     
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
