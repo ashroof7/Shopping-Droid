@@ -47,5 +47,14 @@
         android:onClick="getLocations"
         android:text="el o/p haytla3 hena isA" />
 
-
+<Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/launch_map"
+      android:layout_alignParentRight="true"
+      android:layout_alignLeft="@+id/textView2"
+      android:layout_below="@+id/textView2"
+      android:layout_marginTop="15dp"
+      android:onClick="launchMap"
+      android:text="@string/view_map" />
 </RelativeLayout>

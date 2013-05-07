@@ -83,6 +83,10 @@ public class MainActivity extends Activity {
     startActivityForResult(intent, 0);
     }
     
+    public void launchMap(View view){
+    	Intent i = new Intent(this, MapsActivity.class);
+		startActivity(i);
+    }
     
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
