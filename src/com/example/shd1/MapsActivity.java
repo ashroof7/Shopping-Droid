@@ -23,7 +23,9 @@ public class MapsActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
+        System.out.println("gowa el maps ");
         setContentView(R.layout.activity_map);
         setupWebView();
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

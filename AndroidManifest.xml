@@ -4,7 +4,6 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-     <uses-library android:name="com.google.android.maps" />
 
     <uses-sdk android:minSdkVersion="15" />
  	<uses-permission android:name="android.permission.CAMERA"/>
@@ -21,6 +20,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
+	     <uses-library android:name="com.google.android.maps" />
+	     
         <activity
             android:name="com.example.shd1.MainActivity"
             android:label="@string/app_name" >
@@ -31,11 +32,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.shopping_droid.TestMapsActivity"
+            android:name="com.example.shd1.TestMapsActivity"
             android:label="@string/app_name" >          
         </activity>
         <activity
-            android:name="com.example.shopping_droid.MapsActivity"
+            android:name="com.example.shd1.MapsActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
