@@ -147,14 +147,14 @@
 <string name="DB_product_name">name</string>
 <string name="DB_diff_amount">diff_amount</string>
 <string name="DB_product_price">price</string>
-
+<string name="DB_store_range">range</string>
 <string name="DB_type_id">type_id</string>
 <string name="DB_type_name">type_name</string>
 
 <string name="DB_store_id">store_id</string>
 <string name="DB_store_name">store_name</string>
 <string name="DB_store_longitude">longitude</string>
-<string name="DB_store_latidude">latitude</string>
+<string name="DB_store_latitude">latitude</string>
 <string name="DB_store_address">address</string>
 
 <!-- Methods names -->
@@ -164,6 +164,7 @@
 <string name="DB_product_global">product_global</string>
 <string name="DB_product_range_global">product_range_global</string>
 <string name="DB_product_range">product_range</string>
+<string name="DB_stores_in_range">stores_in_range</string>
 
 <!-- Returned objects names -->
 <string name="DB_return_stores">stores</string>

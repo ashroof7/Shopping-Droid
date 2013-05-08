@@ -19,6 +19,7 @@ stores // return all data of stores
 stores_locations // return store name and location(longitude, latitude)
 product_range // select products of same type that are from a threshold from current product price 
 prodcut_range_global // select products of same type that are from a threshold from current product price  from all stores
+stores_in_range // select the stores in range of current latitude and longitude
 */
 
 $q_type = $parts[2];
@@ -72,6 +73,20 @@ if ($q_type=="product") {
 		sendResponseAndExit(false, 400, "Bad Request");
 
 	$response = $db->product_range_global($_GET["barcode"], $_GET["store_id"], $_GET["diff_amount"]);    
+	sendResponseAndExit(true, 200, "OK", false, $response);
+
+} else if ($q_type=="product_range_global") {
+    if (!isset($_GET["latitude"]) || !isset($_GET["longitude"]) || !isset($_GET["range"])) 
+		sendResponseAndExit(false, 400, "Bad Request");
+
+	$response = $db->product_range_global($_GET["latitude"], $_GET["longitude"], $_GET["range"]);    
+	sendResponseAndExit(true, 200, "OK", false, $response);
+
+} else if ($q_type=="stores_in_range") {
+    if (!isset($_GET["latitude"]) || !isset($_GET["longitude"]) || !isset($_GET["range"])) 
+		sendResponseAndExit(false, 400, "Bad Request");
+
+	$response = $db->stores_in_range($_GET["latitude"], $_GET["longitude"], $_GET["range"]);    
 	sendResponseAndExit(true, 200, "OK", false, $response);
 
 } else {

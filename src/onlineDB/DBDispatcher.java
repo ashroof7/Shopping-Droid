@@ -30,14 +30,14 @@ public class DBDispatcher {
 	public JSONObject productGlobal(String barcode)
 			throws InterruptedException, ExecutionException {
 		params.clear();
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_product_barcode), barcode));
-		paramString = URLEncodedUtils.format(params, context
-				.getString(R.string.DB_return_encoding));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_product_barcode), barcode));
+		paramString = URLEncodedUtils.format(params,
+				context.getString(R.string.DB_return_encoding));
 
 		requestAddress = serverURL
-				+ context.getString(R.string.DB_product_global)
-				+ "?" + paramString;
+				+ context.getString(R.string.DB_product_global) + "?"
+				+ paramString;
 
 		return new Fetcher().execute(requestAddress).get();
 	}
@@ -45,23 +45,21 @@ public class DBDispatcher {
 	public JSONObject product(String barcode, int storeId)
 			throws InterruptedException, ExecutionException {
 		params.clear();
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_product_barcode), barcode));
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_store_id), storeId + ""));
-		paramString = URLEncodedUtils.format(params, context
-				.getString(R.string.DB_return_encoding));
-		requestAddress = serverURL
-				+ context.getString(R.string.DB_product) + "?"
-				+ paramString;
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_product_barcode), barcode));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_store_id), storeId + ""));
+		paramString = URLEncodedUtils.format(params,
+				context.getString(R.string.DB_return_encoding));
+		requestAddress = serverURL + context.getString(R.string.DB_product)
+				+ "?" + paramString;
 
 		return new Fetcher().execute(requestAddress).get();
 
 	}
 
 	public JSONObject stores() throws InterruptedException, ExecutionException {
-		requestAddress = serverURL
-				+ context.getString(R.string.DB_stores);
+		requestAddress = serverURL + context.getString(R.string.DB_stores);
 		return new Fetcher().execute(requestAddress).get();
 	}
 
@@ -72,20 +70,35 @@ public class DBDispatcher {
 		return new Fetcher().execute(requestAddress).get();
 	}
 
+	public JSONObject storesInRange(double latitude, double longitude,
+			double range) throws InterruptedException, ExecutionException {
+		params.clear();
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_store_latitude), latitude + ""));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_store_longitude), longitude + ""));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_store_range), range + ""));
+		requestAddress = serverURL
+				+ context.getString(R.string.DB_stores_in_range) + "?"
+				+ paramString;
+		return new Fetcher().execute(requestAddress).get();
+	}
+
 	public JSONObject productRange(String barcode, int storeId,
 			double diffAmount) throws InterruptedException, ExecutionException {
 		params.clear();
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_product_barcode), barcode));
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_store_id), storeId + ""));
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_diff_amount), diffAmount + ""));
-		paramString = URLEncodedUtils.format(params, context
-				.getString(R.string.DB_return_encoding));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_product_barcode), barcode));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_store_id), storeId + ""));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_diff_amount), diffAmount + ""));
+		paramString = URLEncodedUtils.format(params,
+				context.getString(R.string.DB_return_encoding));
 		requestAddress = serverURL
-				+ context.getString(R.string.DB_product_range)
-				+ "?" + paramString;
+				+ context.getString(R.string.DB_product_range) + "?"
+				+ paramString;
 		return new Fetcher().execute(requestAddress).get();
 
 	}
@@ -93,17 +106,17 @@ public class DBDispatcher {
 	public JSONObject productRangeGlobal(String barcode, int storeId,
 			double diffAmount) throws InterruptedException, ExecutionException {
 		params.clear();
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_product_barcode), barcode));
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_store_id), storeId + ""));
-		params.add(new BasicNameValuePair(context.getString(
-				R.string.DB_diff_amount), diffAmount + ""));
-		paramString = URLEncodedUtils.format(params, context
-				.getString(R.string.DB_return_encoding));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_product_barcode), barcode));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_store_id), storeId + ""));
+		params.add(new BasicNameValuePair(context
+				.getString(R.string.DB_diff_amount), diffAmount + ""));
+		paramString = URLEncodedUtils.format(params,
+				context.getString(R.string.DB_return_encoding));
 		requestAddress = serverURL
-				+ context.getString(
-						R.string.DB_product_range_global) + "?" + paramString;
+				+ context.getString(R.string.DB_product_range_global) + "?"
+				+ paramString;
 		return new Fetcher().execute(requestAddress).get();
 	}
 }

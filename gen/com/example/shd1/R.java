@@ -135,35 +135,37 @@ public final class R {
     }
     public static final class string {
         public static final int DB_diff_amount=0x7f0a007e;
-        public static final int DB_product=0x7f0a0089;
+        public static final int DB_product=0x7f0a008a;
         /**  type and param names 
          */
         public static final int DB_product_barcode=0x7f0a007c;
-        public static final int DB_product_global=0x7f0a008a;
+        public static final int DB_product_global=0x7f0a008b;
         public static final int DB_product_name=0x7f0a007d;
         public static final int DB_product_price=0x7f0a007f;
-        public static final int DB_product_range=0x7f0a008c;
-        public static final int DB_product_range_global=0x7f0a008b;
-        public static final int DB_return_encoding=0x7f0a0093;
-        public static final int DB_return_global=0x7f0a0090;
-        public static final int DB_return_product=0x7f0a008f;
-        public static final int DB_return_product_range=0x7f0a0092;
-        public static final int DB_return_range_global=0x7f0a0091;
+        public static final int DB_product_range=0x7f0a008d;
+        public static final int DB_product_range_global=0x7f0a008c;
+        public static final int DB_return_encoding=0x7f0a0095;
+        public static final int DB_return_global=0x7f0a0092;
+        public static final int DB_return_product=0x7f0a0091;
+        public static final int DB_return_product_range=0x7f0a0094;
+        public static final int DB_return_range_global=0x7f0a0093;
         /**  Returned objects names 
          */
-        public static final int DB_return_stores=0x7f0a008d;
-        public static final int DB_return_stores_locations=0x7f0a008e;
-        public static final int DB_store_address=0x7f0a0086;
-        public static final int DB_store_id=0x7f0a0082;
-        public static final int DB_store_latidude=0x7f0a0085;
-        public static final int DB_store_longitude=0x7f0a0084;
-        public static final int DB_store_name=0x7f0a0083;
+        public static final int DB_return_stores=0x7f0a008f;
+        public static final int DB_return_stores_locations=0x7f0a0090;
+        public static final int DB_store_address=0x7f0a0087;
+        public static final int DB_store_id=0x7f0a0083;
+        public static final int DB_store_latitude=0x7f0a0086;
+        public static final int DB_store_longitude=0x7f0a0085;
+        public static final int DB_store_name=0x7f0a0084;
+        public static final int DB_store_range=0x7f0a0080;
         /**  Methods names 
          */
-        public static final int DB_stores=0x7f0a0087;
-        public static final int DB_stores_locations=0x7f0a0088;
-        public static final int DB_type_id=0x7f0a0080;
-        public static final int DB_type_name=0x7f0a0081;
+        public static final int DB_stores=0x7f0a0088;
+        public static final int DB_stores_in_range=0x7f0a008e;
+        public static final int DB_stores_locations=0x7f0a0089;
+        public static final int DB_type_id=0x7f0a0081;
+        public static final int DB_type_name=0x7f0a0082;
         public static final int action_settings=0x7f0a0001;
         public static final int app_name=0x7f0a0000;
         public static final int app_picker_name=0x7f0a0003;

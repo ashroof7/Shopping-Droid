@@ -34,7 +34,10 @@ class DB_CONNECTION {
     private $stortid;
     private $barcode_;
     private $diffamount;
-
+    private $stores_in_range_stmt;
+    private $latitude;
+    private $longitude;
+    private $radius;
    /**
      * Function to connect with database
      */
@@ -53,9 +56,9 @@ class DB_CONNECTION {
     
 
     $this->product_global_stmt = $this->db->prepare("select product_name, type_name, price, store_name 
-from product p, product_type, product_store ps, stores 
-where p.product_id = ps.product_id and p.product_type = type_id and 
-ps.store_id = stores.store_id  and product_barcode = ?;") ;
+        from product p, product_type, product_store ps, stores 
+        where p.product_id = ps.product_id and p.product_type = type_id and 
+        ps.store_id = stores.store_id  and product_barcode = ?;") ;
 
     $this->product_global_stmt->bind_param('s', $this->barcode_);
     
@@ -76,20 +79,27 @@ ps.store_id = stores.store_id  and product_barcode = ?;") ;
 
     $this->product_range_stmt = $this->db->prepare("select product_name, price
         from product p, stores, product_type, product_store ps
-      where p.product_id = ps.product_id  and type_id = product_type and ps.store_id = stores.store_id 
-      and stores.store_id = ? and type_id = ? and price between ? - ? and ? + ?;");
+        where p.product_id = ps.product_id  and type_id = product_type and ps.store_id = stores.store_id 
+        and stores.store_id = ? and type_id = ? and price between ? - ? and ? + ?;");
 
     $this->product_range_stmt->bind_param('iidddd',$this->storeid ,$this->pivot_type,
         $this->pivot_price, $this->diffamount, $this->pivot_price, $this->diffamount);      
     
-   
+    
     $this->product_range_global_stmt = $this->db->prepare(" select product_name, price, store_name
         from product p, stores, product_type, product_store ps
-      where p.product_id = ps.product_id  and type_id = product_type and ps.store_id = stores.store_id 
-      and type_id = ? and price between ? - ? and ? + ?;");
+        where p.product_id = ps.product_id  and type_id = product_type and ps.store_id = stores.store_id 
+        and type_id = ? and price between ? - ? and ? + ?;");
 
     $this->product_range_global_stmt->bind_param('idddd',$this->pivot_type,
         $this->pivot_price, $this->diffamount, $this->pivot_price, $this->diffamount);      
+
+    $this->stores_in_range_stmt =  $this->db->prepare("select * from stores 
+        where  sqrt((latitude - ?)*(latitude - ?) + (longitude - ?)*(longitude - ?)) <= ?; ");
+
+    $this->stores_in_range_stmt->bind_param('ddddd', $this->latitude, $this->latitude,
+        $this->longitude , $this->longitude, $this->radius );      
+
 
     return $this->db;
 }
@@ -338,6 +348,41 @@ function product_range_global($barcode, $store_id, $diff_amount){
         die('Query failed: ' . mysqli_error($this->db));
     }
 }       
+
+
+function stores_in_range($latitude_ , $longitude_ , $range){
+ if ($this->stores_in_range_stmt)
+ {
+     $this->longitude = $longitude_ ;
+     $this->latitude = $latitude_ ;
+     $this->radius = $range ;
+     $this->stores_in_range_stmt->execute();
+     $this->stores_in_range_stmt->bind_result($store_id, $store_name , $latitude, $longitude, $store_address);
+     
+     $res = array();
+     $res["stores"] = array();   
+     $currstore = array();
+     
+     while($this->stores_in_range_stmt->fetch())
+     {
+        $currstore["store_id"] = $store_id;
+        $currstore["store_name"] = $store_name;
+        $currstore["latitude"] = $latitude;
+        $currstore["longitude"] = $longitude;
+        $currstore["store_address"] = $store_address;
+        array_push($res["stores"],$currstore);                   
+    }
+
+    $result = json_encode($res, JSON_PRETTY_PRINT);
+    $this->stores_in_range_stmt->close(); 
+    return $result;
+    
+} else {
+    die('Query failed: ' . mysqli_error($this->DB));
+}
+
+}
+
 
 
 
