@@ -1,59 +1,91 @@
 package com.example.shd1;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+
+import org.json.JSONObject;
 
 import onlineDB.DBDispatcher;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import Jasonparsing.ItemData;
+import Jasonparsing.JsonParser;
 import android.content.Context;
 import android.util.Log;
 
 public class getStores {
 
 	Context con;
-
+	ArrayList<ItemData> data;
+	int i,sz ;
+	int trial = 0;
+	float lng = 39.909330368042F, lat = 31.208690643311F;
+	
+	ItemData curr;
 	public getStores(Context c) {
 		con = c;
-		JSONObject jObject = null;
+		Log.i("getStores", "new getStores");
 		DBDispatcher d = new DBDispatcher(c);
-
+		JsonParser jp = new JsonParser();
 		try {
-
+			Log.i("getStores", "Before stores locations");
 			JSONObject ob = d.storesLocations();
-			System.out.println(ob.toString(4));
-			JSONArray stores = ob.getJSONArray("stores");
-			String store_name = null;
-			double longitude, latitude;
+			Log.i("getStores", "After stores locations");
 
-			for (int i = 0; i < stores.length(); i++) {
-				jObject = stores.getJSONObject(i);
+			data = jp.parse(ob);
+			i = 0;
+			sz = data.size();
+			Log.i("getStores", "After JSON");
 
-				store_name = jObject.getString("store_name");
-				latitude = jObject.getDouble("latitude");
-				longitude = jObject.getDouble("longitude");
-
-				System.out.println(store_name + " " + longitude + " "
-						+ latitude);
-
-			}
-
-		} catch (JSONException e) {
-			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 
-	}
 
-	public Object testCall() {
-		Log.i("GetStores", "Test Succeeded");
-		return (String) "Alex";
 	}
-
+	
+	public int getNumberOfStores()
+	{
+		Log.i("getStores", "Num Of Stores");
+		return sz;
+//		return 3;
+	}
+	
+	public int inc() {
+		curr = data.get(i++);
+//		lat = (float) (lat+0.2);
+//		lng = (float) (lng-0.2);
+		return 0;
+	}
+	
+	public String getNextStoreName()
+	{
+		return curr.getValue(con.getResources().getString(R.string.DB_store_name));
+//		return "Alex";
+	}
+	
+	public float getNextStoreLng()
+	{
+		return Float.parseFloat(curr.getValue(con.getResources().getString(R.string.DB_store_longitude)));
+//		 return lng;
+	}
+	
+	public float getNextStoreLat()
+	{
+		return Float.parseFloat(curr.getValue(con.getResources().getString(R.string.DB_store_latitude)));
+//		return lat;
+	}
+	
+	
+	/*TODO get the location of the center*/
+	 public float getLatCenter(){
+		  return lat;
+		  
+//		  return (float)31.208690643311;
+	  }
+	  public float getLngCenter(){
+		  return lng;
+//		  return (float)29.909330368042;
+	  }
 }

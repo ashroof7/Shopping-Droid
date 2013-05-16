@@ -12,19 +12,13 @@ public class OfflineDBTestActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_offline_db);
 
-		Database db = new Database(this);
-		Product p1 = new Product(8, "lambada", "biscuits", 1, 5, "carfore",
-				"somoha");
-		Product p2 = new Product(9, "moro", "choclete", 0, 6, "carfore",
-				"mandara");
-		Product p3 = new Product(28, "kranchy", "chips", 11, 15, "carfore",
-				"ma3mora");
-		Product p4 = new Product(18, "vaio", "laptop",55, 5, "carfore",
-				"somoha");
-		Product p5 = new Product(38, "pmw", "car", 7, 15, "carfore",
-				"somoha");
-		Product p6 = new Product(88, "borio", "biscuits", 1, 15, "carfore",
-				"somoha");
+		Database db = new Database(this, "Offline Database");
+		Product p1 = new Product("8", "lambada", "biscuits", 5, "carfore");
+		Product p2 = new Product("9", "moro", "choclete",  6, "carfore");
+		Product p3 = new Product("28", "kranchy", "chips",  15, "carfore");
+		Product p4 = new Product("18", "vaio", "laptop", 5, "carfore");
+		Product p5 = new Product("38", "pmw", "car", 15, "carfore");
+		Product p6 = new Product("88", "borio", "biscuits", 15, "carfore");
 		/**
 		 * CRUD Operations
 		 * */
@@ -43,9 +37,8 @@ public class OfflineDBTestActivity extends Activity {
 
 		for (Product cn : s) {
 			String log = "Id: " + cn.getBar_code() + " ,Name: " + cn.getName()
-					+ " ,type: " + cn.getType_id() + "type name "
-					+ cn.getType_name()+" storen "+cn.getStore_name()+" storeadd "
-					+cn.getStore_adress()+" SOREID "+cn.getStore_id();
+					+  ",type name "
+					+ cn.getType_name()+" storen "+cn.getStore_name()+" SOREID "+cn.getStore_id();
 			System.out.println("//////////////" + log);
 			// Writing Contacts to log
 			Log.d("Name: ", log);
@@ -54,9 +47,8 @@ public class OfflineDBTestActivity extends Activity {
 
 		for (Product cn : s2) {
 			String log = "Id: " + cn.getBar_code() + " ,Name: " + cn.getName()
-					+ " ,type: " + cn.getType_id() + "type name "
-					+ cn.getType_name()+" storen "+cn.getStore_name()+" storeadd "
-					+cn.getStore_adress()+" SOREID "+cn.getStore_id();
+					+  ",type name "
+					+ cn.getType_name()+" storen "+cn.getStore_name()+" SOREID "+cn.getStore_id();
 			System.out.println("//////////////" + log);
 			// Writing Contacts to log
 			Log.d("Name: ", log);

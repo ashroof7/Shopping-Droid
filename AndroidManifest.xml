@@ -5,7 +5,9 @@
     android:versionName="1.0" >
 
 
-    <uses-sdk android:minSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
  	<uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -62,6 +64,22 @@
 			</intent-filter>
 
 		</activity>
+		
+        <activity
+            android:name="com.example.shd1.ListActivity"
+            android:label="@string/UI_favorites" >
+        </activity>
+        
+         <activity
+            android:name="com.example.shd1.FavoriteActivity"
+            android:label="@string/UI_favorites" >
+        </activity>
+        
+         <activity
+            android:name="com.example.shd1.HistoryActivity"
+            android:label="@string/UI_history" >
+        </activity>
+        
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@ public class DB_test extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_db_test);
 		String s = (String)this.getIntent().getStringExtra("stores");
-		((TextView)findViewById(R.id.textView3)).setText(s);
+		((TextView)findViewById(R.id.locationNowText)).setText(s);
 		
 	}
 

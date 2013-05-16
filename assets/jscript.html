@@ -11,24 +11,42 @@
         height: 100%;
       }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+    <script type="text/javascript" src="label.js"></script>
     <script>
 var map;
 function initialize() {
+var clat = AndroidFunction.getLatCenter();
+var cling = AndroidFunction.getLngCenter();
   var mapOptions = {
-    zoom: 8,
-    center: new google.maps.LatLng(31.147006, 29.970703),
+    zoom: 16,
+    center: new google.maps.LatLng(clat, cling),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
-	  
-	  var a = AndroidFunction.testCall();
+ var lt;
+ var ln;
+ var stName;
+ var num = AndroidFunction.getNumberOfStores();
+	   for( var i=0;i<num;i++){
+	   lt = AndroidFunction.getNextStoreLat();
+	   ln = AndroidFunction.getNextStoreLng();
+	   stName = AndroidFunction.getNextStoreName();
 	  var marker = new google.maps.Marker({
-	  position: new google.maps.LatLng(31.147006, 29.970703),
+	  position: new google.maps.LatLng(lt, ln),
       map: map,
-      title: "Alex"
+      title: stName
       });
+      	var label = new Label({
+		map: map
+		});
+
+		label.bindTo('position', marker, 'position');
+		label.bindTo('text', marker, 'title');
+   	  	AndroidFunction.inc();
+   
+      }
 	 
 }
 

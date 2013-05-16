@@ -44,7 +44,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/button2"
         android:layout_marginTop="40dp"
-        android:onClick="getLocations"
+        android:onClick="getLocation"
         android:text="el o/p haytla3 hena isA" />
 
 <Button
@@ -57,4 +57,44 @@
       android:layout_marginTop="15dp"
       android:onClick="launchMap"
       android:text="@string/view_map" />
+
+<TextView
+    android:id="@+id/locationNowText"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
+    android:layout_below="@+id/launch_map"
+    android:layout_marginTop="32dp"
+    android:text="location shoud be displayed here "
+    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+<Button
+    android:id="@+id/button3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/textView2"
+    android:layout_alignRight="@+id/locationNow"
+    android:layout_marginRight="16dp"
+    android:onClick="viewFav"
+    android:text="Favorites" />
+
+<Button
+    android:id="@+id/history"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/launch_map"
+    android:layout_alignRight="@+id/locationNow"
+     android:onClick="viewHistory"
+    android:text="History" />
+
+<Button
+    android:id="@+id/locationNow"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignTop="@+id/textView1"
+    android:onClick="getLocation"
+    android:text="Get Location" />
+
 </RelativeLayout>

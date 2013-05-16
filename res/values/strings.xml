@@ -173,7 +173,13 @@
 <string name="DB_return_global">product</string>
 <string name="DB_return_range_global">type</string>
 <string name="DB_return_product_range">store</string>
-
 <string name="DB_return_encoding">utf-8"</string>
+
+
+<!--  UI out UI not the barcode scanner calsses -->
+<string name="UI_favorites">Favorites</string>
+<string name="UI_history">History</string>
+
+
   
 </resources> 

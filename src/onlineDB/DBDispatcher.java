@@ -15,7 +15,7 @@ import com.example.shd1.R;
 
 public class DBDispatcher {
 
-	private final String host = "shoppingdroid.bugs3.com";
+	private final String host = "10.42.0.1";
 	private final String serverURL = "http://" + host + "/shoppingdroid.php/";
 	private Context context;
 	private String requestAddress;
@@ -77,8 +77,12 @@ public class DBDispatcher {
 				.getString(R.string.DB_store_latitude), latitude + ""));
 		params.add(new BasicNameValuePair(context
 				.getString(R.string.DB_store_longitude), longitude + ""));
-		params.add(new BasicNameValuePair(context
-				.getString(R.string.DB_store_range), range + ""));
+		params.add(new BasicNameValuePair(
+//				context
+//				.getString(R.string.DB_store_range)
+				"range", range + ""));
+		paramString = URLEncodedUtils.format(params,
+				context.getString(R.string.DB_return_encoding));
 		requestAddress = serverURL
 				+ context.getString(R.string.DB_stores_in_range) + "?"
 				+ paramString;
