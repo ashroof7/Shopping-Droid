@@ -85,7 +85,7 @@
         </activity>
 
         <activity
-            android:name="com.example.shd1.Scan_to_display"
+            android:name="com.example.shd1.ScanToDisplay"
             android:label="@string/title_activity_scan_to_display" >
         </activity>
         

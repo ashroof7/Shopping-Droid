@@ -113,7 +113,7 @@ public class MainActivity_test extends Activity {
     
     public void scanNow(View view)
     {
-    	 Intent intent2 = new Intent(this, Scan_to_display.class);
+    	 Intent intent2 = new Intent(this, ScanToDisplay.class);
          intent2.putExtra(BarCode, "1");
      	startActivity(intent2);
 
@@ -151,7 +151,7 @@ public class MainActivity_test extends Activity {
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
              //   Log.i("xZing", "contents: "+contents+" format: "+format);
-                Intent intent2 = new Intent(this, Scan_to_display.class);
+                Intent intent2 = new Intent(this, ScanToDisplay.class);
                 intent2.putExtra(BarCode, contents);
             	startActivity(intent2);
 

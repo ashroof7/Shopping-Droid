@@ -38,6 +38,7 @@ public class ListActivity extends Activity {
 			data.add(d);
 		}
 
+		System.out.println("al3ab baleh");
 		adapter = new ListAdapter(this, data, isFav);
 		listView.setAdapter(adapter);
 
@@ -46,18 +47,9 @@ public class ListActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_history);
-		data =  savedInstanceState.getParcelableArrayList("data");
+		setContentView(R.layout.activity_list);
+		data =  this.getIntent().getParcelableArrayListExtra("data");
 		initList();
-	}
-
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//FIXME mafeech menu aslun lel class dah we ba3deen sheel el menus men kol el activities
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
 	}
 
 	

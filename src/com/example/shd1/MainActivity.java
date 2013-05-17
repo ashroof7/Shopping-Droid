@@ -39,14 +39,14 @@ public class MainActivity extends Activity {
 	}
 	
 	public void launchScanner(View view){
-	    intent = new Intent(this, Scan_to_display.class);
+	    intent = new Intent(this, ScanToDisplay.class);
 	    // TODO what is that one 
         intent.putExtra(BarCode, "1");
     	startActivity(intent);
 	}
 	
 	 @Override
-	    public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) {
 	        // Inflate the menu; this adds items to the action bar if it is present.
 	        getMenuInflater().inflate(R.menu.main, menu);
 	        return true;
