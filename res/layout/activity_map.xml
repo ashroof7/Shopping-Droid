@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-  <WebView android:id="@+id/webview"
+  
+  <WebView 
+      android:id="@+id/webview"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
-     	android:apiKey="AIzaSyBCrfVQPG1JCttvunMjDOlfDIgj7DV-8dE"/> 
+      android:apiKey="AIzaSyBCrfVQPG1JCttvunMjDOlfDIgj7DV-8dE"/> 
 
 </LinearLayout>
     

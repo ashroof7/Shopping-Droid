@@ -80,6 +80,7 @@
             android:label="@string/UI_history" >
         </activity>
         
+        
     </application>
 
 </manifest>

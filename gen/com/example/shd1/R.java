@@ -134,17 +134,18 @@ public final class R {
         public static final int activity_offline_db=0x7f030006;
         public static final int activity_scan_to_display=0x7f030007;
         public static final int activity_test=0x7f030008;
-        public static final int activity_test_maps=0x7f030009;
-        public static final int bookmark_picker_list_item=0x7f03000a;
-        public static final int capture=0x7f03000b;
-        public static final int encode=0x7f03000c;
-        public static final int help=0x7f03000d;
-        public static final int history_list_item=0x7f03000e;
-        public static final int row=0x7f03000f;
-        public static final int search_book_contents=0x7f030010;
-        public static final int search_book_contents_header=0x7f030011;
-        public static final int search_book_contents_list_item=0x7f030012;
-        public static final int share=0x7f030013;
+        public static final int activity_test_map=0x7f030009;
+        public static final int activity_test_maps=0x7f03000a;
+        public static final int bookmark_picker_list_item=0x7f03000b;
+        public static final int capture=0x7f03000c;
+        public static final int encode=0x7f03000d;
+        public static final int help=0x7f03000e;
+        public static final int history_list_item=0x7f03000f;
+        public static final int row=0x7f030010;
+        public static final int search_book_contents=0x7f030011;
+        public static final int search_book_contents_header=0x7f030012;
+        public static final int search_book_contents_list_item=0x7f030013;
+        public static final int share=0x7f030014;
     }
     public static final class menu {
         public static final int capture=0x7f0c0000;

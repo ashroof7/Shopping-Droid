@@ -15,7 +15,7 @@ import com.example.shd1.R;
 
 public class DBDispatcher {
 
-	private final String host = "10.42.0.1";
+	private final String host = "41.46.136.231";
 	private final String serverURL = "http://" + host + "/shoppingdroid.php/";
 	private Context context;
 	private String requestAddress;
