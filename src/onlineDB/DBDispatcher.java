@@ -39,7 +39,7 @@ public class DBDispatcher {
 				+ context.getString(R.string.DB_product_global) + "?"
 				+ paramString;
 
-		return new Fetcher().execute(requestAddress).get();
+		return new Fetcher(context).execute(requestAddress).get();
 	}
 
 	public JSONObject product(String barcode, int storeId)
@@ -54,20 +54,20 @@ public class DBDispatcher {
 		requestAddress = serverURL + context.getString(R.string.DB_product)
 				+ "?" + paramString;
 
-		return new Fetcher().execute(requestAddress).get();
+		return new Fetcher(context).execute(requestAddress).get();
 
 	}
 
 	public JSONObject stores() throws InterruptedException, ExecutionException {
 		requestAddress = serverURL + context.getString(R.string.DB_stores);
-		return new Fetcher().execute(requestAddress).get();
+		return new Fetcher(context).execute(requestAddress).get();
 	}
 
 	public JSONObject storesLocations() throws InterruptedException,
 			ExecutionException {
 		requestAddress = serverURL
 				+ context.getString(R.string.DB_stores_locations);
-		return new Fetcher().execute(requestAddress).get();
+		return new Fetcher(context).execute(requestAddress).get();
 	}
 
 	public JSONObject storesInRange(double latitude, double longitude,
@@ -86,7 +86,7 @@ public class DBDispatcher {
 		requestAddress = serverURL
 				+ context.getString(R.string.DB_stores_in_range) + "?"
 				+ paramString;
-		return new Fetcher().execute(requestAddress).get();
+		return new Fetcher(context).execute(requestAddress).get();
 	}
 
 	public JSONObject productRange(String barcode, int storeId,
@@ -103,7 +103,7 @@ public class DBDispatcher {
 		requestAddress = serverURL
 				+ context.getString(R.string.DB_product_range) + "?"
 				+ paramString;
-		return new Fetcher().execute(requestAddress).get();
+		return new Fetcher(context).execute(requestAddress).get();
 
 	}
 
@@ -121,6 +121,6 @@ public class DBDispatcher {
 		requestAddress = serverURL
 				+ context.getString(R.string.DB_product_range_global) + "?"
 				+ paramString;
-		return new Fetcher().execute(requestAddress).get();
+		return new Fetcher(context).execute(requestAddress).get();
 	}
 }
