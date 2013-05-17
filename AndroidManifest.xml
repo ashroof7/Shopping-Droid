@@ -4,26 +4,24 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-
-    <uses-sdk android:minSdkVersion="8"
+    <uses-sdk
+        android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    
- 	<uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
- 	
- 	
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
-	     <uses-library android:name="com.google.android.maps" />
-	     
+        <uses-library android:name="com.google.android.maps" />
+
         <activity
             android:name="com.example.shd1.MainActivity"
             android:label="@string/app_name" >
@@ -35,7 +33,7 @@
         </activity>
         <activity
             android:name="com.example.shd1.TestMapsActivity"
-            android:label="@string/app_name" >          
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.example.shd1.MapsActivity"
@@ -44,42 +42,40 @@
         <activity
             android:name="com.example.shd1.DB_test"
             android:label="@string/app_name" >
-    
         </activity>
         <activity
             android:name="com.example.shd1.OfflineDBTestActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-			android:name="com.google.zxing.client.android.CaptureActivity"
-			android:label="Scan Barcode"
-			android:configChanges="orientation|keyboardHidden"
-			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-			android:windowSoftInputMode="stateAlwaysHidden"
-			android:screenOrientation="sensorLandscape">
+            android:name="com.google.zxing.client.android.CaptureActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="Scan Barcode"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <action android:name="com.google.zxing.client.android.SCAN" />
 
-			<intent-filter>
-				<action android:name="com.google.zxing.client.android.SCAN"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-
-		</activity>
-		
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.example.shd1.ListActivity"
             android:label="@string/UI_favorites" >
         </activity>
-        
-         <activity
+        <activity
             android:name="com.example.shd1.FavoriteActivity"
             android:label="@string/UI_favorites" >
         </activity>
-        
-         <activity
+        <activity
             android:name="com.example.shd1.HistoryActivity"
             android:label="@string/UI_history" >
         </activity>
-        
+        <activity
+            android:name="com.example.shd1.DisplayLists"
+            android:label="@string/title_activity_display" >
+        </activity>
     </application>
 
 </manifest>

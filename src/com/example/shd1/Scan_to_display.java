@@ -1,6 +1,7 @@
 package com.example.shd1;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -39,7 +40,7 @@ public class Scan_to_display extends Activity {
 	private DBDispatcher d;
 	private JSONObject jOb ;
 	private JsonParser jp;
-	private ArrayList<ItemData> data;
+	public static ArrayList<ItemData> data;
 	
 	TextView txt;
 	@Override
@@ -47,17 +48,7 @@ public class Scan_to_display extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan_to_display);
 		setupActionBar();
-		
-		Log.d("Reading: ", "Reading History..");
-		List<Product> s = MainActivity.db.retreive();
-
-		for (Product cn : s) {
-			String log = "Id: " + cn.getBar_code() + " ,Name: " + cn.getName()
-					 + "type name "
-					+ cn.getType_name()+" store name "+cn.getStore_name()+" STORE ID "+cn.getStore_id();
-			System.out.println("------>" + log);
-		}
-		
+				
 		d = new DBDispatcher(this);
 		
 		jp = new JsonParser();
@@ -136,22 +127,10 @@ public class Scan_to_display extends Activity {
 //------------------------ Assuming ItemData is retrieved --------------------------------------------------
 			Log.i("in scann ", "creating product");
 
-			
-			/*Commented For Testing purposes*/
-//			p = new Product(scaned_item.getValue(getResources().getString(
-//					R.string.DB_product_barcode)),
-//					scaned_item.getValue(getResources().getString(
-//							R.string.DB_product_name)),
-//					scaned_item.getValue(getResources().getString(
-//							R.string.DB_type_name)),
-//					Integer.parseInt(scaned_item.getValue(getResources()
-//							.getString(R.string.DB_type_id))),
-//					Integer.parseInt(scaned_item.getValue(getResources()
-//							.getString(R.string.DB_store_id))),
-//					scaned_item.getValue(getResources().getString(
-//							R.string.DB_store_name)),
-//					scaned_item.getValue(getResources().getString(
-//							R.string.DB_store_address)));
+			// display the returned item;
+
+			txt.setText("Product Barcode: "+product_barcode+" Price "+scaned_item.getValue(getResources().getString(
+			R.string.DB_product_price)));
 			
 			p = new Product(product_barcode,
 					scaned_item.getValue(getResources().getString(
@@ -176,13 +155,7 @@ public class Scan_to_display extends Activity {
 				Log.d("Name: ", log);
 			}
 //----------------------------------------------------------------------------------------------------------			
-
-			
-			
-			// display the returned item;
-			
-
-			 						
+						 						
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -213,8 +186,10 @@ public class Scan_to_display extends Activity {
 			}
 			data = jp.parse(jOb);
 			Log.i("other stores", data.toString());
+	
 			// TODO call the activity that displays it
-			
+			Intent intent = new Intent(this, DisplayLists.class);
+			startActivity(intent);		
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -241,7 +216,8 @@ public class Scan_to_display extends Activity {
 			data = jp.parse(jOb);
 			Log.d("global recommender ", data.toString());
 			// TODO call activity to display
-		
+			Intent intent = new Intent(this, DisplayLists.class);
+			startActivity(intent);		
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -266,9 +242,10 @@ public class Scan_to_display extends Activity {
 			}
 			
 			data = jp.parse(jOb);
-			// TODO display list
 			Log.d("similar prod", data.toString());
-			
+			// TODO display list
+			Intent intent = new Intent(this, DisplayLists.class);
+			startActivity(intent);		
 		
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
