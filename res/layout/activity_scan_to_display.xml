@@ -51,7 +51,7 @@
         android:text="Recommend other stores" />
 
     <Button
-        android:id="@+id/history"
+        android:id="@+id/history_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button3"

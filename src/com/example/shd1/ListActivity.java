@@ -7,62 +7,74 @@ import java.util.List;
 import java.util.TreeSet;
 
 import Jasonparsing.ItemData;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
 
 public class ListActivity extends Activity {
-	
+
 	private ListAdapter adapter;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_favorites);
+
+	ArrayList<ItemData> data ;
+	private void initList() {
+		ListView listView = (ListView) findViewById(R.id.main_list_view);
+		data = new ArrayList<ItemData>();
 		
-		ListView listView = (ListView) findViewById(R.id.favorite_list);
-		ArrayList<ItemData> data = new ArrayList<ItemData>();
-				
-		Product temp = new Product("1", "product name", "type name", 1, "store_1");
-		MainActivity.db.addFavourites(temp);
-		List<Product> favs = MainActivity.db.retreiveFavourites();
-		System.out.println("favourite  = " +favs.size());
-		Iterator<Product> it = favs.iterator();
+		List<Product> list = MainActivity.db.retreive();
+		Iterator<Product> it = list.iterator();
 		Product p;
-		BitSet isFav = new BitSet(favs.size());
-		isFav.set(0, favs.size());
+		BitSet isFav = new BitSet(list.size());
 		
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			p = it.next();
-			ItemData d= new ItemData();
+			ItemData d = new ItemData();
+			d.put("barcode", p.getBar_code());
+			d.put("store_name", p.getStore_name());
 			d.put("product_name", p.getName());
 			d.put("product_type", p.getType_name());
 			d.put("product_price", "");
 			data.add(d);
 		}
-		
-//		adapter = new ListAdapter(this, data, isFav);
-		System.out.println(listView);
+
+		adapter = new ListAdapter(this, data, isFav);
 		listView.setAdapter(adapter);
+
 	}
 
 	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_history);
+		data =  savedInstanceState.getParcelableArrayList("data");
+		initList();
+	}
+
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		//FIXME mafeech menu aslun lel class dah we ba3deen sheel el menus men kol el activities
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		// reflect changed products in Database
 		TreeSet<String> changed = adapter.getRemovedItems();
+		Log.wtf("list", "barcodes.size = "+changed.size());
 		Iterator<String> it = changed.iterator();
-		while(it.hasNext())
-			MainActivity.db.deleteFavourite(it.next());
-		
+		System.out.println(adapter.isFavorite);
+		while (it.hasNext()){
+			String p = it.next();
+			System.out.println(p);
+			MainActivity.db.deleteFavourite(p);
+		}
+
 	}
-	
+
 }

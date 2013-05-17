@@ -1,7 +1,6 @@
 package com.example.shd1;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -9,8 +8,6 @@ import onlineDB.DBDispatcher;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.zxing.BarcodeFormat;
 
 import Jasonparsing.ItemData;
 import Jasonparsing.JsonParser;
@@ -166,9 +163,6 @@ public class Scan_to_display extends Activity {
 	
 	public void add_to_favorites(View view) {
 		//insert the tuple in offline DB
-		
-		
-		
 		MainActivity.db.addFavourites(p);
 		Toast.makeText(this, "Product added to favorites", Toast.LENGTH_LONG).show();
 		Log.d("in add favo", "favoraite added");
@@ -187,8 +181,8 @@ public class Scan_to_display extends Activity {
 			data = jp.parse(jOb);
 			Log.i("other stores", data.toString());
 	
-			// TODO call the activity that displays it
-			Intent intent = new Intent(this, DisplayLists.class);
+			Intent intent = new Intent(this, ListActivity.class);
+			intent.putExtra("data", data);
 			startActivity(intent);		
 			
 		} catch (InterruptedException e) {
@@ -215,8 +209,8 @@ public class Scan_to_display extends Activity {
 			}
 			data = jp.parse(jOb);
 			Log.d("global recommender ", data.toString());
-			// TODO call activity to display
-			Intent intent = new Intent(this, DisplayLists.class);
+			Intent intent = new Intent(this, ListActivity.class);
+			intent.putExtra("data", data);
 			startActivity(intent);		
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -243,8 +237,8 @@ public class Scan_to_display extends Activity {
 			
 			data = jp.parse(jOb);
 			Log.d("similar prod", data.toString());
-			// TODO display list
-			Intent intent = new Intent(this, DisplayLists.class);
+			Intent intent = new Intent(this, ListActivity.class);
+			intent.putExtra("data", data);
 			startActivity(intent);		
 		
 		} catch (NumberFormatException e) {

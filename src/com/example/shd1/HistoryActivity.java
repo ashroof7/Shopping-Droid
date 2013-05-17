@@ -66,8 +66,6 @@ public class HistoryActivity extends Activity {
 	}
 
 	
-	
-	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

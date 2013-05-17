@@ -24,8 +24,8 @@ public class getStores {
 	
 	ItemData curr;
 	public getStores(Context c) {
-		MainActivity.locTest.updateLocation();
-		Location current = MainActivity.locTest.getLastLocation();
+		MainActivity.location.updateLocation();
+		Location current = MainActivity.location.getLastLocation();
 		lng = (float) current.getLongitude();
 		lat = (float) current.getLatitude();
 		System.out.println(lng+" "+lat);
