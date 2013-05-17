@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Scan_to_display" >
+    tools:context=".Scan_to_display" 
+	android:background="@drawable/bk">
 
     <TextView
         android:id="@+id/textView1"

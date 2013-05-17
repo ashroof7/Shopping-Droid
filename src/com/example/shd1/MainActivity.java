@@ -47,15 +47,15 @@ public class MainActivity extends Activity {
         locTest = new LocationMan(this);
         locTest.updateLocation();
         scanState.setText("Press on the button to start scan");
-        try{
-            Product p1 = new Product("11", "ay7aga2", "biscuits", 5, "carfore");
-    		
-    		Log.d("Insert: ", "Inserting in History..");
-    		db.addHistory(p1);
-    		Log.d("Insert: ", "Inserting in Favorites..");
-    		db.addFavourites(p1);
-    }catch(android.database.sqlite.SQLiteConstraintException ex){
-    }
+//        try{
+//            Product p1 = new Product("11", "ay7aga2", "biscuits", 5, "carfore");
+//    		
+//    		Log.d("Insert: ", "Inserting in History..");
+//    		db.addHistory(p1);
+//    		Log.d("Insert: ", "Inserting in Favorites..");
+//    		db.addFavourites(p1);
+//    }catch(android.database.sqlite.SQLiteConstraintException ex){
+//    }
         
         
         
@@ -65,12 +65,12 @@ public class MainActivity extends Activity {
         
         
 //        Product p1 = new Product("1barcode", "product name", "type name", 1, 1, "store_1", "ay 7etta");
-        Product p1 = new Product("11", "ay7aga2", "biscuits", 5, "carfore");
-		db.addFavourites(p1);
-		List<Product> favs = db.retreiveFavourites();
-		Log.wtf("main Act", "favlist size = "+favs.size());
-//		Iterator<Product> it = favs.iterator();
-        System.out.println("db main foo2 "+db);
+//        Product p1 = new Product("11", "ay7aga2", "biscuits", 5, "carfore");
+//		db.addFavourites(p1);
+//		List<Product> favs = db.retreiveFavourites();
+//		Log.wtf("main Act", "favlist size = "+favs.size());
+////		Iterator<Product> it = favs.iterator();
+//        System.out.println("db main foo2 "+db);
     }
 	
 	public void getLocation(View view){

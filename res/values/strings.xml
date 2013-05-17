@@ -179,7 +179,7 @@
 <!--  UI out UI not the barcode scanner calsses -->
 <string name="UI_favorites">Favorites</string>
 <string name="UI_history">History</string>
-
+<string name="title_activity_display">Display</string>
 
   
 </resources> 

@@ -29,7 +29,7 @@ public class MapsActivity extends Activity {
 			}
 		});
 		webview.getSettings().setJavaScriptEnabled(true);
-		webview.addJavascriptInterface(new getStores(this), "centerLocation");
+		webview.addJavascriptInterface(new getStores(this), "storesObject");
 		webview.loadUrl("file:///android_asset/jscript.html");
 		
 	}

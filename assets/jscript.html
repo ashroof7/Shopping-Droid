@@ -17,8 +17,8 @@
 var map;
 function initialize() {
 
-var clat = centerLocation.getLatCenter();
-var cling = centerLocation.getLngCenter();
+var clat = storesObject.getLatCenter();
+var cling = storesObject.getLngCenter();
 
   var mapOptions = {
     zoom: 15,
@@ -30,13 +30,13 @@ var cling = centerLocation.getLngCenter();
 	  var lt; 
 	  var ln;
 	  var stName;
-	   var num = AndroidFunction.getNumberOfStores();
+	   var num = storesObject.getNumberOfStores();
 	  
 	   for( var i=0;i<num;i++){
-	   	AndroidFunction.inc();
-	   	lt = AndroidFunction.getNextStoreLat();
-	   	ln = AndroidFunction.getNextStoreLng();
-	   stName = AndroidFunction.getNextStoreName();
+	   	storesObject.inc();
+	   	lt = storesObject.getNextStoreLat();
+	   	ln = storesObject.getNextStoreLng();
+	   stName = storesObject.getNextStoreName();
 	  var marker = new google.maps.Marker({
 	  position: new google.maps.LatLng(lt, ln),
       map: map,
