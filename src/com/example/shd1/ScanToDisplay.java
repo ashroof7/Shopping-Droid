@@ -51,7 +51,7 @@ public class ScanToDisplay extends Activity {
 		jp = new JsonParser();
 				Intent intent = getIntent();
 				barcode = intent.getStringExtra(MainActivity.BarCode);
-				txt =  (TextView) findViewById(R.id.textView1);
+				txt =  (TextView) findViewById(R.id.textView_res);
 				txt.setText("Product Barcode: "+barcode);
 				Log.i("in scann ", "in scann");
 
