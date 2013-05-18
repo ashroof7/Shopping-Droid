@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -35,7 +37,7 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 	StringBuilder sb;
 	Context con;
 	ProgressDialog diag;
-	
+	boolean checkConnection;
 	
 	public Fetcher(Context cont) {
 		super();
@@ -45,49 +47,81 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 		
 	}
 	
+	private boolean hasConnection(Context con) {
+		ConnectivityManager connectivity = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null) {
+                for (int i = 0; i < info.length; i++) {
+                    Log.v("INTERNET:",String.valueOf(i));
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                        Log.v("INTERNET:", "connected!");
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+	}
+	
+	
 	@Override
 	protected void onPreExecute() {
-//		super.onPreExecute();
+		super.onPreExecute();
 		diag.setMessage("Waiting for Server Response");
 		diag.show();
 		Log.i("Show", "showing");
+		
+		checkConnection = hasConnection(con);
+		
 	}
-	
 
 	@Override
 	protected JSONObject doInBackground(String...param) {
+			
 		JSONObject jObject = null;
+		if(checkConnection)
+		{
 		try {
 			URL url= new URL(param[0]);
+			Log.i("url ",param[0]);
 			try{
 			url.openConnection();
+			Log.i("url ","check connection");
 			}catch(Exception e)
 			{
 				Log.e("url error",e.toString());
 			}
 			try {
 				httpGet = new HttpGet(url.toURI());
+				Log.i("url ","getting request");
 			} catch (URISyntaxException e) {
 				Log.e("uri conversion error",e.toString());
 			}
 			try{
+				if(httpGet==null)
+					return null;
 			response = httpClient.execute(httpGet);
+			Log.i("url ","executing get");
 			}catch(Exception e)
 			{
 //				Toast.makeText(this, "There is no Connection", Toast.LENGTH_LONG).show();
 			}
+			
+			if(response==null)
+				return null;
+			publishProgress(5);
 			Log.i("Status code",""+response.getStatusLine().getStatusCode());
 			Log.i("Reason phrase",""+response.getStatusLine().getReasonPhrase());
 			entity = response.getEntity();
 			is = entity.getContent();
-
 			reader = new BufferedReader(new InputStreamReader(is,"UTF-8" ), 8);
 			sb = new StringBuilder();
-
+			
 			String line = null;
 			while ((line = reader.readLine()) != null)
 				sb.append(line + "\n");
-
+			
 			result = sb.toString();
 			jObject = new JSONObject(result);
 
@@ -96,19 +130,33 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
+		}
+		
+		
 		return jObject;
 		
 	}
 	
 	@Override
 	protected void onPostExecute(JSONObject result) {
-//		super.onPostExecute(result);
+		super.onPostExecute(result);
+		
+		Log.i("in postExec","dismissing now");
 		 diag.dismiss();
-         if (result != null) {
+		 if(!checkConnection)
+		 {
+			 Toast.makeText(con, "No Connection", Toast.LENGTH_LONG).show();		 
+			 Log.i("in postExec","no connection");
+		 }
+		 else
+		 {
+			 if (result != null) {
+				 Log.i("in postExec","got data");
              Toast.makeText(con, "Result retrived", Toast.LENGTH_LONG).show();
-         } else {
+			 } else {
+				 Log.i("in postExec","server down");
              Toast.makeText(con, "Server down", Toast.LENGTH_LONG).show();
-         }
+			 }
+		 }
 	}
 }
