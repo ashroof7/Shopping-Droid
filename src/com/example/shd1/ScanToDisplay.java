@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import Jasonparsing.ItemData;
 import Jasonparsing.JsonParser;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -26,8 +27,6 @@ import android.widget.Toast;
 public class ScanToDisplay extends Activity {
 
 	@SuppressLint("NewApi")
-	
-	
 	private ItemData scaned_item;
 	private Product p;
 	private String store_id;
@@ -35,186 +34,180 @@ public class ScanToDisplay extends Activity {
 	private double latitude;
 	private String barcode;
 	private DBDispatcher d;
-	private JSONObject jOb ;
+	private JSONObject jOb;
 	private JsonParser jp;
 	public static ArrayList<ItemData> data;
-	
+	private double curLat, curLng;
+
 	TextView txt;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan_to_display);
 		setupActionBar();
-				
-		d = new DBDispatcher(this);
-		
-		jp = new JsonParser();
-				Intent intent = getIntent();
-				barcode = intent.getStringExtra(MainActivity.BarCode);
-				txt =  (TextView) findViewById(R.id.textView_res);
-				txt.setText("Product Barcode: "+barcode);
-				Log.i("in scann ", "in scann");
 
-				Query(barcode);
+		MainActivity.location.updateLocation();
+		Location loc = MainActivity.location.getLastLocation();
+		curLat = loc.getLatitude();
+		curLng = loc.getLongitude();
+
+		d = new DBDispatcher(this);
+
+		jp = new JsonParser();
+		Intent intent = getIntent();
+		barcode = intent.getStringExtra(MainActivity.BarCode);
+		txt = (TextView) findViewById(R.id.textView_res);
+		txt.setText("Product Barcode: " + barcode);
+		Query(barcode);
 	}
 
-	private void Query(String product_barcode){
-		Log.i("in scann ", "in Query");
-
+	private void Query(String product_barcode) {
 		ArrayList<ItemData> stores;
 		ItemData store = null;
-	
-//		// TODO get location
-		double range = 2;
+
+		double range = 0.2;// distance range raduis
 		try {
-			latitude = 20.463399887085;
-			longitude = 32.423000335693;
-			jOb = d.storesInRange(latitude,longitude ,range);
-			try {
-				Log.i(" json ret ", jOb.toString(4));
-			} catch (JSONException e) {
-				e.printStackTrace();
+			jOb = d.storesInRange(curLat, curLng, range);
+			if (jOb == null) {
+				finish();
+				return;
 			}
 			stores = jp.parse(jOb);
-			int sz = stores.size() ;
-			Log.i("in scann ", "after stores");
+			int sz = stores.size();
 
-			if(sz == 1)
-			{
+			if (sz == 1) {
 				store = stores.get(0);
-				store_id = stores.get(0).getValue(getResources().getString(R.string.DB_store_id));
-				Log.i("in scann ", "size = 1");
+				store_id = stores.get(0).getValue(
+						getResources().getString(R.string.DB_store_id));
 
-			}
-			else if(sz > 1)
-			{
-				//TODO init activity and let user select his store from the provided list;
+			} else if (sz > 1) {
+				// TODO init activity and let user select his store from the
+				// provided list;
 				// set the store_id
-			}
-			else
-			{
+				sz = stores.size();
+				store = getNearestStore(stores);
+				store_id = store.getValue("store_id");
+			} else {
 				jOb = d.stores();
-				data = jp.parse(jOb);
+				if (jOb == null) {
+					finish();
+					return;
+				}
+				stores = jp.parse(jOb);
+				store = getNearestStore(stores);
+				store_id = store.getValue("store_id");
 				// TODO init activity and let user select a store
-				// set the store_id;
-				Log.i("in scann ", "not handled yet");
-
 			}
-			
+
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		} catch (ExecutionException e1) {
 			e1.printStackTrace();
 		}
-		
-		
-		Log.i("in scann ", "after job");
 
-		
+
 		try {
 			barcode = product_barcode;
-			
-			store_id = store.getValue(this.getResources().getString(R.string.DB_store_id));
-			
-			jOb = d.product(product_barcode,Integer.parseInt(store_id));
+			jOb = d.product(product_barcode, Integer.parseInt(store_id));
+			if (jOb == null) {
+				finish();
+				return;
+			}
 			data = jp.parse(jOb);
-
+			if (data.size() == 0) {
+				Toast.makeText(this, "product not found", Toast.LENGTH_LONG)
+						.show();
+				finish();
+				return;
+			}
 			scaned_item = data.get(0);
-//------------------------ Assuming ItemData is retrieved --------------------------------------------------
-			Log.i("in scann ", "creating product");
+// ------------------------ Assuming ItemData is retrieved ---------------------
 
 			// display the returned item;
 
-			txt.setText("Product Barcode: "+product_barcode+" Price "+scaned_item.getValue(getResources().getString(
-			R.string.DB_product_price)));
-			
+			txt.setText("Product Barcode\n"
+					+ product_barcode
+					+ "\nPrice "
+					+ scaned_item.getValue(getResources().getString(
+							R.string.DB_product_price)));
+
 			p = new Product(product_barcode,
-					scaned_item.getValue(getResources().getString(
-							R.string.DB_product_name)),
-					scaned_item.getValue("product_type"),					
-					Integer.parseInt(store_id),
-					store.getValue(getResources().getString(R.string.DB_store_name))
-					);
-			
+					scaned_item.getValue("product_name"),
+					scaned_item.getValue("product_type"),
+					Integer.parseInt(store_id), store.getValue(getResources()
+							.getString(R.string.DB_store_name)));
+
 			MainActivity.db.addHistory(p);
 			List<Product> s = MainActivity.db.retreive();
 
-			Log.i("in scann ", "will print history");
+			// ----------------------------------------------------------------------------------------------------------
 
-			for (Product cn : s) {
-				String log = "Id: " + cn.getBar_code() + " ,Name: " + cn.getName()
-						+ "type name "
-						+ cn.getType_name()+" store "+cn.getStore_name()+" store addr "
-						+" STORE ID "+cn.getStore_id();
-				System.out.println("History Retrieved !!!!!!!!!-->" + log);
-				// Writing Contacts to log
-				Log.d("Name: ", log);
-			}
-//----------------------------------------------------------------------------------------------------------			
-						 						
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
+	public ItemData getNearestStore(ArrayList<ItemData> stores) {
+		double nearestDis = Double.MAX_VALUE;
+		double deltaLat, deltaLng, delta;
+		int index = 0;
+		int i = 0;
+		for (ItemData st : stores) {
+			deltaLat = curLat - Double.parseDouble(st.getValue("latitude"));
+			deltaLng = curLng - Double.parseDouble(st.getValue("longitude"));
+			delta = Math.sqrt(deltaLat * deltaLat + deltaLng * deltaLng);
+			if (delta < nearestDis) {
+				nearestDis = delta;
+				index = i;
+			}
+			i++;
+		}
+		return stores.get(index);
+	}
+
 	public void add_to_favorites(View view) {
-		//insert the tuple in offline DB
+		// insert the tuple in offline DB
 		MainActivity.db.addFavourites(p);
-		Toast.makeText(this, "Product added to favorites", Toast.LENGTH_LONG).show();
-		Log.d("in add favo", "favoraite added");
-	
+		Toast.makeText(this, "Product added to favorites", Toast.LENGTH_LONG)
+				.show();
+
 	}
 
 	public void otherStores(View view) {
-		//query other stores with the same product
+		// query other stores with the same product
 		try {
 			jOb = d.productGlobal(barcode);
-			if(jOb==null)
-			return;
-			try {
-				Log.i("other stores", jOb.toString(4));
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+			if (jOb == null)
+				return;
 			data = jp.parse(jOb);
-			Log.i("other stores", data.toString());
-	
-			Intent intent = new Intent(this, ListActivity.class);
-			intent.putParcelableArrayListExtra("data", data);
-			startActivity(intent);		
-			
+			Intent intent = new Intent(this, DisplayList.class);
+			startActivity(intent);
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	public void globalRecommender(View view) {
-		//query stores with products of the same type
-		
+		// query stores with products of the same type
+
 		double diff_amount = 20;
-		
-		
+
 		try {
-			jOb = d.productRangeGlobal(barcode, Integer.parseInt(store_id), diff_amount);
-			if(jOb==null)
-			return;
-			try {
-				Log.i("global recommender", jOb.toString(4));
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+			jOb = d.productRangeGlobal(barcode, Integer.parseInt(store_id),
+					diff_amount);
+			if (jOb == null)
+				return;
 			data = jp.parse(jOb);
-			Log.d("global recommender ", data.toString());
-			Intent intent = new Intent(this, ListActivity.class);
-			intent.putParcelableArrayListExtra("data", data);
-			startActivity(intent);		
+			Intent intent = new Intent(this, DisplayList.class);
+			startActivity(intent);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -222,30 +215,23 @@ public class ScanToDisplay extends Activity {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
 	public void similarProductsInStore(View view) {
-		//query products of the same type in store
+		// query products of the same type in store
 		double diff_amount = 20;
-		
-		
+
 		try {
-			jOb = d.productRange(barcode, Integer.parseInt(store_id), diff_amount);
-			if(jOb==null)
-			return;
-			try {
-				Log.i("similar products", jOb.toString(4));
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			
+			jOb = d.productRange(barcode, Integer.parseInt(store_id),
+					diff_amount);
+			if (jOb == null)
+				return;
+
 			data = jp.parse(jOb);
-			Log.d("similar prod", data.toString());
-			Intent intent = new Intent(this, ListActivity.class);
-			intent.putParcelableArrayListExtra("data", data);
-			startActivity(intent);		
-		
+			Intent intent = new Intent(this, DisplayList.class);
+			startActivity(intent);
+
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -254,14 +240,13 @@ public class ScanToDisplay extends Activity {
 			e.printStackTrace();
 		}
 
-		
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.scan_to_display, menu);
-		
+
 		return true;
 	}
 

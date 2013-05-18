@@ -21,14 +21,11 @@ public class HistoryActivity extends Activity {
 		ListView listView = (ListView) findViewById(R.id.history_list);
 		ArrayList<ItemData> data = new ArrayList<ItemData>();
 		
-		System.out.println("db in history " + MainActivity.db);
 		List<Product> history = MainActivity.db.retreive();
-		Log.wtf("history", "history_list = "+history.size());
 		 
 		Iterator<Product> it = history.iterator();
 		Product p;
 		BitSet isFav = new BitSet(history.size());
-		System.out.println(isFav);
 		TreeSet<String> favInHis = MainActivity.db.favoritesInHistory();
 		
 		int i =0 ;
@@ -46,7 +43,6 @@ public class HistoryActivity extends Activity {
 		}
 
 		adapter = new ListAdapter(this, data, isFav);
-		System.out.println(adapter);
 		listView.setAdapter(adapter);
 
 	}
@@ -71,15 +67,15 @@ public class HistoryActivity extends Activity {
 		super.onDestroy();
 		// reflect changed products in Database
 		TreeSet<String> changed = adapter.getRemovedItems();
-		Log.wtf("list", "barcodes.size = "+changed.size());
 		Iterator<String> it = changed.iterator();
-		System.out.println(adapter.isFavorite);
 		while (it.hasNext()){
 			String p = it.next();
-			System.out.println(p);
 			MainActivity.db.deleteFavourite(p);
 		}
+		
 
-	}
+		}
+
+	
 
 }

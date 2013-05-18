@@ -52,26 +52,34 @@ public class ItemData implements Parcelable {
 			return hm.get("product_name");
 		else if (hm.containsKey("store_name"))
 			return hm.get("store_name");
-
 		throw new IllegalStateException("no title found");
 
 	}
 
 	public String getSubText() {
+		String out;
+
+		out = "";
 		if (hm.containsKey("product_name"))
 			if (hm.containsKey("product_type"))
-				return hm.get("product_type");
+				out = hm.get("product_type");
 			else
 				// TODO check server product range queries
-				return "";
-		else if (hm.containsKey("store_name"))
-			if (hm.containsKey("store_address"))
-				return hm.get("store_address");
-			else
-				// TODO check server product range queries
-				return "";
+				out = "";
+		if (hm.containsKey("store_name")) {
 
-		throw new IllegalStateException("no sub-text found");
+			// if (hm.containsKey("store_address"))
+			// return hm.get("store_address");
+			// else
+			// TODO check server product range queries
+			if (out.equals(""))
+				return hm.get("store_name");
+			else
+				return hm.get("store_name") + " - " + out;
+		}
+		return out;
+
+		// throw new IllegalStateException("no sub-text found");
 
 	}
 
@@ -79,8 +87,8 @@ public class ItemData implements Parcelable {
 		String out = "";
 		if (hm.containsKey("product_name") && hm.containsKey("product_price")) {
 			out = hm.get("product_price");
-			if (hm.containsKey("store_name"))
-				out = hm.get("store_name") + " - " + out;
+			// if (hm.containsKey("store_name"))
+			// out = hm.get("store_name") + " - " + out;
 			return out;
 		} else if (hm.containsKey("store_name"))
 			return "";
@@ -112,16 +120,15 @@ public class ItemData implements Parcelable {
 
 	}
 
-	
 	public static Creator<ItemData> CREATOR = new Creator<ItemData>() {
 		public ItemData createFromParcel(Parcel parcel) {
-            return new ItemData(parcel);
-        }
+			return new ItemData(parcel);
+		}
 
 		@Override
 		public ItemData[] newArray(int arg0) {
-			return new ItemData [arg0];
+			return new ItemData[arg0];
 		}
 
-    };
+	};
 }

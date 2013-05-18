@@ -72,13 +72,12 @@ public class ListAdapter extends BaseAdapter {
         box.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				System.out.println(isChecked);
+				if (barcode == null )
+					return;
 				if (isChecked ){
 					removedItems.remove(barcode);
-					Log.wtf("adapter", "barcodes.size"+removedItems.size());
 				}else {
 					removedItems.add(barcode);
-					Log.wtf("adapter", "barcodes.size"+removedItems.size());
 				}
 			}
 		});

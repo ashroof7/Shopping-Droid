@@ -19,10 +19,14 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		db = new Database(this, "The Offline Database");
+		db = new Database(this, "The Offline Database1");
         location = new LocationMan(this);
         location.updateLocation();
 	}
+	
+	
+	
+
 	
 	public void launchFavorites(View view){
 		intent  = new Intent(this, FavoriteActivity.class);
@@ -40,15 +44,15 @@ public class MainActivity extends Activity {
 	}
 	
 	public void launchScanner(View view){
-	    intent = new Intent(this, ScanToDisplay.class);
-	    // TODO activate scan by comment the following 2 lines and uncommenting the 4 lines below them
-        intent.putExtra(BarCode, "1");
-    	startActivity(intent);
+//	    intent = new Intent(this, ScanToDisplay.class);
+//	     TODO activate scan by comment the following 2 lines and uncommenting the 4 lines below them
+//        intent.putExtra(BarCode, "1");
+//    	startActivity(intent);
     	
-//      Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-//      intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
-//  	Log.i("xZing", "Start Scan");
-//      startActivityForResult(intent, 0);
+      Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+      intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
+  	  Log.i("xZing", "Start Scan");
+      startActivityForResult(intent, 0);
 	}
 	
 	
@@ -61,8 +65,6 @@ public class MainActivity extends Activity {
 	            {
 	            	Log.i("xZing", "Scan Successful");
 	                String contents = intent.getStringExtra("SCAN_RESULT");
-	                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-	             //   Log.i("xZing", "contents: "+contents+" format: "+format);
 	                Intent intent2 = new Intent(this, ScanToDisplay.class);
 	                intent2.putExtra(BarCode, contents);
 	            	startActivity(intent2);

@@ -39,7 +39,6 @@ public class OfflineDBTestActivity extends Activity {
 			String log = "Id: " + cn.getBar_code() + " ,Name: " + cn.getName()
 					+  ",type name "
 					+ cn.getType_name()+" storen "+cn.getStore_name()+" SOREID "+cn.getStore_id();
-			System.out.println("//////////////" + log);
 			// Writing Contacts to log
 			Log.d("Name: ", log);
 		}
@@ -49,7 +48,6 @@ public class OfflineDBTestActivity extends Activity {
 			String log = "Id: " + cn.getBar_code() + " ,Name: " + cn.getName()
 					+  ",type name "
 					+ cn.getType_name()+" storen "+cn.getStore_name()+" SOREID "+cn.getStore_id();
-			System.out.println("//////////////" + log);
 			// Writing Contacts to log
 			Log.d("Name: ", log);
 		}

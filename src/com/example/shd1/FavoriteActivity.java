@@ -22,13 +22,11 @@ public class FavoriteActivity extends Activity {
 		ArrayList<ItemData> data = new ArrayList<ItemData>();
 
 		List<Product> favs = MainActivity.db.retreiveFavourites();
-		System.out.println("favourite  = " + favs.size());
 		Iterator<Product> it = favs.iterator();
 		Product p;
 		BitSet isFav = new BitSet(favs.size());
 		
 		isFav.set(0, favs.size());
-		System.out.println(isFav);
 		
 		while (it.hasNext()) {
 			p = it.next();
@@ -41,7 +39,6 @@ public class FavoriteActivity extends Activity {
 		}
 
 		adapter = new ListAdapter(this, data, isFav);
-		System.out.println(listView);
 		listView.setAdapter(adapter);
 
 	}
@@ -68,12 +65,9 @@ public class FavoriteActivity extends Activity {
 		super.onDestroy();
 		// reflect changed products in Database
 		TreeSet<String> changed = adapter.getRemovedItems();
-		Log.wtf("list", "barcodes.size = "+changed.size());
 		Iterator<String> it = changed.iterator();
-		System.out.println(adapter.isFavorite);
 		while (it.hasNext()){
 			String p = it.next();
-			System.out.println(p);
 			MainActivity.db.deleteFavourite(p);
 		}
 

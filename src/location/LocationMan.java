@@ -20,9 +20,6 @@ public class LocationMan {
 		lr = new LocationResult(){
     	    @Override
     	    public void gotLocation(Location location){
-    	    	System.out.println(location.getLatitude());
-    			System.out.println(location.getLongitude());
-    			System.out.println("-------------");
     	    	lastLocation = location;
     	    }
     	};	

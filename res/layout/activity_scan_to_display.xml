@@ -49,9 +49,9 @@
             android:id="@+id/recommend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
             android:drawableLeft="@drawable/rec"
             android:gravity="center"
+            android:textSize="30sp"
             android:text="Recommendations"
             android:textColor="#006600" />
     </TableRow>

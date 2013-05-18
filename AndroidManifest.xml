@@ -24,27 +24,24 @@
 
         <activity
             android:name="com.example.shd1.MainActivity"
-            android:theme="@android:style/Theme.NoTitleBar" 
-            >
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="com.example.shd1.MainActivity_test"
             android:label="@string/app_name" >
         </activity>
-        
         <activity
             android:name="com.example.shd1.TestMapsActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.example.shd1.MapsActivity"
-            android:label="@string/app_name" >
+            android:label="Stores Map" >
         </activity>
         <activity
             android:name="com.example.shd1.DB_test"
@@ -79,17 +76,18 @@
             android:name="com.example.shd1.HistoryActivity"
             android:label="@string/UI_history" >
         </activity>
-
         <activity
             android:name="com.example.shd1.DisplayLists"
             android:label="products" >
         </activity>
-
         <activity
             android:name="com.example.shd1.ScanToDisplay"
             android:label="@string/title_activity_scan_to_display" >
         </activity>
-        
+        <activity
+            android:name="com.example.shd1.DisplayList"
+            android:label="Recommendation" >
+        </activity>
     </application>
 
 </manifest>

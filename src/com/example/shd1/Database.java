@@ -26,7 +26,7 @@ public class Database extends SQLiteOpenHelper {
 	//  Columns names
 	private static final String bar_code = "bar_code";
 	private static final String h_id = "h_id";
-	private static final String name = "name";
+	private static final String name = "product_name";
 	private static final String type_name = "type_name";
 	private static final String store = "store";
 	private static final String store_id = "store_id";
@@ -106,7 +106,6 @@ public class Database extends SQLiteOpenHelper {
 			values = new ContentValues();
 			values.put(store_id, product.getStore_id());
 			values.put(store_name, product.getStore_name());
-			
 
 			// Inserting Row
 			db.insert(table_stores, null, values);
@@ -115,6 +114,7 @@ public class Database extends SQLiteOpenHelper {
 
 		values = new ContentValues();
 		values.put(bar_code, product.getBar_code()); // barcode
+		Log.i("In DB",product.getName());
 		values.put(name, product.getName()); // name
 		values.put(type_name, product.getType_name());
 		values.put(store, product.getStore_id());
@@ -157,7 +157,10 @@ public class Database extends SQLiteOpenHelper {
 			do {
 				Product p = new Product();
 				p.setBar_code(cursor.getString(1));
-				p.setName(cursor.getString(2));
+				String nameP =  cursor.getString(2);
+				
+				p.setName(nameP);
+				Log.i("name In DB ",nameP);
 				p.setType_name(cursor.getString(3));
 				p.setStore_id(Integer.parseInt(cursor.getString(4)));
 				p.setStore_name(cursor.getString(5));

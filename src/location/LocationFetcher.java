@@ -29,10 +29,8 @@ public class LocationFetcher {
 				.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
 		// don't start listeners if no provider is enabled
-		if (!gps_enabled && !network_enabled){
-			System.out.println("mafeech loacation :'(");
+		if (!gps_enabled && !network_enabled)
 			return false;
-		}
 		if (gps_enabled)
 			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 					locationListenerGps);

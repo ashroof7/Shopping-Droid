@@ -20,25 +20,8 @@ public class ListActivity extends Activity {
 	ArrayList<ItemData> data ;
 	private void initList() {
 		ListView listView = (ListView) findViewById(R.id.main_list_view);
-		data = new ArrayList<ItemData>();
+		BitSet isFav = new BitSet(data.size());
 		
-		List<Product> list = MainActivity.db.retreive();
-		Iterator<Product> it = list.iterator();
-		Product p;
-		BitSet isFav = new BitSet(list.size());
-		
-		while (it.hasNext()) {
-			p = it.next();
-			ItemData d = new ItemData();
-			d.put("barcode", p.getBar_code());
-			d.put("store_name", p.getStore_name());
-			d.put("product_name", p.getName());
-			d.put("product_type", p.getType_name());
-			d.put("product_price", "");
-			data.add(d);
-		}
-
-		System.out.println("al3ab baleh");
 		adapter = new ListAdapter(this, data, isFav);
 		listView.setAdapter(adapter);
 
@@ -58,12 +41,11 @@ public class ListActivity extends Activity {
 		super.onDestroy();
 		// reflect changed products in Database
 		TreeSet<String> changed = adapter.getRemovedItems();
-		Log.wtf("list", "barcodes.size = "+changed.size());
 		Iterator<String> it = changed.iterator();
-		System.out.println(adapter.isFavorite);
 		while (it.hasNext()){
 			String p = it.next();
-			System.out.println(p);
+			if (p == null ) // in case the list is not used for favourite or history 
+				continue;
 			MainActivity.db.deleteFavourite(p);
 		}
 
