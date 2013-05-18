@@ -20,7 +20,7 @@ public class getStores {
 	ArrayList<ItemData> data;
 	int i,sz ;
 	int trial = 0;
-	public float lng = 39.909330368042F, lat = 31.208690643311F;
+	public float lng = 32.423000335693F, lat = 20.463399887085F;
 	
 	ItemData curr;
 	public getStores(Context c) {
@@ -31,33 +31,33 @@ public class getStores {
 		System.out.println(lng+" "+lat);
 		con = c;
 		Log.i("getStores", "new getStores");
-//		DBDispatcher d = new DBDispatcher(c);
-//		JsonParser jp = new JsonParser();
-//		try {
-//			Log.i("getStores", "Before stores locations");
-//			JSONObject ob = d.storesLocations();
-//			Log.i("getStores", "After stores locations");
-//
-//			data = jp.parse(ob);
-//			i = 0;
-//			sz = data.size();
-//			Log.i("getStores", "After JSON");
-//
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		} catch (ExecutionException e) {
-//			e.printStackTrace();
-//		}
+		DBDispatcher d = new DBDispatcher(c);
+		JsonParser jp = new JsonParser();
+		try {
+			Log.i("getStores", "Before stores locations");
+			JSONObject ob = d.storesLocations();
+			Log.i("getStores", "After stores locations");
+
+			data = jp.parse(ob);
+			i = 0;
+			sz = data.size();
+			Log.i("getStores", data.toString());
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 
 
 	}
-	
+	@JavascriptInterface	
 	public int getNumberOfStores()
 	{
-		Log.i("getStores", "Num Of Stores");
+		Log.i("getStores", "Num Of Stores "+sz);
 		return sz;
 	}
-	
+	@JavascriptInterface	
 	public int inc() {
 		curr = data.get(i++);
 		Log.i("getStores", "inc");
@@ -65,19 +65,26 @@ public class getStores {
 		lng = (float) (lng-0.09);
 		return 0;
 	}
+	@JavascriptInterface	
 	public String getNextStoreName()
 	{
-		return curr.getValue(con.getResources().getString(R.string.DB_store_name));
+		String s = curr.getValue(con.getResources().getString(R.string.DB_store_name));
+		Log.i("getStores", "returning Name "+s);
+		return s;
 	}
-	
+	@JavascriptInterface	
 	public float getNextStoreLng()
 	{
-		return Float.parseFloat(curr.getValue(con.getResources().getString(R.string.DB_store_longitude)));
+		float f1 = Float.parseFloat(curr.getValue(con.getResources().getString(R.string.DB_store_longitude)));
+		Log.i("getStores", "returning Lng "+f1);
+		return f1;
 	}
-	
+	@JavascriptInterface
 	public float getNextStoreLat()
 	{
-		return Float.parseFloat(curr.getValue(con.getResources().getString(R.string.DB_store_latitude)));
+		float f2 = Float.parseFloat(curr.getValue(con.getResources().getString(R.string.DB_store_latitude)));
+		Log.i("getStores", "returning Lat "+f2);
+		return f2;
 	}
 	
 	

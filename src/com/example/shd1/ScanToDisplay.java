@@ -172,6 +172,8 @@ public class ScanToDisplay extends Activity {
 		//query other stores with the same product
 		try {
 			jOb = d.productGlobal(barcode);
+			if(jOb==null)
+			return;
 			try {
 				Log.i("other stores", jOb.toString(4));
 			} catch (JSONException e) {
@@ -201,6 +203,8 @@ public class ScanToDisplay extends Activity {
 		
 		try {
 			jOb = d.productRangeGlobal(barcode, Integer.parseInt(store_id), diff_amount);
+			if(jOb==null)
+			return;
 			try {
 				Log.i("global recommender", jOb.toString(4));
 			} catch (JSONException e) {
@@ -228,6 +232,8 @@ public class ScanToDisplay extends Activity {
 		
 		try {
 			jOb = d.productRange(barcode, Integer.parseInt(store_id), diff_amount);
+			if(jOb==null)
+			return;
 			try {
 				Log.i("similar products", jOb.toString(4));
 			} catch (JSONException e) {
