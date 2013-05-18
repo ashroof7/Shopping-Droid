@@ -72,7 +72,7 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a

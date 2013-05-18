@@ -24,7 +24,7 @@ import android.content.Context;
 import android.widget.TextView;
 import com.google.zxing.client.android.HttpHelper;
 import com.google.zxing.client.android.LocaleManager;
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

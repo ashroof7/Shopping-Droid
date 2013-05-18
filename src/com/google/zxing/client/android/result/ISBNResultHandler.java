@@ -17,7 +17,7 @@
 package com.google.zxing.client.android.result;
 
 import com.google.zxing.Result;
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import com.google.zxing.client.result.ISBNParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 

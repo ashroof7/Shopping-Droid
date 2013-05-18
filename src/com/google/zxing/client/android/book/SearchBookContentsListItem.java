@@ -16,7 +16,7 @@
 
 package com.google.zxing.client.android.book;
 
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.Spannable;

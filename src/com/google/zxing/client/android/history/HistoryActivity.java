@@ -34,7 +34,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.google.zxing.client.android.CaptureActivity;
 import com.google.zxing.client.android.Intents;
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import java.util.List;
 
 public final class HistoryActivity extends ListActivity {

@@ -23,7 +23,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.FinishListener;
 import com.google.zxing.client.android.Intents;
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;

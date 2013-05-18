@@ -20,7 +20,7 @@ import android.provider.ContactsContract;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.Intents;
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;

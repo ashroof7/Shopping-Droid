@@ -32,7 +32,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import java.util.Collection;
 
 /**

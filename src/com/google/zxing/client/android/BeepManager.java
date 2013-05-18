@@ -28,7 +28,7 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 
 /**
  * Manages beeps and vibrations for {@link CaptureActivity}.

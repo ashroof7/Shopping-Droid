@@ -25,7 +25,7 @@ import android.preference.PreferenceScreen;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 /**
  * The main settings activity.
  *

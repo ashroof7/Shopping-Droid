@@ -16,7 +16,7 @@
 
 package com.google.zxing.client.android.share;
 
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;

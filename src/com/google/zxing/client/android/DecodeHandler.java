@@ -31,7 +31,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import com.example.shd1.R;
+import com.shoppingDriod.main.R;
 import java.util.Map;
 
 final class DecodeHandler extends Handler {
