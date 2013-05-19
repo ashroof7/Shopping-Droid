@@ -63,6 +63,6 @@ Tasks
 
 ### UI ###
 + all team worked on UI 
-iconset refer links are to be added soon (some icons may change)
-all icons and pictures and icons used are opensource.
++ iconset refer links are to be added soon (some icons may change)
++ all icons and pictures and icons used are opensource.
 
