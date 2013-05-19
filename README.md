@@ -1,27 +1,27 @@
-Shopping-Droid
+Shopping-Droid 1.0
 ==============
 
 Database integrated, and barcode reader android app that provides location based information about scanned item
 
+This project is under GNU3 Lisence 
 
-Initial Design
-===============
 
+Feature List
+============
 ### Barcode scanner ###
 + Use android phone to scan a product's barcode to use it in finding information about this product.
-+ Using equality search to get the item with the primary key = barcode
 	           
-### Recommendation of similar products ###
-+ Query same category and delta price < threshold
-	(delta price = scanned item price - item[i] in same category (same price range) )
-+ Range search (where category = product.category AND delta price <= threshold)
+### Web Interface ### 
++ query the server from web browser using different ending URL
 
-### Item catalogue viewer ###
-+ View all items on some conditions
-+ Items of same category (neat display of local store database range search on this category of items)
-           
+### Recommendation of similar products ###
++ same product in other stores
++ similar products (same type, near price) in same store
++ similat products in all stores
+
+          
 ### History of scanned items ###
-+ Saving the current store -using GPS location-
++ Saving the current store 
 + Also saving information ( product bought, its price, ... etc)
 + Keep the last 20 scanned items for example
 
@@ -31,36 +31,39 @@ Initial Design
 + Also can be FK on that entry in the main DB.
 
 ### Store location finder ###
-+ Search your saved favourite list for the closest store that sells a certain product, or the store that sold you this product the cheapest,.. etc. 
-+ Using GPS to locate your position, and using Google Maps to show you location of the saved stores.
++ Search your saved favorite list for the closest store that sells a certain product, or the store that sold you this product the cheapest,.. etc. + Using GPS to locate your position, and using Google Maps to show you location of the saved stores.
+ + current store is determined by current user location, if the user was not in a store the nearest store is considered the current store
 
 ### Application interface ###
-+ User friendly interface.
++ User friendly interface. posting screenshots soon.
 
 
-Tasks
-======
+Module List
+============
 
-### Nada - Nessma - Nourhan 
+### server side ###
++ RESTfull API [link](https://en.wikipedia.org/wiki/Representational_state_transfer)
+	++ MySQL Database  (you can find the database desing in a separate file beside this file) 
+	++ PHP interface to route queries, Only supported requests are GET requests. Response in JSON format 
+	++ different ending URLs
 
-#### 1. Map API ####
-+ display a map (just a proto type)
-+ show markers of locations on the map
+### Client Side ###
+	+ Device sends a GET request to the server using HTTP
+ 	+ Server replies with JSON object
+    + JSON object is parsed and a list of stores or products is retrieved and displayed to the user. 
 
-#### 2.BarCode Scanner ####
-+ display a screen that capture a barcode -prototype
-+ translate image to barcode (use a library)
+### Barcode Scanner ### 
++ Integrated with zXing (zebra crossing) [link](http://code.google.com/p/zxing/)
+  Open source library which has Apache 2.0 license to scan barcodes of products, which can be used to retrieve any necessary information about the product from the Database.
 
-#### 3. Offline on device DB ####
-+ Create SQLite DB on device
-+ Favoutite and history handelling (insert, retrieve)
+### Stores Map ### 
++ Google Maps Javascript API v3 [link](https://developers.google.com/maps/documentation/javascript/)
+	used for displaying all stores on the map so that the user may find nearby stores to his current location.
 
-### Ashraf - Hazem ###
+### On device database ###
++ SQLite database 
+	used to store scannig history (auto cleaning list of the last 20 items scanned)
+	also used to save a favorite list 
 
-#### 4. GPS ####
-+ return current location
-+ location tolerance calculation (is in store ?)
-
-#### 5. Online DB MYSQL ####
-+ create a new online DB 
-+ connect to online DB from device
+### Location Manager ###
++ Getting current user location based on GPS. switching to network provided locaiton if GPS is not available

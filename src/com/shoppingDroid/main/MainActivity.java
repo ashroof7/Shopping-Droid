@@ -25,11 +25,7 @@ public class MainActivity extends Activity {
         location = new LocationMan(this);
         location.updateLocation();
 	}
-	
-	
-	
-
-	
+		
 	public void launchFavorites(View view){
 		intent  = new Intent(this, FavoriteActivity.class);
     	startActivity(intent);
