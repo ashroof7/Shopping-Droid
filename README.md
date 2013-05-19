@@ -18,7 +18,7 @@ Feature List
 ### Recommendation of similar products ###
 > + same product in other stores
 > + similar products (same type, near price) in same store
-> + similat products in all stores
+> + similar products in all stores
     
 ### History of scanned items ###
 > + Saving the current store 
@@ -31,8 +31,8 @@ Feature List
 > + Also can be FK on that entry in the main DB.
 
 ### Store location finder ###
-> + Search your saved favorite list for the closest store that sells a certain product, or the store that sold you this product the cheapest,.. etc. 
-+ Using GPS to locate your position, and using Google Maps to show you location of the saved stores.
+> + Search for nearby stores. 
++ Using GPS to locate your position, and using Google Maps to show you location of the stores.
 + current store is determined by current user location, if the user was not in a store the nearest store is considered the current store
 
 ### Application interface ###
