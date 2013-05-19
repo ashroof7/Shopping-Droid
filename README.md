@@ -18,8 +18,7 @@ Feature List
 + same product in other stores
 + similar products (same type, near price) in same store
 + similat products in all stores
-
-          
+    
 ### History of scanned items ###
 + Saving the current store 
 + Also saving information ( product bought, its price, ... etc)
@@ -43,7 +42,7 @@ Module List
 
 ### server side ###
 + RESTfull API [link](https://en.wikipedia.org/wiki/Representational_state_transfer)
-	++ MySQL Database  (you can find the database desing in a separate file beside this file) 
+	++ MySQL Database  [DB design](online_DB_design.txt) 
 	++ PHP interface to route queries, Only supported requests are GET requests. Response in JSON format 
 	++ different ending URLs
 
