@@ -19,10 +19,10 @@ public class DataFetcher {
 	private JSONObject jOb;
 	private JsonParser jp;
 	private ItemData scannedItem;
-	public static ArrayList<ItemData> data;
+	private  ArrayList<ItemData> data;
 	private double curLat, curLng;
-	ItemData store = null;
-	Context context;
+	private ItemData store = null;
+	private Context context;
 
 	public DataFetcher(Context context, double lat, double lng,
 			String productBarcode) {
@@ -32,7 +32,6 @@ public class DataFetcher {
 		barcode = productBarcode;
 		d = new DBDispatcher(context);
 		jp = new JsonParser();
-
 	}
 
 	public boolean locateStore() {
@@ -70,7 +69,7 @@ public class DataFetcher {
 				store_id = store.getValue("store_id");
 				// TODO init activity and let user select a store
 			}
-
+			return true ;
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		} catch (ExecutionException e1) {
@@ -98,9 +97,14 @@ public class DataFetcher {
 		return stores.get(index);
 	}
 
+	//TODO malhach lazma 5ales 
 	public ItemData getItem(){
 		return scannedItem;
 	}
+	
+	public ArrayList<ItemData> getData(){
+		return data;
+	} 
 	
 	public boolean here() {
 		try {
