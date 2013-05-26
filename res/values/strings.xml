@@ -173,10 +173,16 @@
     <string name="DB_return_product_range">store</string>
     <string name="DB_return_encoding">utf-8"</string>
 
-    <!-- UI out UI not the barcode scanner calsses -->
+    <!-- UI our UI not the barcode scanner calsses -->
     <string name="UI_favorites">Favorites</string>
     <string name="UI_history">History</string>
     <string name="title_activity_scan_to_display">What to do</string>
     <string name="title_activity_display_list">DisplayList</string>
+    <string name="title_activity_tabs">Actions</string>
+    
+    <string name="sec_sim_here">Similar here</string>
+    <string name="sec_current">Home</string>
+    <string name="sec_same_everyw">Same everywhere</string>
+    <string name="sec_sim_everyw">Similar everywhere</string>
 
 </resources>

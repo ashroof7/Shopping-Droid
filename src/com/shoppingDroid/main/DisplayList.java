@@ -15,7 +15,7 @@ public class DisplayList extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_list);
-		ListView listView = (ListView) findViewById(R.id.other_stores_list);
+		ListView listView = (ListView) findViewById(R.id.results_list);
 		
 		BitSet isFav = new BitSet(ScanToDisplay.data.size());
 		adapter = new ListAdapter(this, ScanToDisplay.data, isFav);

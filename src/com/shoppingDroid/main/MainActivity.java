@@ -6,6 +6,7 @@ import com.shoppingDroid.location.LocationMan;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.test.ActivityTestCase;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -42,15 +43,15 @@ public class MainActivity extends Activity {
 	}
 	
 	public void launchScanner(View view){
-//	    intent = new Intent(this, ScanToDisplay.class);
-//	     TODO activate scan by comment the following 2 lines and uncommenting the 4 lines below them
-//        intent.putExtra(BarCode, "1");
-//    	startActivity(intent);
-    	
-      Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-      intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
-  	  Log.i("xZing", "Start Scan");
-      startActivityForResult(intent, 0);
+		 // FIXME just a shortcut to jump to tabs activity
+		 Intent intent2 = new Intent(this, TabsActivity.class);
+        intent2.putExtra(BarCode, "1");
+    	 startActivity(intent2);
+	
+//      Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+//      intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
+//  	  Log.i("xZing", "Start Scan");
+//      startActivityForResult(intent, 0);
 	}
 	
 	
@@ -75,6 +76,7 @@ public class MainActivity extends Activity {
 	               // Log.i("xZing", "Cancelled");
 	            }
 	        }
+		 
 	    }
 	
 	 @Override
