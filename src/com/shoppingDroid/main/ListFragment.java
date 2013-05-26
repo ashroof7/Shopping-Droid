@@ -25,14 +25,18 @@ public class ListFragment extends Fragment{
 		this.data = data ;
 	}
 	
+	
+
+
+	
 	 @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	        // Inflate the layout for this fragment
-	        ListView listView = (ListView) this.getActivity().findViewById(R.id.list_tab_view);
+			 View v =  inflater.inflate(R.layout.activity_display_list, container, false);
+	        ListView listView = (ListView) v.findViewById(R.id.results_list);
 			BitSet isFav = new BitSet(data.size());
 			adapter = new ListAdapter(this.getActivity(), data, isFav);
 			listView.setAdapter(adapter);
-			
-			return inflater.inflate(R.layout.activity_display_list, container, false);
+			return v;
 	    }
 }

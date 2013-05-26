@@ -17,8 +17,8 @@ public class TabsActivity extends Activity {
 	public static Context appContext;
 	public static DataFetcher df;
 
-	private ListFragment curFrag, simHereFrag, sameEFrag, simEFrag ;
-	
+	private ListFragment curFrag, simHereFrag, sameEFrag, simEFrag;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,7 +60,7 @@ public class TabsActivity extends Activity {
 		simHereFrag = new ListFragment();
 		sameEFrag = new ListFragment();
 		simEFrag = new ListFragment();
-		
+
 		currentTab.setTabListener(new MyTabsListener(curFrag));
 		simHereTab.setTabListener(new MyTabsListener(simHereFrag));
 		sameETab.setTabListener(new MyTabsListener(sameEFrag));
@@ -91,40 +91,73 @@ public class TabsActivity extends Activity {
 					Toast.LENGTH_LONG).show();
 		}
 
-		@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-//		ft.replace(R.id.fragment_container, fragment);
-		//FIXME search for a better code style
-		switch (tab.getPosition()) {
-		case 0:
-			TabsActivity.df.here();
-			curFrag.setData(df.getData());
-			break;
-		case 1:
-			TabsActivity.df.similarHere();
-			simHereFrag.setData(df.getData());
-			break;
-		case 2:
-			TabsActivity.df.sameEverywhere();
-			sameEFrag.setData(df.getData());
-			break;
-		case 3:
-			TabsActivity.df.similarEverywhere();
-			simEFrag.setData(df.getData());
-			break;
-		default:
-			break;
-		}
-		
-		
+		boolean sectionFirst[] = { true, true, true, true };
 
-//		ft.replace(R.id.list_tab_view, fragment);
-		
-	}
+		@Override
+		public void onTabSelected(Tab tab, FragmentTransaction ft) {
+			// ft.replace(R.id.fragment_container, fragment);
+			// FIXME search for a better code style
+			switch (tab.getPosition()) {
+			case 0:
+				if (sectionFirst[0]) {
+					sectionFirst[0] = false;
+					TabsActivity.df.here();
+					curFrag.setData(df.getData());
+//					ft.add(R.id.list_tab_view, curFrag);
+				} else {
+//					ft.attach(curFrag);
+				}
+				break;
+			case 1:
+				if (sectionFirst[1]) {
+					sectionFirst[1] = false;
+
+					TabsActivity.df.similarHere();
+					simHereFrag.setData(df.getData());
+					System.out.println("data aaa  "+df.getData().size());
+					ft.add(R.id.frag_containter, simHereFrag);
+
+				} else {
+//					ft.attach(simHereFrag);
+				}
+				break;
+			case 2:
+				if (sectionFirst[2]) {
+					sectionFirst[2] = false;
+
+					TabsActivity.df.sameEverywhere();
+					sameEFrag.setData(df.getData());
+					ft.add(R.id.frag_containter, sameEFrag);
+
+				} else {
+//					ft.attach(sameEFrag);
+				}
+				break;
+			case 3:
+				if (sectionFirst[3]) {
+					sectionFirst[3] = false;
+
+					TabsActivity.df.similarEverywhere();
+					simEFrag.setData(df.getData());
+					ft.add(R.id.frag_containter, simEFrag);
+
+				} else {
+//					ft.attach(simEFrag);
+				}
+				break;
+			default:
+				break;
+			}
+
+			// com.R.id.list_tab_views;
+
+//			ft.replace(R.id.list_tab_view, fragment);
+
+		}
 
 		@Override
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-			ft.remove(fragment);
+
 		}
 
 	}
