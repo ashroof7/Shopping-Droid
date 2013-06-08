@@ -1,15 +1,22 @@
 package com.shoppingDroid.main;
 
+import java.util.ArrayList;
+
 import com.shoppingDriod.main.R;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class TabsActivity extends Activity {
@@ -18,6 +25,7 @@ public class TabsActivity extends Activity {
 	public static DataFetcher df;
 
 	private ListFragment curFrag, simHereFrag, sameEFrag, simEFrag;
+	MyTabsListener tabsListener;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,15 +64,12 @@ public class TabsActivity extends Activity {
 		ActionBar.Tab simETab = actionbar.newTab().setText(
 				R.string.sec_sim_everyw);
 
-		curFrag = new ListFragment();
-		simHereFrag = new ListFragment();
-		sameEFrag = new ListFragment();
-		simEFrag = new ListFragment();
+		tabsListener = new MyTabsListener();
 
-		currentTab.setTabListener(new MyTabsListener(curFrag));
-		simHereTab.setTabListener(new MyTabsListener(simHereFrag));
-		sameETab.setTabListener(new MyTabsListener(sameEFrag));
-		simETab.setTabListener(new MyTabsListener(simEFrag));
+		currentTab.setTabListener(tabsListener);
+		simHereTab.setTabListener(tabsListener);
+		sameETab.setTabListener(tabsListener);
+		simETab.setTabListener(tabsListener);
 
 		actionbar.addTab(currentTab);
 		actionbar.addTab(simHereTab);
@@ -75,23 +80,31 @@ public class TabsActivity extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+		outState.putInt("tab_index", getActionBar()
+				.getSelectedNavigationIndex());
 	}
 
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		getActionBar().setSelectedNavigationItem(
+				savedInstanceState.getInt("tab_index"));
+		
+	}
+	
+	
 	class MyTabsListener implements ActionBar.TabListener {
-		public Fragment fragment;
-
-		public MyTabsListener(Fragment fragment) {
-			this.fragment = fragment;
+		
+		public MyTabsListener() {
+			Log.wtf("TabL", "elbes dah bey3mel ob gedeed 3and el rotation");
 		}
-
+		
 		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
 			Toast.makeText(TabsActivity.appContext, "Reselected!",
 					Toast.LENGTH_LONG).show();
 		}
 
-		boolean sectionFirst[] = { true, true, true, true };
 
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -99,65 +112,83 @@ public class TabsActivity extends Activity {
 			// FIXME search for a better code style
 			switch (tab.getPosition()) {
 			case 0:
-				if (sectionFirst[0]) {
-					sectionFirst[0] = false;
+				if (curFrag == null) {
+					curFrag = new ListFragment();
 					TabsActivity.df.here();
 					curFrag.setData(df.getData());
-//					ft.add(R.id.list_tab_view, curFrag);
+					curFrag.setRetainInstance(true);
+					ft.add(R.id.frag_containter, curFrag);
 				} else {
-//					ft.attach(curFrag);
+					ft.attach(curFrag);
 				}
+				Log.wtf("cur", curFrag+"");
 				break;
 			case 1:
-				if (sectionFirst[1]) {
-					sectionFirst[1] = false;
-
+				if (simHereFrag == null) {
+					simHereFrag = new ListFragment();
 					TabsActivity.df.similarHere();
 					simHereFrag.setData(df.getData());
-					System.out.println("data aaa  "+df.getData().size());
+					simHereFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, simHereFrag);
-
-				} else {
-//					ft.attach(simHereFrag);
+			} else {
+					ft.attach(simHereFrag);
 				}
+				Log.wtf("sim", simHereFrag+"");
 				break;
 			case 2:
-				if (sectionFirst[2]) {
-					sectionFirst[2] = false;
-
+				if (sameEFrag == null) {
+					sameEFrag = new ListFragment();
 					TabsActivity.df.sameEverywhere();
 					sameEFrag.setData(df.getData());
+					sameEFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, sameEFrag);
 
 				} else {
-//					ft.attach(sameEFrag);
+					ft.attach(sameEFrag);
 				}
+				Log.wtf("same", sameEFrag+"");
 				break;
 			case 3:
-				if (sectionFirst[3]) {
-					sectionFirst[3] = false;
-
+				if (simEFrag == null) {
+					simEFrag = new ListFragment();
 					TabsActivity.df.similarEverywhere();
 					simEFrag.setData(df.getData());
+					simEFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, simEFrag);
 
 				} else {
-//					ft.attach(simEFrag);
+					ft.attach(simEFrag);
 				}
+				Log.wtf("simE", simEFrag+"");
 				break;
 			default:
 				break;
 			}
 
-			// com.R.id.list_tab_views;
-
-//			ft.replace(R.id.list_tab_view, fragment);
-
 		}
 
 		@Override
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-
+			switch (tab.getPosition()) {
+			case 0:
+				ft.detach(curFrag);
+				Log.wtf("cur","detach");
+				break;
+			case 1:
+				ft.detach(simHereFrag);
+				Log.wtf("sim","detach");
+				break;
+			case 2:
+				ft.detach(sameEFrag);
+				Log.wtf("same","detach");
+				break;
+			case 3:
+				ft.detach(simEFrag);
+				Log.wtf("simE","detach");
+				break;
+			default:
+				break;
+			}
 		}
 
 	}

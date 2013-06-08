@@ -26,13 +26,10 @@ public class ListFragment extends Fragment{
 	}
 	
 	
-
-
-	
 	 @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	        // Inflate the layout for this fragment
-			 View v =  inflater.inflate(R.layout.activity_display_list, container, false);
+		 	View v =  inflater.inflate(R.layout.activity_display_list, container, false);
 	        ListView listView = (ListView) v.findViewById(R.id.results_list);
 			BitSet isFav = new BitSet(data.size());
 			adapter = new ListAdapter(this.getActivity(), data, isFav);
