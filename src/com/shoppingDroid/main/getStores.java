@@ -10,9 +10,7 @@ import com.shoppingDroid.jsonParsing.ItemData;
 import com.shoppingDroid.jsonParsing.JsonParser;
 import com.shoppingDroid.onlineDB.DBDispatcher;
 
-
 import android.content.Context;
-import android.location.Location;
 import android.webkit.JavascriptInterface;
 
 public class getStores {
@@ -26,10 +24,6 @@ public class getStores {
 	ItemData curr;
 
 	public getStores(Context c) {
-		MainActivity.location.updateLocation();
-		Location current = MainActivity.location.getLastLocation();
-		lng = (float) current.getLongitude();
-		lat = (float) current.getLatitude();
 		con = c;
 		DBDispatcher d = new DBDispatcher(c);
 		JsonParser jp = new JsonParser();
@@ -54,14 +48,6 @@ public class getStores {
 	}
 
 	@JavascriptInterface
-	public int inc() {
-		curr = data.get(i++);
-		lat = (float) (lat + 0.09);
-		lng = (float) (lng - 0.09);
-		return 0;
-	}
-
-	@JavascriptInterface
 	public String getNextStoreName() {
 		String s = curr.getValue(con.getResources().getString(
 				R.string.DB_store_name));
@@ -82,14 +68,5 @@ public class getStores {
 		return f2;
 	}
 
-	@JavascriptInterface
-	public float getLatCenter() {
-		return lat;
-	}
-
-	@JavascriptInterface
-	public float getLngCenter() {
-		return lng;
-	}
 
 }

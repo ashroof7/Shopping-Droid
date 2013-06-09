@@ -1,22 +1,14 @@
 package com.shoppingDroid.main;
 
-import java.util.ArrayList;
-
 import com.shoppingDriod.main.R;
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class TabsActivity extends Activity {
@@ -27,6 +19,7 @@ public class TabsActivity extends Activity {
 	private ListFragment curFrag, simHereFrag, sameEFrag, simEFrag;
 	MyTabsListener tabsListener;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,7 +56,7 @@ public class TabsActivity extends Activity {
 				R.string.sec_same_everyw);
 		ActionBar.Tab simETab = actionbar.newTab().setText(
 				R.string.sec_sim_everyw);
-
+		
 		tabsListener = new MyTabsListener();
 
 		currentTab.setTabListener(tabsListener);

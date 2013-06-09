@@ -153,8 +153,10 @@ public class ScanToDisplay extends Activity {
 		int index = 0;
 		int i = 0;
 		for (ItemData st : stores) {
-			deltaLat = curLat - Double.parseDouble(st.getValue("latitude"));
-			deltaLng = curLng - Double.parseDouble(st.getValue("longitude"));
+			deltaLat = curLat - Double.parseDouble(st.getValue(getResources().getString(
+					R.string.DB_store_latitude)));
+			deltaLng = curLng - Double.parseDouble(st.getValue(getResources().getString(
+					R.string.DB_store_longitude)));
 			delta = Math.sqrt(deltaLat * deltaLat + deltaLng * deltaLng);
 			if (delta < nearestDis) {
 				nearestDis = delta;
