@@ -1,6 +1,7 @@
 package com.shoppingDroid.main;
 
 import com.shoppingDriod.main.R;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -15,8 +16,9 @@ public class TabsActivity extends Activity {
 
 	public static Context appContext;
 	public static DataFetcher df;
-
-	private ListFragment curFrag, simHereFrag, sameEFrag, simEFrag;
+	private static String scannedBarcode;
+	ScannedFragment curFrag;
+	private ListFragment simHereFrag, sameEFrag, simEFrag;
 	MyTabsListener tabsListener;
 
 	
@@ -25,7 +27,7 @@ public class TabsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tabs);
 		appContext = getApplicationContext();
-		String barcode = getIntent().getStringExtra(MainActivity.BarCode);
+		 scannedBarcode = getIntent().getStringExtra(MainActivity.BarCode);
 
 		// get location
 		MainActivity.location.updateLocation();
@@ -35,7 +37,7 @@ public class TabsActivity extends Activity {
 
 		System.out.println(lat + "  " + lng);
 		// data-fetcher
-		df = new DataFetcher(this, lat, lng, barcode);
+		df = new DataFetcher(this, lat, lng, scannedBarcode);
 
 		if (!df.locateStore()) {
 			// error happened
@@ -77,7 +79,7 @@ public class TabsActivity extends Activity {
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
 			//TODO you may need to refetch from server here 
 			Toast.makeText(TabsActivity.appContext, "Reselected!",
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_SHORT).show();
 		}
 
 
@@ -86,9 +88,9 @@ public class TabsActivity extends Activity {
 			switch (tab.getPosition()) {
 			case 0:
 				if (curFrag == null) {
-					curFrag = new ListFragment();
+					curFrag = new ScannedFragment();
 					TabsActivity.df.here();
-					curFrag.setData(df.getData());
+					curFrag.displayData(scannedBarcode, df.getData().get(0),false, df.getStore(), TabsActivity.appContext);
 					curFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, curFrag);
 				} else {

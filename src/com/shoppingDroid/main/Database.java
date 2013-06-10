@@ -117,7 +117,6 @@ public class Database extends SQLiteOpenHelper {
 		db.close(); // Closing database connection
 		Rdb2.close();
 		Log.i("Database", "Inserted in history");
-
 	}
 
 	public void addFavourites(Product product) {

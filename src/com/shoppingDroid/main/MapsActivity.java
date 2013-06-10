@@ -24,7 +24,6 @@ public class MapsActivity extends Activity {
 
 	public double lng = 32.423000335693F, lat = 20.463399887085F;
 	GoogleMap map ;
-
 	
 	private void addStoresToMap(){
 		DBDispatcher d = new DBDispatcher(this);

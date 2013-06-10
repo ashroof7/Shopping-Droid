@@ -143,9 +143,10 @@
 
     <!-- type and param names -->
     <string name="DB_product_barcode">barcode</string>
-    <string name="DB_product_name">name</string>
-    <string name="DB_diff_amount">diff_amount</string>
+    <string name="DB_product_name">product_name</string>
+    <string name="DB_product_type">product_type</string>
     <string name="DB_product_price">product_price</string>
+    <string name="DB_diff_amount">diff_amount</string>
     <string name="DB_store_range">range</string>
     <string name="DB_type_id">type_id</string>
     <string name="DB_type_name">type_name</string>
@@ -179,10 +180,10 @@
     <string name="title_activity_scan_to_display">What to do</string>
     <string name="title_activity_display_list">DisplayList</string>
     <string name="title_activity_tabs">Actions</string>
-    
     <string name="sec_sim_here">Similar here</string>
     <string name="sec_current">Home</string>
     <string name="sec_same_everyw">Same everywhere</string>
     <string name="sec_sim_everyw">Similar everywhere</string>
+    <string name="title_activity_scanned">ScannedActivity</string>
 
 </resources>

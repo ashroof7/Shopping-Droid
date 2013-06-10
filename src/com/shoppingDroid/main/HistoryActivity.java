@@ -32,6 +32,7 @@ public class HistoryActivity extends Activity {
 		int i =0 ;
 		while (it.hasNext()) {
 			p = it.next();
+			System.out.println(p+"");
 			ItemData d = new ItemData();
 			d.put("barcode", p.getBar_code());
 			d.put("product_name", p.getName());

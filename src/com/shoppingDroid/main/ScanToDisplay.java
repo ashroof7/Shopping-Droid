@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 public class ScanToDisplay extends Activity {
 
+	//FIXME this class is not needed anymore
+	
 	@SuppressLint("NewApi")
 	private ItemData scaned_item;
 	private Product p;

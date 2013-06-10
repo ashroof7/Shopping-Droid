@@ -23,6 +23,7 @@ public class DataFetcher {
 	private double curLat, curLng;
 	private ItemData store = null;
 	private Context context;
+	
 
 	public DataFetcher(Context context, double lat, double lng,
 			String productBarcode) {
@@ -37,7 +38,7 @@ public class DataFetcher {
 	public boolean locateStore() {
 		double range = 0.2;// distance range raduis
 		ArrayList<ItemData> stores;
-
+		
 		try {
 			jOb = d.storesInRange(curLat, curLng, range);
 			if (jOb == null) {
@@ -53,8 +54,8 @@ public class DataFetcher {
 
 			} else if (sz > 1) {
 				// TODO initialize activity and let user select his store from
-				// the
-				// provided list;
+				// the provided list;
+				
 				// set the store_id
 				sz = stores.size();
 				store = getNearestStore(stores);
@@ -79,7 +80,7 @@ public class DataFetcher {
 
 	}
 
-	public ItemData getNearestStore(ArrayList<ItemData> stores) {
+	private ItemData getNearestStore(ArrayList<ItemData> stores) {
 		double nearestDis = Double.MAX_VALUE;
 		double deltaLat, deltaLng, delta;
 		int index = 0;
@@ -96,7 +97,11 @@ public class DataFetcher {
 		}
 		return stores.get(index);
 	}
-
+	
+	public ItemData getStore(){
+		return store;
+	}
+	
 	//TODO malhach lazma 5ales 
 	public ItemData getItem(){
 		return scannedItem;
