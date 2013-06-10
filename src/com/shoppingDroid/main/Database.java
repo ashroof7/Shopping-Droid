@@ -118,7 +118,7 @@ public class Database extends SQLiteOpenHelper {
 		Rdb2.close();
 		Log.i("Database", "Inserted in history");
 	}
-
+	
 	public void addFavourites(Product product) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
