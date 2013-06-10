@@ -1,4 +1,4 @@
-Shopping-Droid 1.0.0
+Shopping-Droid 0.1
 ==============
 
 Database integrated, and barcode reader android app that provides location based information about scanned item
