@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.BitSet;
 
 import com.shoppingDriod.main.R;
-import com.shoppingDroid.jsonParsing.ItemData;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -19,9 +18,9 @@ public class ListFragment extends Fragment{
 	
 	private ListAdapter adapter;
 	public static final String ARG_SECTION_NUMBER = "section_number";
-	private ArrayList<ItemData> data;
+	private ArrayList<? extends ViewItem> data;
 	
-	public void setData(ArrayList<ItemData> data){
+	public void setData(ArrayList<? extends ViewItem> data){
 		this.data = data ;
 	}
 	

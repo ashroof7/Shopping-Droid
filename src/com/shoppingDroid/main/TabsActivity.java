@@ -89,8 +89,7 @@ public class TabsActivity extends Activity {
 			case 0:
 				if (curFrag == null) {
 					curFrag = new ScannedFragment();
-					TabsActivity.df.here();
-					curFrag.displayData(scannedBarcode, df.getData().get(0),false, df.getStore(), TabsActivity.appContext);
+					curFrag.displayData(TabsActivity.df.here(), false, TabsActivity.appContext);
 					curFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, curFrag);
 				} else {
@@ -101,8 +100,7 @@ public class TabsActivity extends Activity {
 			case 1:
 				if (simHereFrag == null) {
 					simHereFrag = new ListFragment();
-					TabsActivity.df.similarHere();
-					simHereFrag.setData(df.getData());
+					simHereFrag.setData(df.similarHere());
 					simHereFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, simHereFrag);
 			} else {
@@ -113,8 +111,7 @@ public class TabsActivity extends Activity {
 			case 2:
 				if (sameEFrag == null) {
 					sameEFrag = new ListFragment();
-					TabsActivity.df.sameEverywhere();
-					sameEFrag.setData(df.getData());
+					sameEFrag.setData(df.sameEverywhere());
 					sameEFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, sameEFrag);
 
@@ -126,8 +123,7 @@ public class TabsActivity extends Activity {
 			case 3:
 				if (simEFrag == null) {
 					simEFrag = new ListFragment();
-					TabsActivity.df.similarEverywhere();
-					simEFrag.setData(df.getData());
+					simEFrag.setData(df.similarEverywhere());
 					simEFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, simEFrag);
 

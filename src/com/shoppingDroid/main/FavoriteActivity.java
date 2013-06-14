@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.TreeSet;
 
 import com.shoppingDriod.main.R;
-import com.shoppingDroid.jsonParsing.ItemData;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -20,25 +19,10 @@ public class FavoriteActivity extends Activity {
 
 	private void initList() {
 		ListView listView = (ListView) findViewById(R.id.favorite_list);
-		ArrayList<ItemData> data = new ArrayList<ItemData>();
-
+		ArrayList<ViewItem> data = new ArrayList<ViewItem>();
 		List<Product> favs = MainActivity.db.retreiveFavourites();
-		Iterator<Product> it = favs.iterator();
-		Product p;
 		BitSet isFav = new BitSet(favs.size());
-		
 		isFav.set(0, favs.size());
-		
-		while (it.hasNext()) {
-			p = it.next();
-			ItemData d = new ItemData();
-			d.put("barcode", p.getBarcode());
-			d.put("product_name", p.getName());
-			d.put("product_type", p.getTypeName());
-			d.put("product_price", "");
-			data.add(d);
-		}
-
 		adapter = new ListAdapter(this, data, isFav);
 		listView.setAdapter(adapter);
 

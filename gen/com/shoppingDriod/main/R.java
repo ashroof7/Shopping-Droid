@@ -364,21 +364,22 @@ containing a value of this type.
         /**  type and param names 
          */
         public static final int DB_product_barcode=0x7f080091;
-        public static final int DB_product_global=0x7f0800a1;
+        public static final int DB_product_global=0x7f0800a2;
         public static final int DB_product_name=0x7f080092;
         public static final int DB_product_price=0x7f080094;
-        public static final int DB_product_range=0x7f0800a3;
-        public static final int DB_product_range_global=0x7f0800a2;
+        public static final int DB_product_range=0x7f0800a4;
+        public static final int DB_product_range_global=0x7f0800a3;
         public static final int DB_product_type=0x7f080093;
-        public static final int DB_return_encoding=0x7f0800ab;
-        public static final int DB_return_global=0x7f0800a8;
-        public static final int DB_return_product=0x7f0800a7;
-        public static final int DB_return_product_range=0x7f0800aa;
-        public static final int DB_return_range_global=0x7f0800a9;
+        public static final int DB_products=0x7f0800a1;
+        public static final int DB_return_encoding=0x7f0800ac;
+        public static final int DB_return_global=0x7f0800a9;
+        public static final int DB_return_product=0x7f0800a8;
+        public static final int DB_return_product_range=0x7f0800ab;
+        public static final int DB_return_range_global=0x7f0800aa;
         /**  Returned objects names 
          */
-        public static final int DB_return_stores=0x7f0800a5;
-        public static final int DB_return_stores_locations=0x7f0800a6;
+        public static final int DB_return_stores=0x7f0800a6;
+        public static final int DB_return_stores_locations=0x7f0800a7;
         public static final int DB_store_address=0x7f08009d;
         public static final int DB_store_id=0x7f080099;
         public static final int DB_store_latitude=0x7f08009c;
@@ -388,14 +389,14 @@ containing a value of this type.
         /**  Methods names 
          */
         public static final int DB_stores=0x7f08009e;
-        public static final int DB_stores_in_range=0x7f0800a4;
+        public static final int DB_stores_in_range=0x7f0800a5;
         public static final int DB_stores_locations=0x7f08009f;
         public static final int DB_type_id=0x7f080097;
         public static final int DB_type_name=0x7f080098;
         /**  UI our UI not the barcode scanner calsses 
          */
-        public static final int UI_favorites=0x7f0800ac;
-        public static final int UI_history=0x7f0800ad;
+        public static final int UI_favorites=0x7f0800ad;
+        public static final int UI_history=0x7f0800ae;
         public static final int action_settings=0x7f080016;
         public static final int app_name=0x7f080015;
         public static final int app_picker_name=0x7f080018;
@@ -590,15 +591,15 @@ containing a value of this type.
         public static final int result_uri=0x7f080089;
         public static final int result_wifi=0x7f08008a;
         public static final int sbc_name=0x7f08008b;
-        public static final int sec_current=0x7f0800b2;
-        public static final int sec_same_everyw=0x7f0800b3;
-        public static final int sec_sim_everyw=0x7f0800b4;
-        public static final int sec_sim_here=0x7f0800b1;
+        public static final int sec_current=0x7f0800b3;
+        public static final int sec_same_everyw=0x7f0800b4;
+        public static final int sec_sim_everyw=0x7f0800b5;
+        public static final int sec_sim_here=0x7f0800b2;
         public static final int share_name=0x7f08008c;
-        public static final int title_activity_display_list=0x7f0800af;
-        public static final int title_activity_scan_to_display=0x7f0800ae;
-        public static final int title_activity_scanned=0x7f0800b5;
-        public static final int title_activity_tabs=0x7f0800b0;
+        public static final int title_activity_display_list=0x7f0800b0;
+        public static final int title_activity_scan_to_display=0x7f0800af;
+        public static final int title_activity_scanned=0x7f0800b6;
+        public static final int title_activity_tabs=0x7f0800b1;
         public static final int view_map=0x7f080090;
         public static final int wifi_changing_network=0x7f08008d;
         public static final int wifi_ssid_label=0x7f08008e;

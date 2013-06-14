@@ -1,11 +1,10 @@
 package com.shoppingDroid.main;
 
-import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 import java.util.TreeSet;
 
 import com.shoppingDriod.main.R;
-import com.shoppingDroid.jsonParsing.ItemData;
  
 import android.app.Activity;
 import android.content.Context;
@@ -20,7 +19,7 @@ import android.widget.TextView;
  
 public class ListAdapter extends BaseAdapter {
  
-	private ArrayList<ItemData> data; //array of list data
+	private List<? extends ViewItem> data; //array of list data
 	//FIXME change to private
     public BitSet isFavorite;
     
@@ -29,7 +28,7 @@ public class ListAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
     private int index ;
     
-    public ListAdapter(Activity activity, ArrayList<ItemData> data, BitSet isFavorite) {
+    public ListAdapter(Activity activity, List<? extends ViewItem> data, BitSet isFavorite) {
     	this.data = data;
         this.index = 0;
         this.isFavorite = isFavorite;
@@ -65,7 +64,7 @@ public class ListAdapter extends BaseAdapter {
         ((TextView)vi.findViewById(R.id.row_price)).setText(data.get(position).getRightText()); // r_text
         CheckBox box = ((CheckBox)vi.findViewById(R.id.row_fav));
         box.setChecked(isFavorite.get(position));
-        final String barcode = data.get(position).getValue("barcode");
+        final String barcode = ((Product)data.get(position)).getBarcode();
         
         box.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override

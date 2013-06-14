@@ -1,7 +1,6 @@
 package com.shoppingDroid.main;
 
 import com.shoppingDriod.main.R;
-import com.shoppingDroid.jsonParsing.ItemData;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -16,11 +15,9 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class ScannedFragment extends Fragment {
 
-	String barcode;
-	String price;
 	boolean addToFav = false;
 	boolean isFav = false;
-	Product p;
+	Product product;
 	View v;
 	
 	@Override
@@ -30,14 +27,14 @@ public class ScannedFragment extends Fragment {
 		v = inflater.inflate(R.layout.activity_scanned, container, false);
 		
 
-		((TextView) v.findViewById(R.id.scanned_name)).setText(p.getName());
-		((TextView) v.findViewById(R.id.scanned_price)).setText(price);
+		((TextView) v.findViewById(R.id.scanned_name)).setText(product.getName());
+		((TextView) v.findViewById(R.id.scanned_price)).setText(product.getPrice()+"");
 		((TextView) v.findViewById(R.id.scanned_type))
-				.setText(p.getTypeName());
+				.setText(product.getTypeName());
 		// TODO change string here
 		((TextView) v.findViewById(R.id.scanned_barcode)).setText("Barcode : "
-				+ barcode);
-		((TextView) v.findViewById(R.id.scanned_store)).setText(p
+				+ product.getBarcode());
+		((TextView) v.findViewById(R.id.scanned_store)).setText(product
 				.getStoreName());
 
 		CheckBox box = ((CheckBox) v.findViewById(R.id.scanned_fav));
@@ -47,8 +44,6 @@ public class ScannedFragment extends Fragment {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				if (barcode == null)
-					return;
 				if (isChecked) {
 					addToFav = true;
 				} else {
@@ -57,26 +52,12 @@ public class ScannedFragment extends Fragment {
 			}
 		});
 
-		
 		return v;
 	}
 
-	public void displayData(String barcode, ItemData item, boolean isFav, ItemData store, Context c) {
-		this.barcode = barcode;
+	public void displayData(Product p, boolean isFav, Context c) {
 		this.isFav = isFav;
-
-		p = new Product(
-				barcode,
-				item.getValue(c.getResources()
-						.getString(R.string.DB_product_name)),
-				item.getValue(c.getResources()
-						.getString(R.string.DB_product_type)),
-				Integer.parseInt(store.getValue(c.getResources().getString(
-						R.string.DB_store_id))),
-				store.getValue(c.getResources().getString(R.string.DB_store_name)));
-		
-		price = item.getRightText();
-		
+		this.product = p;
 		MainActivity.db.addHistory(p);
 	}
 
@@ -84,9 +65,9 @@ public class ScannedFragment extends Fragment {
 	public void onDestroy() {
 		super.onDestroy();
 		if (addToFav && !isFav) {
-			MainActivity.db.addFavourites(p);
+			MainActivity.db.addFavourites(product);
 		} else if (isFav && !addToFav) {
-			MainActivity.db.deleteFavourite(barcode);
+			MainActivity.db.deleteFavourite(product.getBarcode());
 		}
 	}
 

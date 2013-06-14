@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.widget.ListView;
 
 public class DisplayList extends Activity {
+	//UNused class
+	
 	private ListAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +20,7 @@ public class DisplayList extends Activity {
 		ListView listView = (ListView) findViewById(R.id.results_list);
 		
 		BitSet isFav = new BitSet(ScanToDisplay.data.size());
-		adapter = new ListAdapter(this, ScanToDisplay.data, isFav);
+//		adapter = new ListAdapter(this, ScanToDisplay.data, isFav);
 		listView.setAdapter(adapter);
 	}
 

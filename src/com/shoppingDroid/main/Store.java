@@ -1,32 +1,32 @@
 package com.shoppingDroid.main;
 
-public class Store {
-	private int storeId;
-	private String storeName;
+public class Store extends ViewItem{
+	private int id;
+	private String name;
 	private double longitude;
 	private double latitude;
 	
 	public Store(int storeId, String storeName, double longitude, double latitude) {
-		this.storeId = storeId;
-		this.storeName = storeName;
+		this.id = storeId;
+		this.name = storeName;
 		this.longitude = longitude;	
 		this.latitude = latitude;
 	}
 
-	public int getStoreId() {
-		return storeId;
+	public int getId() {
+		return id;
 	}
 
-	public void setStoreId(int storeId) {
-		this.storeId = storeId;
+	public void setId(int storeId) {
+		this.id = storeId;
 	}
 
-	public String getStoreName() {
-		return storeName;
+	public String getName() {
+		return name;
 	}
 
-	public void setStoreName(String storeName) {
-		this.storeName = storeName;
+	public void setName(String storeName) {
+		this.name = storeName;
 	}
 
 	public double getLongitude() {
@@ -47,8 +47,23 @@ public class Store {
 
 	@Override
 	public String toString() {
-		return "Store [" + storeId + ", " + storeName
+		return "Store [" + id + ", " + name
 				+ ", lng:" + longitude + ", lat:" + latitude + "]";
+	}
+
+	@Override
+	public String getTitle() {
+		return name;
+	}
+
+	@Override
+	public String getSubText() {
+		return "";
+	}
+
+	@Override
+	public String getRightText() {
+		return "";
 	}
 	
 	

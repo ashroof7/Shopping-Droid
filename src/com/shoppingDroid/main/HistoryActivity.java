@@ -1,13 +1,11 @@
 package com.shoppingDroid.main;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
 import com.shoppingDriod.main.R;
-import com.shoppingDroid.jsonParsing.ItemData;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -20,31 +18,19 @@ public class HistoryActivity extends Activity {
 
 	private void initList() {
 		ListView listView = (ListView) findViewById(R.id.history_list);
-		ArrayList<ItemData> data = new ArrayList<ItemData>();
-		
 		List<Product> history = MainActivity.db.retreive();
-		 
 		Iterator<Product> it = history.iterator();
-		Product p;
 		BitSet isFav = new BitSet(history.size());
 		TreeSet<String> favInHis = MainActivity.db.favoritesInHistory();
 		
 		int i =0 ;
 		while (it.hasNext()) {
-			p = it.next();
-			System.out.println(p+"");
-			ItemData d = new ItemData();
-			d.put("barcode", p.getBarcode());
-			d.put("product_name", p.getName());
-			d.put("product_type", p.getTypeName());
-			d.put("product_price", "");
-			data.add(d);
-			if (favInHis.contains(p.getBarcode()))
+			if (favInHis.contains(it.next().getBarcode()))
 				isFav.set(i);
 			i++;
 		}
 
-		adapter = new ListAdapter(this, data, isFav);
+		adapter = new ListAdapter(this, history, isFav);
 		listView.setAdapter(adapter);
 
 	}

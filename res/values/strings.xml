@@ -160,6 +160,7 @@
     <string name="DB_stores">stores</string>
     <string name="DB_stores_locations">stores_locations</string>
     <string name="DB_product">product</string>
+    <string name="DB_products">products</string>
     <string name="DB_product_global">product_global</string>
     <string name="DB_product_range_global">product_range_global</string>
     <string name="DB_product_range">product_range</string>

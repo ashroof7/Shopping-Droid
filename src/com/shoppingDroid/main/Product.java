@@ -1,28 +1,34 @@
 package com.shoppingDroid.main;
 
-public class Product {
+public class Product extends ViewItem{
 	private String barcode;
 	private String name;
 	private String typeName;
 	private String storeName;
 	private int storeId;
+	private double price;
 	
-	public Product(String barcode, String name, String type, int storeId, String store) {
+	public Product(String barcode, String name, String type, int storeId, String store, double price) {
 		this.barcode = barcode;
 		this.name = name;
 		this.typeName = type;
 		this.storeId = storeId;
 		this.storeName = store;
+		this.price = price;
+	}
+	
+	public Product(String barcode, String name, String type, int storeId, String store){
+		this(barcode, name, type, storeId, store, 0);
 	}
 
 	public String getBarcode() {
 		return barcode;
 	}
 
-	public void setBarCode(String barCode) {
-		this.barcode = barCode;
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -55,11 +61,37 @@ public class Product {
 		this.storeId = storeId;
 	}
 
+	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	
+
 	@Override
 	public String toString() {
 		return "Product [" + barcode + ", name=" + name + ", "
 				+ typeName + ", " + storeName + " : "
 				+ storeId + "]";
+	}
+
+	@Override
+	public String getTitle() {
+		return name;
+	}
+
+	@Override
+	public String getSubText() {
+		return storeName +"  "+typeName;
+	}
+
+	@Override
+	public String getRightText() {
+		return price+"";
 	}
 
 	

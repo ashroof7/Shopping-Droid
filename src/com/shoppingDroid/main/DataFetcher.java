@@ -3,27 +3,29 @@ package com.shoppingDroid.main;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import com.shoppingDriod.main.R;
-import com.shoppingDroid.jsonParsing.ItemData;
-import com.shoppingDroid.jsonParsing.JsonParser;
 import com.shoppingDroid.onlineDB.DBDispatcher;
 
+/**
+ * a class that calls the server (using DBDispatcher) and parses the result.
+ * At first we locate the nearest store based on current user location.
+ * all methods @returns either an arrayList of Products or stores.
+ */
 public class DataFetcher {
-
-	private String store_id;
-	private String barcode;
-	private DBDispatcher d;
-	private JSONObject jOb;
-	private JsonParser jp;
-	private ItemData scannedItem;
-	private  ArrayList<ItemData> data;
-	private double curLat, curLng;
-	private ItemData store = null;
-	private Context context;
 	
+	private double curLat, curLng;
+	private Store store;
+	private double diffAmount = 20;
+	private String barcode;
+	private String type="";
+	private DBDispatcher dbDispatcher;
+	private JSONObject jOb;
+	private Context context;
 
 	public DataFetcher(Context context, double lat, double lng,
 			String productBarcode) {
@@ -31,63 +33,54 @@ public class DataFetcher {
 		curLat = lat;
 		curLng = lng;
 		barcode = productBarcode;
-		d = new DBDispatcher(context);
-		jp = new JsonParser();
+		dbDispatcher = new DBDispatcher(context);
 	}
 
 	public boolean locateStore() {
-		double range = 0.2;// distance range raduis
-		ArrayList<ItemData> stores;
-		
+		double range = 0.05;// distance range radius
+
+		String mainTag = context.getResources().getString(R.string.DB_stores);
+		ArrayList<Store> stores = new ArrayList<Store>();
+
 		try {
-			jOb = d.storesInRange(curLat, curLng, range);
-			if (jOb == null) {
+			jOb = dbDispatcher.storesInRange(curLat, curLng, range);
+			if (jOb == null || !jOb.has(mainTag))
 				return false;
-			}
-			stores = jp.parse(jOb);
-			int sz = stores.size();
 
-			if (sz == 1) {
-				store = stores.get(0);
-				store_id = stores.get(0).getValue(
-						context.getResources().getString(R.string.DB_store_id));
+			JSONArray elements = jOb.getJSONArray(mainTag);
 
-			} else if (sz > 1) {
-				// TODO initialize activity and let user select his store from
-				// the provided list;
-				
-				// set the store_id
-				sz = stores.size();
-				store = getNearestStore(stores);
-				store_id = store.getValue("store_id");
-			} else {
-				jOb = d.stores();
-				if (jOb == null) {
-					return false;
-				}
-				stores = jp.parse(jOb);
-				store = getNearestStore(stores);
-				store_id = store.getValue("store_id");
-				// TODO init activity and let user select a store
+			JSONObject store;
+			for (int i = 0; i < elements.length(); i++) {
+				store = elements.getJSONObject(i);
+				stores.add(new Store(
+						store.getInt(	context.getResources().getString(R.string.DB_store_id)),
+						store.getString(context.getResources().getString(R.string.DB_store_name)),
+						store.getDouble(context.getResources().getString(R.string.DB_store_longitude)),
+						store.getDouble(context.getResources().getString(R.string.DB_store_latitude))));
 			}
-			return true ;
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		} catch (ExecutionException e1) {
-			e1.printStackTrace();
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		return false;
+
+		store = getNearestStore(stores);
+		
+		return !(store==null);
 
 	}
 
-	private ItemData getNearestStore(ArrayList<ItemData> stores) {
+	private Store getNearestStore(ArrayList<Store> stores) {
 		double nearestDis = Double.MAX_VALUE;
 		double deltaLat, deltaLng, delta;
 		int index = 0;
 		int i = 0;
-		for (ItemData st : stores) {
-			deltaLat = curLat - Double.parseDouble(st.getValue("latitude"));
-			deltaLng = curLng - Double.parseDouble(st.getValue("longitude"));
+		for (Store st : stores) {
+			deltaLat = curLat - st.getLatitude();
+			deltaLng = curLng - st.getLongitude();
 			delta = Math.sqrt(deltaLat * deltaLat + deltaLng * deltaLng);
 			if (delta < nearestDis) {
 				nearestDis = delta;
@@ -97,97 +90,158 @@ public class DataFetcher {
 		}
 		return stores.get(index);
 	}
-	
-	public ItemData getStore(){
-		return store;
-	}
-	
-	//TODO malhach lazma 5ales 
-	public ItemData getItem(){
-		return scannedItem;
-	}
-	
-	public ArrayList<ItemData> getData(){
-		return data;
-	} 
-	
-	public boolean here() {
-		try {
-			jOb = d.product(barcode, Integer.parseInt(store_id));
-			if (jOb == null)
-				return false;
 
-			data = jp.parse(jOb);
-			if (data.size() == 0)
-				return false;
+	public Product here() {
+		Product ret = null;
+		try {
+			jOb = dbDispatcher.product(barcode, store.getId());
+			String mainTag = context.getResources().getString(
+					R.string.DB_product);
+
+			if (jOb == null || !jOb.has(mainTag))
+				return null;
+
+			JSONArray elements = jOb.getJSONArray(mainTag);
+			JSONObject product = elements.getJSONObject(0);
+
+			ret = new Product(barcode, product.getString(context.getResources()
+					.getString(R.string.DB_product_name)),
+					product.getString(context.getResources().getString(
+							R.string.DB_product_type)), store.getId(),
+					store.getName(), product.getDouble(context.getResources().getString(
+									R.string.DB_product_price)));
 			
-			scannedItem = data.get(0);
-			return true;
+			// set the type attribute to be used in next calls
+			type = ret.getTypeName();
+			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		return false;
+		return ret;
 	}
 
-	public boolean sameEverywhere() {
+	public ArrayList<Product> sameEverywhere() {
 		// query other stores with the same product
+		ArrayList<Product> products = new ArrayList<Product>();
+
+		String mainTag = context.getResources().getString(R.string.DB_product);
+		String pName, ptype;
+
 		try {
-			jOb = d.productGlobal(barcode);
-			if (jOb == null)
-				return false;
-			data = jp.parse(jOb);
-			return true;
+
+			jOb = dbDispatcher.productGlobal(barcode);
+			if (jOb == null || !jOb.has(mainTag))
+				return null;
+
+			JSONArray elements = jOb.getJSONArray(mainTag);
+			JSONObject product = elements.getJSONObject(0);
+
+			pName = product.getString(context.getResources().getString(
+					R.string.DB_product_name));
+			ptype = product.getString(context.getResources().getString(
+					R.string.DB_product_type));
+
+			if (product == null
+					|| !product.has(context.getResources().getString(
+							R.string.DB_stores)))
+				return null;
+
+			elements = product.getJSONArray(context.getResources().getString(
+					R.string.DB_stores));
+
+			JSONObject store;
+			for (int i = 0; i < elements.length(); i++) {
+				store = elements.getJSONObject(i);
+				products.add(new Product(barcode, pName, ptype, store
+						.getInt(context.getResources().getString(
+								R.string.DB_store_id)), store.getString(context
+						.getResources().getString(R.string.DB_store_name)),
+						store.getDouble(context
+								.getResources().getString(
+										R.string.DB_product_price))));
+			}
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		return false;
+		return products;
 	}
 
-	public boolean similarHere() {
-		double diff_amount = 20;
-		try {
-			jOb = d.productRange(barcode, Integer.parseInt(store_id),
-					diff_amount);
-			if (jOb == null)
-				return false;
+	public ArrayList<Product> similarHere() {
 
-			data = jp.parse(jOb);
-			return true;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
+		ArrayList<Product> products = new ArrayList<Product>();
+
+		String mainTag = context.getResources().getString(R.string.DB_products);
+		try {
+			jOb = dbDispatcher.productRange(barcode, store.getId(),
+					diffAmount);
+			if (jOb == null || !jOb.has(mainTag))
+				return null;
+
+			JSONArray elements = jOb.getJSONArray(mainTag);
+			JSONObject product;
+			
+			for (int i = 0; i < elements.length(); i++) {
+				product = elements.getJSONObject(i);
+				products.add(new Product(
+						product.getString(context.getResources().getString(R.string.DB_product_barcode)),
+						product.getString(context.getResources().getString(	R.string.DB_product_name)),
+						type, 
+						store.getId(), store.getName(), product.getDouble(context.getResources().getString(R.string.DB_product_price))));
+			}
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		return false;
+		return products;
 	}
 
-	public boolean similarEverywhere() {
+	public ArrayList<Product> similarEverywhere() {
 		// query stores with products of the same type
+		ArrayList<Product> products = new ArrayList<Product>();
 
-		double diff_amount = 20;
-
+		String mainTag = context.getResources().getString(R.string.DB_products);
 		try {
-			jOb = d.productRangeGlobal(barcode, Integer.parseInt(store_id),
-					diff_amount);
-			if (jOb == null)
-				return false;
-			data = jp.parse(jOb);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			jOb = dbDispatcher.productRangeGlobal(barcode, store.getId(),
+					diffAmount);
+			if (jOb == null || !jOb.has(mainTag))
+				return null;
+
+			JSONArray elements = jOb.getJSONArray(mainTag);
+			JSONObject product;
+
+			for (int i = 0; i < elements.length(); i++) {
+				product = elements.getJSONObject(i);
+				products.add(new Product(
+						product.getString(context.getResources().getString(R.string.DB_product_barcode)),
+						product.getString(context.getResources().getString(R.string.DB_product_name)),
+						type,
+						product.getInt(context.getResources().getString(R.string.DB_store_id)),
+						product.getString(context.getResources().getString(R.string.DB_store_name)), 
+						product.getDouble(context.getResources().getString(R.string.DB_product_price))));
+			}
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		return false;
+		return products;
 	}
 }
