@@ -32,9 +32,9 @@ public class FavoriteActivity extends Activity {
 		while (it.hasNext()) {
 			p = it.next();
 			ItemData d = new ItemData();
-			d.put("barcode", p.getBar_code());
+			d.put("barcode", p.getBarcode());
 			d.put("product_name", p.getName());
-			d.put("product_type", p.getType_name());
+			d.put("product_type", p.getTypeName());
 			d.put("product_price", "");
 			data.add(d);
 		}

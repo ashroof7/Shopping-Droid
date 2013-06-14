@@ -1,8 +1,8 @@
 package com.shoppingDroid.main;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
-
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class Database extends SQLiteOpenHelper {
 
-	//FIXME copy this values to @+res/string
+	// FIXME copy this values to @+res/string
 	// All Static variables
 	// Database Version
 	private static final int DATABASE_VERSION = 1;
@@ -23,7 +23,7 @@ public class Database extends SQLiteOpenHelper {
 	private static final String table_stores = "stores";
 	// table of favourites
 	private static final String table_favourites = "favourites";
-	//  Columns names
+	// Columns names
 	private static final String bar_code = "bar_code";
 	private static final String h_id = "h_id";
 	private static final String name = "product_name";
@@ -40,22 +40,21 @@ public class Database extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String Create_stores = "CREATE TABLE " + table_stores + "(" + store_id
-				+ " INTEGER PRIMARY KEY," + store_name + " varchar(45)"
-				+ ")";
+				+ " INTEGER PRIMARY KEY," + store_name + " varchar(45)" + ")";
 		db.execSQL(Create_stores);
 		String create_history = "CREATE TABLE " + table_history + "(" + h_id
 				+ " INTEGER PRIMARY KEY autoincrement ," + bar_code
 				+ " varchar(45) UNIQUE, " + name + " varchar(45), " + type_name
 				+ " varchar(45)," + store + " INTEGER NOT NULL ,"
-				+ "FOREIGN KEY (" + store + ") REFERENCES "
-				+ table_stores + " ( " + store_id + " ) " + ")";
+				+ "FOREIGN KEY (" + store + ") REFERENCES " + table_stores
+				+ " ( " + store_id + " ) " + ")";
 		db.execSQL(create_history);
 		String create_favourites = "CREATE TABLE " + table_favourites + "("
 
-		+ bar_code + " varchar(45) PRIMARY KEY, " + name + " varchar(45), "  + type_name
-		+ " varchar(45)," + store + " INTEGER NOT NULL ,"
-				+ "FOREIGN KEY (" + store + ") REFERENCES "
-				+ table_stores + " ( " + store_id + " ) " + ")";
+		+ bar_code + " varchar(45) PRIMARY KEY, " + name + " varchar(45), "
+				+ type_name + " varchar(45)," + store + " INTEGER NOT NULL ,"
+				+ "FOREIGN KEY (" + store + ") REFERENCES " + table_stores
+				+ " ( " + store_id + " ) " + ")";
 		db.execSQL(create_favourites);
 	}
 
@@ -79,27 +78,29 @@ public class Database extends SQLiteOpenHelper {
 	public void addHistory(Product product) {
 		SQLiteDatabase Rdb = this.getReadableDatabase();
 
-		Cursor mCount = Rdb.rawQuery("select count(*) from "+table_history, null);
+		Cursor mCount = Rdb.rawQuery("select count(*) from " + table_history,
+				null);
 
 		mCount.moveToFirst();
 		int count = mCount.getInt(0);
 		mCount.close();
-		if (count >= 20){
-			deleteOldest();}
-			Rdb.close();
+		if (count >= 20) {
+			deleteOldest();
+		}
+		Rdb.close();
 
-			SQLiteDatabase db = this.getWritableDatabase();
-			SQLiteDatabase Rdb2 = this.getReadableDatabase();
+		SQLiteDatabase db = this.getWritableDatabase();
+		SQLiteDatabase Rdb2 = this.getReadableDatabase();
 		ContentValues values = new ContentValues();
 
 		Cursor s = Rdb2.query(table_stores, new String[] { store_name },
 				store_id + "=?",
-				new String[] { String.valueOf(product.getStore_id()) }, null,
+				new String[] { String.valueOf(product.getStoreId()) }, null,
 				null, null, null);
 		if (s.getCount() == 0) {
 			values = new ContentValues();
-			values.put(store_id, product.getStore_id());
-			values.put(store_name, product.getStore_name());
+			values.put(store_id, product.getStoreId());
+			values.put(store_name, product.getStoreName());
 
 			// Inserting Row
 			db.insert(table_stores, null, values);
@@ -107,10 +108,10 @@ public class Database extends SQLiteOpenHelper {
 		s.close();
 
 		values = new ContentValues();
-		values.put(bar_code, product.getBar_code()); // barcode
+		values.put(bar_code, product.getBarcode()); // barcode
 		values.put(name, product.getName()); // name
-		values.put(type_name, product.getType_name());
-		values.put(store, product.getStore_id());
+		values.put(type_name, product.getTypeName());
+		values.put(store, product.getStoreId());
 
 		// Inserting Row
 		db.insert(table_history, null, values);
@@ -118,54 +119,50 @@ public class Database extends SQLiteOpenHelper {
 		Rdb2.close();
 		Log.i("Database", "Inserted in history");
 	}
-	
+
 	public void addFavourites(Product product) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values = new ContentValues();
-		values.put(bar_code, product.getBar_code()); // barcode
+		values.put(bar_code, product.getBarcode()); // barcode
 		values.put(name, product.getName()); // name
-		values.put(type_name, product.getType_name());
-		values.put(store, product.getStore_id());
+		values.put(type_name, product.getTypeName());
+		values.put(store, product.getStoreId());
 		db.insert(table_favourites, null, values);
 		db.close(); // Closing database connection
 		Log.i("Database", "Inserted in favorites");
 	}
 
-	
 	// Getting All Contacts
 	public List<Product> retreive() {
 		List<Product> products = new ArrayList<Product>();
 		// Select All Query
-		String selectQuery = "select a.*, c." + store_name
-				+ " from " + table_history + " a, "
-				+ table_stores + " c  where a." + store + " = c."
-				+ store_id;
+		String selectQuery = "select a.*, c." + store_name + " from "
+				+ table_history + " a, " + table_stores + " c  where a."
+				+ store + " = c." + store_id;
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
-				Product p = new Product();
-				p.setBar_code(cursor.getString(1));
-				p.setName(cursor.getString(2));
-				p.setType_name(cursor.getString(3));
-				p.setStore_id(Integer.parseInt(cursor.getString(4)));
-				p.setStore_name(cursor.getString(5));
-				products.add(p);
+				products.add( new Product(cursor.getString(1),
+						cursor.getString(2), cursor.getString(3),
+						Integer.parseInt(cursor.getString(4)),
+						cursor.getString(5)));
 			} while (cursor.moveToNext());
 		}
 
 		return products;
 	}
 
-	
 	public TreeSet<String> favoritesInHistory() {
 		TreeSet<String> barcodes = new TreeSet<String>();
 		SQLiteDatabase db = this.getWritableDatabase();
-		String selectQuery =  "select a."+bar_code+" from "+table_history+" a inner join "+table_favourites+" b where a."+bar_code+" = b."+bar_code;
-		
+		String selectQuery = "select a." + bar_code + " from " + table_history
+				+ " a inner join " + table_favourites + " b where a."
+				+ bar_code + " = b." + bar_code;
+
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
@@ -175,35 +172,30 @@ public class Database extends SQLiteOpenHelper {
 		}
 		return barcodes;
 	}
-	
+
 	public List<Product> retreiveFavourites() {
 		List<Product> products = new ArrayList<Product>();
 		// Select All Query
 		Log.i("Database", "Retrieving Favorites");
-		String selectQuery = "select a.*, c." + store_name
-				+ " from " + table_favourites + " a, "
-				+ table_stores + " c  where a." + store + " = c."
-				+ store_id;
+		String selectQuery = "select a.*, c." + store_name + " from "
+				+ table_favourites + " a, " + table_stores + " c  where a."
+				+ store + " = c." + store_id;
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
-	
+
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
-				Product p = new Product();
-				p.setBar_code(cursor.getString(0));
-				p.setName(cursor.getString(1));
-				p.setType_name(cursor.getString(2));
-				p.setStore_id(Integer.parseInt(cursor.getString(3)));
-				p.setStore_name(cursor.getString(4));
-				products.add(p);
+				products.add( new Product(cursor.getString(0),
+						cursor.getString(1), cursor.getString(2),
+						Integer.parseInt(cursor.getString(3)),
+						cursor.getString(4)));
 			} while (cursor.moveToNext());
 		}
 		Log.i("Database", "Retrieved Favorites");
 		// return contact list
 		return products;
 	}
-
 
 	// Deleting single contact
 	public void deleteOldest() {
@@ -220,12 +212,10 @@ public class Database extends SQLiteOpenHelper {
 		Rdb.close();
 	}
 
-    public void deleteFavourite(String code) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(table_favourites, bar_code + " = ?",
-                new String[] {code});
-        db.close();
-    }
- 
+	public void deleteFavourite(String code) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(table_favourites, bar_code + " = ?", new String[] { code });
+		db.close();
+	}
 
 }

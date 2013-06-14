@@ -34,12 +34,12 @@ public class HistoryActivity extends Activity {
 			p = it.next();
 			System.out.println(p+"");
 			ItemData d = new ItemData();
-			d.put("barcode", p.getBar_code());
+			d.put("barcode", p.getBarcode());
 			d.put("product_name", p.getName());
-			d.put("product_type", p.getType_name());
+			d.put("product_type", p.getTypeName());
 			d.put("product_price", "");
 			data.add(d);
-			if (favInHis.contains(p.getBar_code()))
+			if (favInHis.contains(p.getBarcode()))
 				isFav.set(i);
 			i++;
 		}

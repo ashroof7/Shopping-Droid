@@ -33,12 +33,12 @@ public class ScannedFragment extends Fragment {
 		((TextView) v.findViewById(R.id.scanned_name)).setText(p.getName());
 		((TextView) v.findViewById(R.id.scanned_price)).setText(price);
 		((TextView) v.findViewById(R.id.scanned_type))
-				.setText(p.getType_name());
+				.setText(p.getTypeName());
 		// TODO change string here
 		((TextView) v.findViewById(R.id.scanned_barcode)).setText("Barcode : "
 				+ barcode);
 		((TextView) v.findViewById(R.id.scanned_store)).setText(p
-				.getStore_name());
+				.getStoreName());
 
 		CheckBox box = ((CheckBox) v.findViewById(R.id.scanned_fav));
 		box.setChecked(isFav);
