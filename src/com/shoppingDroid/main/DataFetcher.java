@@ -90,7 +90,38 @@ public class DataFetcher {
 		}
 		return stores.get(index);
 	}
+	
+	public ArrayList<Store>stores(){
+		ArrayList<Store> stores = new ArrayList<Store>();
 
+		String mainTag = context.getResources().getString(R.string.DB_stores);
+		try {
+			jOb = dbDispatcher.stores();
+			if (jOb == null || !jOb.has(mainTag))
+				return null;
+
+			JSONArray elements = jOb.getJSONArray(mainTag);
+			JSONObject store;
+			
+			for (int i = 0; i < elements.length(); i++) {
+				store = elements.getJSONObject(i);
+				stores.add(new Store(
+						store.getInt(	context.getResources().getString(R.string.DB_store_id)),
+						store.getString(context.getResources().getString(R.string.DB_store_name)),
+						store.getDouble(context.getResources().getString(R.string.DB_store_longitude)),
+						store.getDouble(context.getResources().getString(R.string.DB_store_latitude))));
+			}
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return stores;
+	}
+	
 	public Product here() {
 		Product ret = null;
 		try {

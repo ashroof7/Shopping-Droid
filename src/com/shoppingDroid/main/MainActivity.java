@@ -6,7 +6,6 @@ import com.shoppingDroid.location.LocationMan;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.test.ActivityTestCase;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -64,7 +63,7 @@ public class MainActivity extends Activity {
 	            {
 	            	Log.i("xZing", "Scan Successful");
 	                String contents = intent.getStringExtra("SCAN_RESULT");
-	                Intent intent2 = new Intent(this, ScanToDisplay.class);
+	                Intent intent2 = new Intent(this, TabsActivity.class);
 	                intent2.putExtra(BarCode, contents);
 	            	startActivity(intent2);
 

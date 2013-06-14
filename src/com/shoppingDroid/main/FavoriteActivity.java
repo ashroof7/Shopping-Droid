@@ -1,6 +1,5 @@
 package com.shoppingDroid.main;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
@@ -19,11 +18,10 @@ public class FavoriteActivity extends Activity {
 
 	private void initList() {
 		ListView listView = (ListView) findViewById(R.id.favorite_list);
-		ArrayList<ViewItem> data = new ArrayList<ViewItem>();
-		List<Product> favs = MainActivity.db.retreiveFavourites();
+		List<? extends ViewItem> favs = MainActivity.db.retreiveFavourites();
 		BitSet isFav = new BitSet(favs.size());
 		isFav.set(0, favs.size());
-		adapter = new ListAdapter(this, data, isFav);
+		adapter = new ListAdapter(this, favs, isFav);
 		listView.setAdapter(adapter);
 
 	}
