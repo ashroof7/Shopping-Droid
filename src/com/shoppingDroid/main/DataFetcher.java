@@ -133,15 +133,20 @@ public class DataFetcher {
 				return null;
 
 			JSONArray elements = jOb.getJSONArray(mainTag);
+			
+			if (elements.isNull(0))
+				return null;
+			
 			JSONObject product = elements.getJSONObject(0);
-
+			
 			ret = new Product(barcode, product.getString(context.getResources()
 					.getString(R.string.DB_product_name)),
 					product.getString(context.getResources().getString(
 							R.string.DB_product_type)), store.getId(),
 					store.getName(), product.getDouble(context.getResources().getString(
 									R.string.DB_product_price)));
-			
+		
+
 			// set the type attribute to be used in next calls
 			type = ret.getTypeName();
 			

@@ -68,9 +68,7 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 		diag.setMessage("Waiting for Server Response");
 		diag.show();
 		Log.i("Show", "showing");
-
 		checkConnection = hasConnection(con);
-
 	}
 
 	@Override

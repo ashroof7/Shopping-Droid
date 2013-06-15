@@ -19,27 +19,29 @@ public class ScannedFragment extends Fragment {
 	boolean isFav = false;
 	Product product;
 	View v;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		v = inflater.inflate(R.layout.activity_scanned, container, false);
-		
 
-		((TextView) v.findViewById(R.id.scanned_name)).setText(product.getName());
-		((TextView) v.findViewById(R.id.scanned_price)).setText(product.getPrice()+"");
-		((TextView) v.findViewById(R.id.scanned_type))
-				.setText(product.getTypeName());
-		// TODO change string here
-		((TextView) v.findViewById(R.id.scanned_barcode)).setText("Barcode : "
-				+ product.getBarcode());
-		((TextView) v.findViewById(R.id.scanned_store)).setText(product
-				.getStoreName());
+		if (product != null) {
+			((TextView) v.findViewById(R.id.scanned_name)).setText(product
+					.getName());
+			((TextView) v.findViewById(R.id.scanned_price)).setText(product
+					.getPrice() + "");
+			((TextView) v.findViewById(R.id.scanned_type)).setText(product
+					.getTypeName());
+			// TODO change string here
+			((TextView) v.findViewById(R.id.scanned_barcode))
+					.setText("Barcode : " + product.getBarcode());
+			((TextView) v.findViewById(R.id.scanned_store)).setText(product
+					.getStoreName());
 
+		}
 		CheckBox box = ((CheckBox) v.findViewById(R.id.scanned_fav));
 		box.setChecked(isFav);
-
 		box.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
@@ -58,7 +60,8 @@ public class ScannedFragment extends Fragment {
 	public void displayData(Product p, boolean isFav, Context c) {
 		this.isFav = isFav;
 		this.product = p;
-		MainActivity.db.addHistory(p);
+		if (p != null)
+			MainActivity.db.addHistory(p);
 	}
 
 	@Override

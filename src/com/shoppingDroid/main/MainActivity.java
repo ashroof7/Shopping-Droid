@@ -43,14 +43,14 @@ public class MainActivity extends Activity {
 	
 	public void launchScanner(View view){
 		 // FIXME just a shortcut to jump to tabs activity
-		 Intent intent2 = new Intent(this, TabsActivity.class);
-        intent2.putExtra(BarCode, "6221053001804");
-    	 startActivity(intent2);
+//		 Intent intent2 = new Intent(this, TabsActivity.class);
+//        intent2.putExtra(BarCode, "6221053001804");
+//    	 startActivity(intent2);
 	
-//      Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-//      intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
-//  	  Log.i("xZing", "Start Scan");
-//      startActivityForResult(intent, 0);
+      Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+      intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
+  	  Log.i("xZing", "Start Scan");
+      startActivityForResult(intent, 0);
 	}
 	
 	
