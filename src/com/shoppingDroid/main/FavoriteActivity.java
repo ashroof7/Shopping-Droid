@@ -1,14 +1,13 @@
 package com.shoppingDroid.main;
 
 import java.util.BitSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.TreeSet;
 
 import com.shoppingDriod.main.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
 
@@ -19,11 +18,9 @@ public class FavoriteActivity extends Activity {
 	private void initList() {
 		ListView listView = (ListView) findViewById(R.id.favorite_list);
 		List<? extends ViewItem> favs = MainActivity.db.retreiveFavourites();
-		BitSet isFav = new BitSet(favs.size());
-		isFav.set(0, favs.size());
-		adapter = new ListAdapter(this, favs, isFav);
+		Log.wtf("fav size", favs.size()+"");
+		adapter = new ListAdapter(this, favs);
 		listView.setAdapter(adapter);
-
 	}
 
 	@Override
@@ -44,16 +41,20 @@ public class FavoriteActivity extends Activity {
 	
 	
 	@Override
-	protected void onDestroy() {
+	public void onDestroy() {
 		super.onDestroy();
 		// reflect changed products in Database
-		TreeSet<String> changed = adapter.getRemovedItems();
-		Iterator<String> it = changed.iterator();
-		while (it.hasNext()){
-			String p = it.next();
-			MainActivity.db.deleteFavourite(p);
+		List<? extends ViewItem> data = adapter.getData();
+		BitSet curFav = adapter.getCurrentFav();
+		Product p ;
+		for (int i = 0; i < data.size(); i++) {
+			p = (Product) data.get(i);
+			if (!p.isFav() && curFav.get(i)) {
+				MainActivity.db.addFavourites(p);
+			} else if (p.isFav() && !curFav.get(i)) {
+				MainActivity.db.deleteFavourite(p.getBarcode());
+			}
 		}
-
 	}
 
 }

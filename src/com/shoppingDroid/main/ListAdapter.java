@@ -2,8 +2,6 @@ package com.shoppingDroid.main;
 
 import java.util.BitSet;
 import java.util.List;
-import java.util.TreeSet;
-
 import com.shoppingDriod.main.R;
  
 import android.app.Activity;
@@ -20,30 +18,29 @@ import android.widget.TextView;
 public class ListAdapter extends BaseAdapter {
  
 	private List<? extends ViewItem> data; //array of list data
-	//FIXME change to private
-    public BitSet isFavorite;
-    
-    private TreeSet<String> removedItems;
-    
     private static LayoutInflater inflater = null;
+    private BitSet currentFav;
     private int index ;
     
-    public ListAdapter(Activity activity, List<? extends ViewItem> data, BitSet isFavorite) {
+    public ListAdapter(Activity activity, List<? extends ViewItem> data) {
     	this.data = data;
         this.index = 0;
-        this.isFavorite = isFavorite;
-        removedItems = new TreeSet<String>();
+        currentFav = new BitSet(data.size());
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     
-    public TreeSet<String> getRemovedItems(){
-    	return removedItems;
+    public BitSet getCurrentFav(){
+    	return currentFav;
     } 
     
     public int getCount() {
         return data.size();
     }
- 
+    
+    public List<? extends ViewItem> getData(){
+    	return data;
+    } 
+    
     public Object getItem(int position) {
         return data.get(index);
     }
@@ -53,7 +50,7 @@ public class ListAdapter extends BaseAdapter {
         return 0;
     }
  
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         
         if(convertView == null)
@@ -63,7 +60,10 @@ public class ListAdapter extends BaseAdapter {
         ((TextView)vi.findViewById(R.id.row_text_2)).setText(data.get(position).getSubText()); // subtext
         ((TextView)vi.findViewById(R.id.row_price)).setText(data.get(position).getRightText()); // r_text
         CheckBox box = ((CheckBox)vi.findViewById(R.id.row_fav));
-        box.setChecked(isFavorite.get(position));
+        
+        box.setChecked(((Product)data.get(position)).isFav());
+        currentFav.set(position,box.isChecked());
+        
         final String barcode = ((Product)data.get(position)).getBarcode();
         
         box.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -71,10 +71,10 @@ public class ListAdapter extends BaseAdapter {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (barcode == null )
 					return;
-				if (isChecked ){
-					removedItems.remove(barcode);
+				if (isChecked){
+					currentFav.set(position);
 				}else {
-					removedItems.add(barcode);
+					currentFav.clear(position);
 				}
 			}
 		});

@@ -2,7 +2,7 @@ package com.shoppingDroid.main;
 
 import java.util.ArrayList;
 import java.util.BitSet;
-
+import java.util.List;
 import com.shoppingDriod.main.R;
 
 import android.app.Fragment;
@@ -25,14 +25,31 @@ public class ListFragment extends Fragment{
 	}
 	
 	
-	 @Override
-	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	        // Inflate the layout for this fragment
 		 	View v =  inflater.inflate(R.layout.activity_display_list, container, false);
 	        ListView listView = (ListView) v.findViewById(R.id.results_list);
-			BitSet isFav = new BitSet(data.size());
-			adapter = new ListAdapter(this.getActivity(), data, isFav);
+			adapter = new ListAdapter(this.getActivity(), data);
 			listView.setAdapter(adapter);
 			return v;
 	    }
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		// reflect changed products in Database
+		List<? extends ViewItem> data = adapter.getData();
+		BitSet curFav = adapter.getCurrentFav();
+		Product p ;
+		for (int i = 0; i < data.size(); i++) {
+			p = (Product) data.get(i);
+			if (!p.isFav() && curFav.get(i)) {
+				MainActivity.db.addFavourites(p);
+			} else if (p.isFav() && !curFav.get(i)) {
+				MainActivity.db.deleteFavourite(p.getBarcode());
+			}
+		}
+	}
+
 }

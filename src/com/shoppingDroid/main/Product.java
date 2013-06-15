@@ -7,18 +7,20 @@ public class Product extends ViewItem{
 	private String storeName;
 	private int storeId;
 	private double price;
+	private boolean isFav; 
 	
-	public Product(String barcode, String name, String type, int storeId, String store, double price) {
+	public Product(String barcode, String name, String type, int storeId, String store, double price, boolean isFav) {
 		this.barcode = barcode;
 		this.name = name;
 		this.typeName = type;
 		this.storeId = storeId;
 		this.storeName = store;
 		this.price = price;
+		this.isFav = isFav;
 	}
 	
-	public Product(String barcode, String name, String type, int storeId, String store){
-		this(barcode, name, type, storeId, store, 0);
+	public Product(String barcode, String name, String type, int storeId, String store, boolean isFav){
+		this(barcode, name, type, storeId, store, 0, isFav);
 	}
 
 	public String getBarcode() {
@@ -71,6 +73,14 @@ public class Product extends ViewItem{
 	}
 
 	
+
+	public boolean isFav() {
+		return isFav;
+	}
+
+	public void setFav(boolean isFav) {
+		this.isFav = isFav;
+	}
 
 	@Override
 	public String toString() {

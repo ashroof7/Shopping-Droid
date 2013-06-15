@@ -89,7 +89,7 @@ public class TabsActivity extends Activity {
 			case 0:
 				if (curFrag == null) {
 					curFrag = new ScannedFragment();
-					curFrag.displayData(TabsActivity.df.here(), false, TabsActivity.appContext);
+					curFrag.displayData(TabsActivity.df.here(), TabsActivity.appContext);
 					curFrag.setRetainInstance(true);
 					ft.add(R.id.frag_containter, curFrag);
 				} else {
@@ -97,6 +97,7 @@ public class TabsActivity extends Activity {
 				}
 				Log.wtf("cur", curFrag+"");
 				break;
+				
 			case 1:
 				if (simHereFrag == null) {
 					simHereFrag = new ListFragment();

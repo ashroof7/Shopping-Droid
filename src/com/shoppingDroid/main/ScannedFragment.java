@@ -15,7 +15,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class ScannedFragment extends Fragment {
 
-	boolean addToFav = false;
+	boolean initFav = false;
 	boolean isFav = false;
 	Product product;
 	View v;
@@ -38,7 +38,7 @@ public class ScannedFragment extends Fragment {
 					.setText("Barcode : " + product.getBarcode());
 			((TextView) v.findViewById(R.id.scanned_store)).setText(product
 					.getStoreName());
-
+			isFav = initFav = product.isFav();
 		}
 		CheckBox box = ((CheckBox) v.findViewById(R.id.scanned_fav));
 		box.setChecked(isFav);
@@ -47,18 +47,16 @@ public class ScannedFragment extends Fragment {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 				if (isChecked) {
-					addToFav = true;
+					isFav = true;
 				} else {
-					addToFav = false;
+					isFav = false;
 				}
 			}
 		});
-
 		return v;
 	}
 
-	public void displayData(Product p, boolean isFav, Context c) {
-		this.isFav = isFav;
+	public void displayData(Product p, Context c) {
 		this.product = p;
 		if (p != null)
 			MainActivity.db.addHistory(p);
@@ -67,9 +65,9 @@ public class ScannedFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		if (addToFav && !isFav) {
+		if (!initFav && isFav) {
 			MainActivity.db.addFavourites(product);
-		} else if (isFav && !addToFav) {
+		} else if (initFav && !isFav) {
 			MainActivity.db.deleteFavourite(product.getBarcode());
 		}
 	}

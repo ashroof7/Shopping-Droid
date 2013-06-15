@@ -26,7 +26,8 @@ public class DataFetcher {
 	private DBDispatcher dbDispatcher;
 	private JSONObject jOb;
 	private Context context;
-
+	private Database DB;
+	
 	public DataFetcher(Context context, double lat, double lng,
 			String productBarcode) {
 		this.context = context;
@@ -34,6 +35,7 @@ public class DataFetcher {
 		curLng = lng;
 		barcode = productBarcode;
 		dbDispatcher = new DBDispatcher(context);
+		DB = MainActivity.db;
 	}
 
 	public boolean locateStore() {
@@ -144,7 +146,8 @@ public class DataFetcher {
 					product.getString(context.getResources().getString(
 							R.string.DB_product_type)), store.getId(),
 					store.getName(), product.getDouble(context.getResources().getString(
-									R.string.DB_product_price)));
+									R.string.DB_product_price)),
+									DB.isFavorite(barcode));
 		
 
 			// set the type attribute to be used in next calls
@@ -194,13 +197,11 @@ public class DataFetcher {
 			JSONObject store;
 			for (int i = 0; i < elements.length(); i++) {
 				store = elements.getJSONObject(i);
-				products.add(new Product(barcode, pName, ptype, store
-						.getInt(context.getResources().getString(
-								R.string.DB_store_id)), store.getString(context
-						.getResources().getString(R.string.DB_store_name)),
-						store.getDouble(context
-								.getResources().getString(
-										R.string.DB_product_price))));
+				products.add(new Product(barcode, pName, ptype, 
+						store.getInt(context.getResources().getString(R.string.DB_store_id)),
+						store.getString(context.getResources().getString(R.string.DB_store_name)),
+						store.getDouble(context.getResources().getString(R.string.DB_product_price)),
+						DB.isFavorite(barcode)));
 			}
 
 		} catch (InterruptedException e) {
@@ -227,13 +228,15 @@ public class DataFetcher {
 			JSONArray elements = jOb.getJSONArray(mainTag);
 			JSONObject product;
 			
+			String tempBarcode;
 			for (int i = 0; i < elements.length(); i++) {
 				product = elements.getJSONObject(i);
 				products.add(new Product(
-						product.getString(context.getResources().getString(R.string.DB_product_barcode)),
+						tempBarcode = product.getString(context.getResources().getString(R.string.DB_product_barcode)),
 						product.getString(context.getResources().getString(	R.string.DB_product_name)),
 						type, 
-						store.getId(), store.getName(), product.getDouble(context.getResources().getString(R.string.DB_product_price))));
+						store.getId(), store.getName(), product.getDouble(context.getResources().getString(R.string.DB_product_price)),
+						DB.isFavorite(tempBarcode)));
 			}
 
 		} catch (InterruptedException e) {
@@ -259,16 +262,17 @@ public class DataFetcher {
 
 			JSONArray elements = jOb.getJSONArray(mainTag);
 			JSONObject product;
-
+			String tempBarcode;
 			for (int i = 0; i < elements.length(); i++) {
 				product = elements.getJSONObject(i);
 				products.add(new Product(
-						product.getString(context.getResources().getString(R.string.DB_product_barcode)),
+						tempBarcode = product.getString(context.getResources().getString(R.string.DB_product_barcode)),
 						product.getString(context.getResources().getString(R.string.DB_product_name)),
 						type,
 						product.getInt(context.getResources().getString(R.string.DB_store_id)),
 						product.getString(context.getResources().getString(R.string.DB_store_name)), 
-						product.getDouble(context.getResources().getString(R.string.DB_product_price))));
+						product.getDouble(context.getResources().getString(R.string.DB_product_price)),
+						DB.isFavorite(tempBarcode)));
 			}
 
 		} catch (InterruptedException e) {

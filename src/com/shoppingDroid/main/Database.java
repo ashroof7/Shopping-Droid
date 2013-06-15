@@ -14,6 +14,7 @@ import android.util.Log;
 public class Database extends SQLiteOpenHelper {
 
 	// FIXME copy this values to @+res/string
+	// FIXME make offline DB save price
 	// All Static variables
 	// Database Version
 	private static final int DATABASE_VERSION = 1;
@@ -56,6 +57,7 @@ public class Database extends SQLiteOpenHelper {
 				+ "FOREIGN KEY (" + store + ") REFERENCES " + table_stores
 				+ " ( " + store_id + " ) " + ")";
 		db.execSQL(create_favourites);
+		
 	}
 
 	// Upgrading database
@@ -121,7 +123,6 @@ public class Database extends SQLiteOpenHelper {
 	}
 
 	public void addFavourites(Product product) {
-
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values = new ContentValues();
@@ -143,19 +144,22 @@ public class Database extends SQLiteOpenHelper {
 				+ store + " = c." + store_id;
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
+		
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
 				products.add( new Product(cursor.getString(1),
 						cursor.getString(2), cursor.getString(3),
 						Integer.parseInt(cursor.getString(4)),
-						cursor.getString(5)));
+						cursor.getString(5),
+						isFavorite(cursor.getString(1))));
 			} while (cursor.moveToNext());
 		}
 
 		return products;
 	}
 
+	//TODO remove not used anymore 
 	public TreeSet<String> favoritesInHistory() {
 		TreeSet<String> barcodes = new TreeSet<String>();
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -177,9 +181,15 @@ public class Database extends SQLiteOpenHelper {
 		List<Product> products = new ArrayList<Product>();
 		// Select All Query
 		Log.i("Database", "Retrieving Favorites");
+		
+		// FIXME just Why ?? that took me 1 hour to find the bug  
+//		String selectQuery = "select a.*, c." + store_name + " from "
+//				+ table_favourites + " a, " + table_stores + " c  where a."
+//				+ store + " = c." + store_id;
+		
 		String selectQuery = "select a.*, c." + store_name + " from "
-				+ table_favourites + " a, " + table_stores + " c  where a."
-				+ store + " = c." + store_id;
+				+ table_favourites + " a, " + table_stores + " c";
+		
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -189,16 +199,17 @@ public class Database extends SQLiteOpenHelper {
 				products.add( new Product(cursor.getString(0),
 						cursor.getString(1), cursor.getString(2),
 						Integer.parseInt(cursor.getString(3)),
-						cursor.getString(4)));
+						cursor.getString(4),
+						true ));
 			} while (cursor.moveToNext());
 		}
 		Log.i("Database", "Retrieved Favorites");
-		// return contact list
 		return products;
 	}
 
-	// Deleting single contact
+	// Deleting single item
 	public void deleteOldest() {
+		//FIXME do we really need 2 DB instances here !!!
 		SQLiteDatabase db = this.getWritableDatabase();
 		SQLiteDatabase Rdb = this.getReadableDatabase();
 		Cursor c = Rdb.query(table_history,
@@ -217,5 +228,15 @@ public class Database extends SQLiteOpenHelper {
 		db.delete(table_favourites, bar_code + " = ?", new String[] { code });
 		db.close();
 	}
-
+	
+	//FIXME to do it this way u MUST make an index on favorite table
+	public boolean isFavorite(String barcode){
+		String selectQuery = "SELECT count(*) from "+table_favourites+" WHERE "+bar_code+" = "+barcode;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		cursor.moveToFirst();
+		db.close();
+		return cursor.getInt(0)>0;
+	}
+	
 }
