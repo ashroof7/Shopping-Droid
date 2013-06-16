@@ -13,6 +13,8 @@ import com.shoppingDriod.main.R;
 import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 public class MapsActivity extends Activity {
 
@@ -22,6 +24,12 @@ public class MapsActivity extends Activity {
 	private void addStoresToMap(){
 		DataFetcher df = new DataFetcher(this, lat, lng, "");
 		ArrayList<Store> stores = df.stores();
+		
+		if (stores == null){
+			Toast.makeText(this, getString(R.string.diag_no_stores), Toast.LENGTH_LONG).show();
+			Log.i("Maps", "couldn't fetch stores");
+			return;
+		}
 		
 		LatLng latlang;
 		for (Store st : stores) {
@@ -54,7 +62,6 @@ public class MapsActivity extends Activity {
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		addStoresToMap();
-		
 	}
 	
 

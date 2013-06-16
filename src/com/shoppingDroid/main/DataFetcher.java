@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.widget.Toast;
+
 import com.shoppingDriod.main.R;
 import com.shoppingDroid.onlineDB.DBDispatcher;
 
@@ -99,8 +101,10 @@ public class DataFetcher {
 		String mainTag = context.getString(R.string.DB_stores);
 		try {
 			jOb = dbDispatcher.stores();
-			if (jOb == null || !jOb.has(mainTag))
+			if (jOb == null || !jOb.has(mainTag)){
+				Toast.makeText(context, context.getString(R.string.diag_no_connection), Toast.LENGTH_SHORT).show();
 				return null;
+			}
 
 			JSONArray elements = jOb.getJSONArray(mainTag);
 			JSONObject store;
@@ -127,12 +131,20 @@ public class DataFetcher {
 	public Product here() {
 		Product ret = null;
 		try {
+			
+			if (store==null){
+				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+				return null;
+			}
+			
 			jOb = dbDispatcher.product(barcode, store.getId());
 			String mainTag = context.getString(
 					R.string.DB_product);
 
-			if (jOb == null || !jOb.has(mainTag))
+			if (jOb == null || !jOb.has(mainTag)){
+				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
+			}
 
 			JSONArray elements = jOb.getJSONArray(mainTag);
 			
@@ -175,9 +187,11 @@ public class DataFetcher {
 		try {
 
 			jOb = dbDispatcher.productGlobal(barcode);
-			if (jOb == null || !jOb.has(mainTag))
+			if (jOb == null || !jOb.has(mainTag)){
+				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
-
+			}
+			
 			JSONArray elements = jOb.getJSONArray(mainTag);
 			JSONObject product = elements.getJSONObject(0);
 
@@ -220,10 +234,18 @@ public class DataFetcher {
 
 		String mainTag = context.getString(R.string.DB_products);
 		try {
+			
+			if (store==null){
+				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+				return null;
+			}
+			
 			jOb = dbDispatcher.productRange(barcode, store.getId(),
 					diffAmount);
-			if (jOb == null || !jOb.has(mainTag))
+			if (jOb == null || !jOb.has(mainTag)){
+				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
+			}
 
 			JSONArray elements = jOb.getJSONArray(mainTag);
 			JSONObject product;
@@ -255,11 +277,18 @@ public class DataFetcher {
 
 		String mainTag = context.getString(R.string.DB_products);
 		try {
+			
+			if (store==null){
+				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+				return null;
+			}
+			
 			jOb = dbDispatcher.productRangeGlobal(barcode, store.getId(),
 					diffAmount);
-			if (jOb == null || !jOb.has(mainTag))
+			if (jOb == null || !jOb.has(mainTag)){
+				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
-
+			}
 			JSONArray elements = jOb.getJSONArray(mainTag);
 			JSONObject product;
 			String tempBarcode;

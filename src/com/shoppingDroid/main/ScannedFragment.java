@@ -38,7 +38,11 @@ public class ScannedFragment extends Fragment {
 			((TextView) v.findViewById(R.id.scanned_store)).setText(product
 					.getStoreName());
 			isFav = initFav = product.isFav();
+			
+		}else {
+			((TextView) v.findViewById(R.id.scanned_name)).setText(getString(R.string.diag_prod_not_found));
 		}
+		
 		CheckBox box = ((CheckBox) v.findViewById(R.id.scanned_fav));
 		box.setChecked(isFav);
 		box.setOnCheckedChangeListener(new OnCheckedChangeListener() {

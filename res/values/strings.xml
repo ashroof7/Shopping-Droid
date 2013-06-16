@@ -197,8 +197,9 @@
     <string name="diag_no_connection">No Connection</string>
     <string name="diag_data_retrieved">Download complete</string>
     <string name="diag_server_down">Could not download data, Server problem</string>
+    <string name="diag_no_data">Could not download data, Server problem</string>
     <string name="diag_no_stores">Could not get current store</string>
-    
+    <string name="diag_prod_not_found">Oops !! the product you scanned is not found</string>
     <!-- buttons text -->
     <string name="btn_main_scan">Scan Barcode</string>
     <string name="btn_main_fav">Saved</string>

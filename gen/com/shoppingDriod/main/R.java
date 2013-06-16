@@ -412,13 +412,13 @@ containing a value of this type.
         public static final int auth_client_requested_by_msg=0x7f080011;
         public static final int barcode=0x7f0800b9;
         public static final int bookmark_picker_name=0x7f080019;
-        public static final int btn_main_fav=0x7f0800c0;
-        public static final int btn_main_history=0x7f0800c1;
-        public static final int btn_main_map=0x7f0800c2;
+        public static final int btn_main_fav=0x7f0800c2;
+        public static final int btn_main_history=0x7f0800c3;
+        public static final int btn_main_map=0x7f0800c4;
         /**  buttons text 
          */
-        public static final int btn_main_scan=0x7f0800bf;
-        public static final int btn_scanned_save=0x7f0800c3;
+        public static final int btn_main_scan=0x7f0800c1;
+        public static final int btn_scanned_save=0x7f0800c5;
         public static final int button_add_calendar=0x7f08001a;
         public static final int button_add_contact=0x7f08001b;
         public static final int button_back=0x7f08001c;
@@ -508,12 +508,14 @@ containing a value of this type.
         public static final int contents_text=0x7f080039;
         /**   image content description 
          */
-        public static final int desc_logo=0x7f0800c4;
-        public static final int desc_red_green=0x7f0800c5;
-        public static final int desc_scanned_barcode=0x7f0800c6;
+        public static final int desc_logo=0x7f0800c6;
+        public static final int desc_red_green=0x7f0800c7;
+        public static final int desc_scanned_barcode=0x7f0800c8;
         public static final int diag_data_retrieved=0x7f0800bc;
         public static final int diag_no_connection=0x7f0800bb;
-        public static final int diag_no_stores=0x7f0800be;
+        public static final int diag_no_data=0x7f0800be;
+        public static final int diag_no_stores=0x7f0800bf;
+        public static final int diag_prod_not_found=0x7f0800c0;
         public static final int diag_server_down=0x7f0800bd;
         /**  Dialogs 
          */
