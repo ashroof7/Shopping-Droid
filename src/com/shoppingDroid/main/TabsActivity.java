@@ -35,13 +35,12 @@ public class TabsActivity extends Activity {
 		double lat = loc.getLatitude();
 		double lng = loc.getLongitude();
 
-		System.out.println(lat + "  " + lng);
 		// data-fetcher
 		df = new DataFetcher(this, lat, lng, scannedBarcode);
 
 		if (!df.locateStore()) {
 			// error happened
-			Toast.makeText(this, "Could not get current store",
+			Toast.makeText(this, getString(R.string.diag_no_stores),
 					Toast.LENGTH_LONG).show();
 			finish();
 		}

@@ -15,6 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.shoppingDriod.main.R;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -65,7 +67,7 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		diag.setMessage("Waiting for Server Response");
+		diag.setMessage(con.getString(R.string.diag_waiting_response));
 		diag.show();
 		Log.i("Show", "showing");
 		checkConnection = hasConnection(con);
@@ -138,16 +140,16 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 		Log.i("in postExec", "dismissing now");
 		diag.dismiss();
 		if (!checkConnection) {
-			Toast.makeText(con, "No Connection", Toast.LENGTH_LONG).show();
+			Toast.makeText(con, con.getString(R.string.diag_no_connection), Toast.LENGTH_LONG).show();
 			Log.i("in postExec", "no connection");
 		} else {
 			if (result != null) {
 				Log.i("in postExec", "got data");
-				Toast.makeText(con, "Result retrived", Toast.LENGTH_LONG)
+				Toast.makeText(con, con.getString(R.string.diag_data_retrieved), Toast.LENGTH_SHORT)
 						.show();
 			} else {
 				Log.i("in postExec", "server down");
-				Toast.makeText(con, "Server down", Toast.LENGTH_LONG).show();
+				Toast.makeText(con, con.getString(R.string.diag_server_down), Toast.LENGTH_LONG).show();
 			}
 		}
 	}

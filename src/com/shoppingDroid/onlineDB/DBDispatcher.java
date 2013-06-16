@@ -14,9 +14,10 @@ import android.content.Context;
 import com.shoppingDriod.main.R;
 
 public class DBDispatcher {
-
-	private final String host = "192.168.1.3";
-	private final String serverURL = "http://" + host + "/shoppingdroid.php/";
+	
+	
+	private String host;
+	private String serverURL; 
 	private Context context;
 	private String requestAddress;
 	private List<NameValuePair> params;
@@ -25,6 +26,8 @@ public class DBDispatcher {
 	public DBDispatcher(Context context) {
 		this.context = context;
 		params = new ArrayList<NameValuePair>(5);
+		host = context.getString(R.string.host);
+		serverURL = "http://" + host + "/"+context.getString(R.string.router)+"/";
 	}
 
 	public JSONObject productGlobal(String barcode)
@@ -78,9 +81,7 @@ public class DBDispatcher {
 		params.add(new BasicNameValuePair(context
 				.getString(R.string.DB_store_longitude), longitude + ""));
 		params.add(new BasicNameValuePair(
-//				context
-//				.getString(R.string.DB_store_range)
-				"range", range + ""));
+				context.getString(R.string.DB_store_range),	range + ""));
 		paramString = URLEncodedUtils.format(params,
 				context.getString(R.string.DB_return_encoding));
 		requestAddress = serverURL

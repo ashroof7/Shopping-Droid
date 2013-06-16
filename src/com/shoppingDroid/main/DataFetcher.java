@@ -41,7 +41,7 @@ public class DataFetcher {
 	public boolean locateStore() {
 		double range = 0.05;// distance range radius
 
-		String mainTag = context.getResources().getString(R.string.DB_stores);
+		String mainTag = context.getString(R.string.DB_stores);
 		ArrayList<Store> stores = new ArrayList<Store>();
 
 		try {
@@ -55,10 +55,10 @@ public class DataFetcher {
 			for (int i = 0; i < elements.length(); i++) {
 				store = elements.getJSONObject(i);
 				stores.add(new Store(
-						store.getInt(	context.getResources().getString(R.string.DB_store_id)),
-						store.getString(context.getResources().getString(R.string.DB_store_name)),
-						store.getDouble(context.getResources().getString(R.string.DB_store_longitude)),
-						store.getDouble(context.getResources().getString(R.string.DB_store_latitude))));
+						store.getInt(	context.getString(R.string.DB_store_id)),
+						store.getString(context.getString(R.string.DB_store_name)),
+						store.getDouble(context.getString(R.string.DB_store_longitude)),
+						store.getDouble(context.getString(R.string.DB_store_latitude))));
 			}
 
 		} catch (InterruptedException e) {
@@ -96,7 +96,7 @@ public class DataFetcher {
 	public ArrayList<Store>stores(){
 		ArrayList<Store> stores = new ArrayList<Store>();
 
-		String mainTag = context.getResources().getString(R.string.DB_stores);
+		String mainTag = context.getString(R.string.DB_stores);
 		try {
 			jOb = dbDispatcher.stores();
 			if (jOb == null || !jOb.has(mainTag))
@@ -108,10 +108,10 @@ public class DataFetcher {
 			for (int i = 0; i < elements.length(); i++) {
 				store = elements.getJSONObject(i);
 				stores.add(new Store(
-						store.getInt(	context.getResources().getString(R.string.DB_store_id)),
-						store.getString(context.getResources().getString(R.string.DB_store_name)),
-						store.getDouble(context.getResources().getString(R.string.DB_store_longitude)),
-						store.getDouble(context.getResources().getString(R.string.DB_store_latitude))));
+						store.getInt(	context.getString(R.string.DB_store_id)),
+						store.getString(context.getString(R.string.DB_store_name)),
+						store.getDouble(context.getString(R.string.DB_store_longitude)),
+						store.getDouble(context.getString(R.string.DB_store_latitude))));
 			}
 
 		} catch (InterruptedException e) {
@@ -128,7 +128,7 @@ public class DataFetcher {
 		Product ret = null;
 		try {
 			jOb = dbDispatcher.product(barcode, store.getId());
-			String mainTag = context.getResources().getString(
+			String mainTag = context.getString(
 					R.string.DB_product);
 
 			if (jOb == null || !jOb.has(mainTag))
@@ -143,9 +143,9 @@ public class DataFetcher {
 			
 			ret = new Product(barcode, product.getString(context.getResources()
 					.getString(R.string.DB_product_name)),
-					product.getString(context.getResources().getString(
+					product.getString(context.getString(
 							R.string.DB_product_type)), store.getId(),
-					store.getName(), product.getDouble(context.getResources().getString(
+					store.getName(), product.getDouble(context.getString(
 									R.string.DB_product_price)),
 									DB.isFavorite(barcode));
 		
@@ -169,7 +169,7 @@ public class DataFetcher {
 		// query other stores with the same product
 		ArrayList<Product> products = new ArrayList<Product>();
 
-		String mainTag = context.getResources().getString(R.string.DB_product);
+		String mainTag = context.getString(R.string.DB_product);
 		String pName, ptype;
 
 		try {
@@ -181,26 +181,26 @@ public class DataFetcher {
 			JSONArray elements = jOb.getJSONArray(mainTag);
 			JSONObject product = elements.getJSONObject(0);
 
-			pName = product.getString(context.getResources().getString(
+			pName = product.getString(context.getString(
 					R.string.DB_product_name));
-			ptype = product.getString(context.getResources().getString(
+			ptype = product.getString(context.getString(
 					R.string.DB_product_type));
 
 			if (product == null
-					|| !product.has(context.getResources().getString(
+					|| !product.has(context.getString(
 							R.string.DB_stores)))
 				return null;
 
-			elements = product.getJSONArray(context.getResources().getString(
+			elements = product.getJSONArray(context.getString(
 					R.string.DB_stores));
 
 			JSONObject store;
 			for (int i = 0; i < elements.length(); i++) {
 				store = elements.getJSONObject(i);
 				products.add(new Product(barcode, pName, ptype, 
-						store.getInt(context.getResources().getString(R.string.DB_store_id)),
-						store.getString(context.getResources().getString(R.string.DB_store_name)),
-						store.getDouble(context.getResources().getString(R.string.DB_product_price)),
+						store.getInt(context.getString(R.string.DB_store_id)),
+						store.getString(context.getString(R.string.DB_store_name)),
+						store.getDouble(context.getString(R.string.DB_product_price)),
 						DB.isFavorite(barcode)));
 			}
 
@@ -218,7 +218,7 @@ public class DataFetcher {
 
 		ArrayList<Product> products = new ArrayList<Product>();
 
-		String mainTag = context.getResources().getString(R.string.DB_products);
+		String mainTag = context.getString(R.string.DB_products);
 		try {
 			jOb = dbDispatcher.productRange(barcode, store.getId(),
 					diffAmount);
@@ -232,10 +232,10 @@ public class DataFetcher {
 			for (int i = 0; i < elements.length(); i++) {
 				product = elements.getJSONObject(i);
 				products.add(new Product(
-						tempBarcode = product.getString(context.getResources().getString(R.string.DB_product_barcode)),
-						product.getString(context.getResources().getString(	R.string.DB_product_name)),
+						tempBarcode = product.getString(context.getString(R.string.DB_product_barcode)),
+						product.getString(context.getString(	R.string.DB_product_name)),
 						type, 
-						store.getId(), store.getName(), product.getDouble(context.getResources().getString(R.string.DB_product_price)),
+						store.getId(), store.getName(), product.getDouble(context.getString(R.string.DB_product_price)),
 						DB.isFavorite(tempBarcode)));
 			}
 
@@ -253,7 +253,7 @@ public class DataFetcher {
 		// query stores with products of the same type
 		ArrayList<Product> products = new ArrayList<Product>();
 
-		String mainTag = context.getResources().getString(R.string.DB_products);
+		String mainTag = context.getString(R.string.DB_products);
 		try {
 			jOb = dbDispatcher.productRangeGlobal(barcode, store.getId(),
 					diffAmount);
@@ -266,12 +266,12 @@ public class DataFetcher {
 			for (int i = 0; i < elements.length(); i++) {
 				product = elements.getJSONObject(i);
 				products.add(new Product(
-						tempBarcode = product.getString(context.getResources().getString(R.string.DB_product_barcode)),
-						product.getString(context.getResources().getString(R.string.DB_product_name)),
+						tempBarcode = product.getString(context.getString(R.string.DB_product_barcode)),
+						product.getString(context.getString(R.string.DB_product_name)),
 						type,
-						product.getInt(context.getResources().getString(R.string.DB_store_id)),
-						product.getString(context.getResources().getString(R.string.DB_store_name)), 
-						product.getDouble(context.getResources().getString(R.string.DB_product_price)),
+						product.getInt(context.getString(R.string.DB_store_id)),
+						product.getString(context.getString(R.string.DB_store_name)), 
+						product.getDouble(context.getString(R.string.DB_product_price)),
 						DB.isFavorite(tempBarcode)));
 			}
 

@@ -7,7 +7,8 @@
     android:weightSum="10" >
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/logo"
+        android:contentDescription="@string/desc_logo"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
@@ -36,7 +37,7 @@
                 android:drawableTop="@drawable/barcode"
                 android:gravity="center_horizontal"
                 android:onClick="launchScanner"
-                android:text="Scan Barcode" />
+                android:text="@string/btn_main_scan" />
 
             <Button
                 android:id="@+id/fav_main"
@@ -44,7 +45,7 @@
                 android:layout_weight="3.5"
                 android:drawableTop="@drawable/fav"
                 android:onClick="launchFavorites"
-                android:text="Favorites" />
+                android:text="@string/btn_main_fav" />
         </TableRow>
 
         <TableRow
@@ -62,7 +63,7 @@
                 android:layout_weight="3.5"
                 android:drawableTop="@drawable/history"
                 android:onClick="launchHistory"
-                android:text="History" />
+                android:text="@string/btn_main_history" />
 
             <Button
                 android:id="@+id/map_main"
@@ -70,12 +71,13 @@
                 android:layout_weight="3.5"
                 android:drawableTop="@drawable/map"
                 android:onClick="launchMap"
-                android:text="Nearby Stores" />
+                android:text="@string/btn_main_map" />
         </TableRow>
     </TableLayout>
 
     <ImageView
         android:id="@+id/bags_menu"
+        android:contentDescription="@string/desc_red_green"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="end"

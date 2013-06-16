@@ -2,7 +2,6 @@ package com.shoppingDroid.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -157,24 +156,6 @@ public class Database extends SQLiteOpenHelper {
 		}
 
 		return products;
-	}
-
-	//TODO remove not used anymore 
-	public TreeSet<String> favoritesInHistory() {
-		TreeSet<String> barcodes = new TreeSet<String>();
-		SQLiteDatabase db = this.getWritableDatabase();
-		String selectQuery = "select a." + bar_code + " from " + table_history
-				+ " a inner join " + table_favourites + " b where a."
-				+ bar_code + " = b." + bar_code;
-
-		Cursor cursor = db.rawQuery(selectQuery, null);
-		// looping through all rows and adding to list
-		if (cursor.moveToFirst()) {
-			do {
-				barcodes.add(cursor.getString(0));
-			} while (cursor.moveToNext());
-		}
-		return barcodes;
 	}
 
 	public List<Product> retreiveFavourites() {

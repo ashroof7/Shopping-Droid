@@ -186,5 +186,30 @@
     <string name="sec_same_everyw">Same everywhere</string>
     <string name="sec_sim_everyw">Similar everywhere</string>
     <string name="title_activity_scanned">ScannedActivity</string>
-
+	
+    <!-- general -->
+    <string name="host">192.168.1.3</string>
+    <string name="router">shoppingdroid.php</string>
+    <string name="barcode">barcode</string>
+    
+    <!-- Dialogs -->
+    <string name="diag_waiting_response">Waiting for Server Response</string>
+    <string name="diag_no_connection">No Connection</string>
+    <string name="diag_data_retrieved">Download complete</string>
+    <string name="diag_server_down">Could not download data, Server problem</string>
+    <string name="diag_no_stores">Could not get current store</string>
+    
+    <!-- buttons text -->
+    <string name="btn_main_scan">Scan Barcode</string>
+    <string name="btn_main_fav">Saved</string>
+    <string name="btn_main_history">Recently Scanned</string>
+    <string name="btn_main_map">Stores</string>
+    <string name="btn_scanned_save">Save</string>
+    
+    
+    <!--  image content description -->
+    <string name="desc_logo">Application logo</string>
+    <string name="desc_red_green">red green bags</string>
+    <string name="desc_scanned_barcode">scanned barcode picture</string>
+    
 </resources>

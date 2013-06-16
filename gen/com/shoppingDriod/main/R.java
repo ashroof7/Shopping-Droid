@@ -255,12 +255,12 @@ containing a value of this type.
         public static final int history_main=0x7f070016;
         public static final int history_title=0x7f070040;
         public static final int hybrid=0x7f070004;
-        public static final int imageView1=0x7f070010;
         public static final int imageView2=0x7f070052;
         public static final int image_view=0x7f07003c;
         public static final int launch_product_query=0x7f070008;
         public static final int layout_id=0x7f07000f;
         public static final int list_tab_view=0x7f07002b;
+        public static final int logo=0x7f070010;
         public static final int map=0x7f070019;
         public static final int map_main=0x7f070017;
         public static final int menu=0x7f070011;
@@ -410,7 +410,15 @@ containing a value of this type.
         /**   Requested by string saying which app requested the notification. [CHAR LIMIT=42] 
          */
         public static final int auth_client_requested_by_msg=0x7f080011;
+        public static final int barcode=0x7f0800b9;
         public static final int bookmark_picker_name=0x7f080019;
+        public static final int btn_main_fav=0x7f0800c0;
+        public static final int btn_main_history=0x7f0800c1;
+        public static final int btn_main_map=0x7f0800c2;
+        /**  buttons text 
+         */
+        public static final int btn_main_scan=0x7f0800bf;
+        public static final int btn_scanned_save=0x7f0800c3;
         public static final int button_add_calendar=0x7f08001a;
         public static final int button_add_contact=0x7f08001b;
         public static final int button_back=0x7f08001c;
@@ -498,6 +506,18 @@ containing a value of this type.
         public static final int contents_phone=0x7f080037;
         public static final int contents_sms=0x7f080038;
         public static final int contents_text=0x7f080039;
+        /**   image content description 
+         */
+        public static final int desc_logo=0x7f0800c4;
+        public static final int desc_red_green=0x7f0800c5;
+        public static final int desc_scanned_barcode=0x7f0800c6;
+        public static final int diag_data_retrieved=0x7f0800bc;
+        public static final int diag_no_connection=0x7f0800bb;
+        public static final int diag_no_stores=0x7f0800be;
+        public static final int diag_server_down=0x7f0800bd;
+        /**  Dialogs 
+         */
+        public static final int diag_waiting_response=0x7f0800ba;
         public static final int hello_world=0x7f080017;
         public static final int history_clear_one_history_text=0x7f08003b;
         public static final int history_clear_text=0x7f08003a;
@@ -506,6 +526,9 @@ containing a value of this type.
         public static final int history_empty_detail=0x7f08003e;
         public static final int history_send=0x7f08003f;
         public static final int history_title=0x7f080040;
+        /**  general 
+         */
+        public static final int host=0x7f0800b7;
         /**  Location client code resources (prefix with location_client) 
 
         Begin strings for location.reporting
@@ -591,6 +614,7 @@ containing a value of this type.
         public static final int result_text=0x7f080088;
         public static final int result_uri=0x7f080089;
         public static final int result_wifi=0x7f08008a;
+        public static final int router=0x7f0800b8;
         public static final int sbc_name=0x7f08008b;
         public static final int sec_current=0x7f0800b3;
         public static final int sec_same_everyw=0x7f0800b4;

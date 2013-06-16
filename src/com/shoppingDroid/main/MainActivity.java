@@ -53,8 +53,7 @@ public class MainActivity extends Activity {
 //      startActivityForResult(intent, 0);
 	}
 	
-	
-	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
+	public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	    {
 	        if (requestCode == 0)
 	        {

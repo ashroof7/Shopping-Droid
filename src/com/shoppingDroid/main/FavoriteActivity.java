@@ -7,7 +7,6 @@ import com.shoppingDriod.main.R;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
 
@@ -18,7 +17,6 @@ public class FavoriteActivity extends Activity {
 	private void initList() {
 		ListView listView = (ListView) findViewById(R.id.favorite_list);
 		List<? extends ViewItem> favs = MainActivity.db.retreiveFavourites();
-		Log.wtf("fav size", favs.size()+"");
 		adapter = new ListAdapter(this, favs);
 		listView.setAdapter(adapter);
 	}

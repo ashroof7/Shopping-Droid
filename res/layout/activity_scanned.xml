@@ -12,6 +12,7 @@
 
     <ImageView
         android:id="@+id/scanned_image"
+        android:contentDescription="@string/desc_scanned_barcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/barcode" />
@@ -48,7 +49,7 @@
         style="?android:attr/starStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="save" />
+        android:text="@string/btn_scanned_save" />
 
     <TextView
         android:id="@+id/scanned_store"

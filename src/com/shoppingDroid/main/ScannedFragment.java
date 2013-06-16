@@ -33,9 +33,8 @@ public class ScannedFragment extends Fragment {
 					.getPrice() + "");
 			((TextView) v.findViewById(R.id.scanned_type)).setText(product
 					.getTypeName());
-			// TODO change string here
 			((TextView) v.findViewById(R.id.scanned_barcode))
-					.setText("Barcode : " + product.getBarcode());
+					.setText(getString(R.string.barcode)+" : " + product.getBarcode());
 			((TextView) v.findViewById(R.id.scanned_store)).setText(product
 					.getStoreName());
 			isFav = initFav = product.isFav();
