@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_id"
     android:layout_width="match_parent"
@@ -32,7 +33,7 @@
 
             <Button
                 android:id="@+id/barcode_main"
-                style="@style/HomeButton"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_weight="3.5"
                 android:drawableTop="@drawable/barcode"
                 android:gravity="center_horizontal"
@@ -41,7 +42,7 @@
 
             <Button
                 android:id="@+id/fav_main"
-                style="@style/HomeButton"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_weight="3.5"
                 android:drawableTop="@drawable/fav"
                 android:onClick="launchFavorites"
@@ -59,7 +60,7 @@
 
             <Button
                 android:id="@+id/history_main"
-                style="@style/HomeButton"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_weight="3.5"
                 android:drawableTop="@drawable/history"
                 android:onClick="launchHistory"
@@ -67,7 +68,7 @@
 
             <Button
                 android:id="@+id/map_main"
-                style="@style/HomeButton"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_weight="3.5"
                 android:drawableTop="@drawable/map"
                 android:onClick="launchMap"

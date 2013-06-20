@@ -40,7 +40,7 @@
 
         <activity
             android:name="com.shoppingDroid.main.MainActivity"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

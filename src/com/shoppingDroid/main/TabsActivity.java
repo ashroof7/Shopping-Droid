@@ -6,13 +6,17 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Loader;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
-public class TabsActivity extends Activity {
+public class TabsActivity extends Activity implements LoaderCallbacks<Boolean> {
 
 	public static Context appContext;
 	public static DataFetcher df;
@@ -21,34 +25,28 @@ public class TabsActivity extends Activity {
 	private ListFragment simHereFrag, sameEFrag, simEFrag;
 	MyTabsListener tabsListener;
 
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_tabs);
 		appContext = getApplicationContext();
-		 scannedBarcode = getIntent().getStringExtra(MainActivity.BarCode);
+		scannedBarcode = getIntent().getStringExtra(MainActivity.BarCode);
 
-		// get location
 		MainActivity.location.updateLocation();
+		System.out.println(MainActivity.location);
 		Location loc = MainActivity.location.getLastLocation();
-		double lat = loc.getLatitude();
-		double lng = loc.getLongitude();
+		df = new DataFetcher(this, loc.getLatitude(), loc.getLongitude(),
+				scannedBarcode);
 
-		// data-fetcher
-		df = new DataFetcher(this, lat, lng, scannedBarcode);
-
-		if (!df.locateStore()) {
-			// error happened
-			Toast.makeText(this, getString(R.string.diag_no_stores),
-					Toast.LENGTH_LONG).show();
-			finish();
-		}
-
+		Log.wtf("tabs Activity", "OnCreate -- before call");
+		getLoaderManager().initLoader(0, null, this).forceLoad();
+		Log.wtf("tabs Activity", "OnCreate -- after call");
+		
 		// ActionBar
 		ActionBar actionbar = getActionBar();
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
+
 		ActionBar.Tab currentTab = actionbar.newTab().setText(
 				R.string.sec_current);
 		ActionBar.Tab simHereTab = actionbar.newTab().setText(
@@ -57,7 +55,7 @@ public class TabsActivity extends Activity {
 				R.string.sec_same_everyw);
 		ActionBar.Tab simETab = actionbar.newTab().setText(
 				R.string.sec_sim_everyw);
-		
+
 		tabsListener = new MyTabsListener();
 
 		currentTab.setTabListener(tabsListener);
@@ -70,17 +68,50 @@ public class TabsActivity extends Activity {
 		actionbar.addTab(sameETab);
 		actionbar.addTab(simETab);
 		
+//		df.locateStore();
+		
+	
+		
+	}
+
+	@Override
+	public Loader<Boolean> onCreateLoader(int id, Bundle args) {
+		return new TabsLoader(this, df);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Boolean> arg0, Boolean res) {
+
+		if (!res) {
+			// error happened
+			Toast.makeText(this, getString(R.string.diag_no_stores),
+					Toast.LENGTH_LONG).show();
+			finish();
+		}
+		
+		
+		Log.w("tabs activity", "set invisible");
+		
+		getFragmentManager().beginTransaction().detach(curFrag).commitAllowingStateLoss();
+		getFragmentManager().beginTransaction().attach(curFrag).commitAllowingStateLoss();
+		
+		findViewById(R.id.frag_containter).setVisibility(View.VISIBLE);
+		findViewById(R.id.tabs_progress).setVisibility(View.INVISIBLE);
+		Log.wtf("Tabs Activity", "On Load Finished");
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Boolean> arg0) {
 	}
 
 	class MyTabsListener implements ActionBar.TabListener {
-		
+
 		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-			//TODO you may need to refetch from server here 
+			// TODO you may need to refetch from server here
 			Toast.makeText(TabsActivity.appContext, "Reselected!",
 					Toast.LENGTH_SHORT).show();
 		}
-
 
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -88,49 +119,45 @@ public class TabsActivity extends Activity {
 			case 0:
 				if (curFrag == null) {
 					curFrag = new ScannedFragment();
-					curFrag.displayData(TabsActivity.df.here(), TabsActivity.appContext);
-					curFrag.setRetainInstance(true);
+					curFrag.setDataFetcher(df);
 					ft.add(R.id.frag_containter, curFrag);
 				} else {
+					Log.wtf("attach", "attaching ya teet");
 					ft.attach(curFrag);
 				}
-				Log.wtf("cur", curFrag+"");
+				Log.wtf("cur", curFrag + "");
 				break;
-				
+
 			case 1:
 				if (simHereFrag == null) {
 					simHereFrag = new ListFragment();
-					simHereFrag.setData(df.similarHere());
-					simHereFrag.setRetainInstance(true);
+					simHereFrag.setDataFetcher(df, ListLoader.SIMILAR_HERE);
 					ft.add(R.id.frag_containter, simHereFrag);
-			} else {
+				} else {
 					ft.attach(simHereFrag);
 				}
-				Log.wtf("sim", simHereFrag+"");
+				Log.wtf("sim", simHereFrag + "");
 				break;
 			case 2:
 				if (sameEFrag == null) {
 					sameEFrag = new ListFragment();
-					sameEFrag.setData(df.sameEverywhere());
-					sameEFrag.setRetainInstance(true);
+					sameEFrag.setDataFetcher(df, ListLoader.SAME_HERE);
 					ft.add(R.id.frag_containter, sameEFrag);
-
 				} else {
+
 					ft.attach(sameEFrag);
 				}
-				Log.wtf("same", sameEFrag+"");
+				Log.wtf("same", sameEFrag + "");
 				break;
 			case 3:
 				if (simEFrag == null) {
 					simEFrag = new ListFragment();
-					simEFrag.setData(df.similarEverywhere());
-					simEFrag.setRetainInstance(true);
+					simEFrag.setDataFetcher(df, ListLoader.SIMILAR_EVERYWHERE);
 					ft.add(R.id.frag_containter, simEFrag);
-
 				} else {
 					ft.attach(simEFrag);
 				}
-				Log.wtf("simE", simEFrag+"");
+				Log.wtf("simE", simEFrag + "");
 				break;
 			default:
 				break;
@@ -143,24 +170,40 @@ public class TabsActivity extends Activity {
 			switch (tab.getPosition()) {
 			case 0:
 				ft.detach(curFrag);
-				Log.wtf("cur","detach");
+				Log.wtf("cur", "detach");
 				break;
 			case 1:
 				ft.detach(simHereFrag);
-				Log.wtf("sim","detach");
+				Log.wtf("sim", "detach");
 				break;
 			case 2:
 				ft.detach(sameEFrag);
-				Log.wtf("same","detach");
+				Log.wtf("same", "detach");
 				break;
 			case 3:
 				ft.detach(simEFrag);
-				Log.wtf("simE","detach");
+				Log.wtf("simE", "detach");
 				break;
 			default:
 				break;
 			}
 		}
 
+	}
+
+	}
+
+class TabsLoader extends AsyncTaskLoader<Boolean> {
+	DataFetcher df ;
+	
+	public TabsLoader(Context context, DataFetcher df) {
+		super(context);
+		this.df = df ;
+	}
+
+	@Override
+	public Boolean loadInBackground() {
+		Log.wtf("Tabs Loader", "Load in background");
+		return df.locateStore();
 	}
 }

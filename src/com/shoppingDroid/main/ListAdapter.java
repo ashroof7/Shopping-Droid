@@ -25,7 +25,7 @@ public class ListAdapter extends BaseAdapter {
     public ListAdapter(Activity activity, List<? extends ViewItem> data) {
     	this.data = data;
         this.index = 0;
-        currentFav = new BitSet(data.size());
+       	currentFav = new BitSet(data.size());
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     

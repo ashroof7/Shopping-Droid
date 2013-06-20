@@ -15,15 +15,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.shoppingDriod.main.R;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 
@@ -37,14 +34,14 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 	BufferedReader reader;
 	StringBuilder sb;
 	Context con;
-	ProgressDialog diag;
+//	ProgressDialog diag;
 	boolean checkConnection;
 
 	public Fetcher(Context cont) {
 		super();
 		con = cont;
 		httpClient = new DefaultHttpClient();
-		diag = new ProgressDialog(con);
+//		diag = new ProgressDialog(con);
 
 	}
 
@@ -67,9 +64,8 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		diag.setMessage(con.getString(R.string.diag_waiting_response));
-		diag.show();
-		Log.i("Show", "showing");
+//		diag.setMessage(con.getString(R.string.diag_waiting_response));
+//		diag.show();
 		checkConnection = hasConnection(con);
 	}
 
@@ -138,18 +134,18 @@ class Fetcher extends AsyncTask<String, Integer, JSONObject> {
 		super.onPostExecute(result);
 
 		Log.i("in postExec", "dismissing now");
-		diag.dismiss();
+//		diag.dismiss();
 		if (!checkConnection) {
-			Toast.makeText(con, con.getString(R.string.diag_no_connection), Toast.LENGTH_LONG).show();
+//			Toast.makeText(con, con.getString(R.string.diag_no_connection), Toast.LENGTH_LONG).show();
 			Log.i("in postExec", "no connection");
 		} else {
 			if (result != null) {
 				Log.i("in postExec", "got data");
-				Toast.makeText(con, con.getString(R.string.diag_data_retrieved), Toast.LENGTH_SHORT)
-						.show();
+//				Toast.makeText(con, con.getString(R.string.diag_data_retrieved), Toast.LENGTH_SHORT)
+//						.show();
 			} else {
 				Log.i("in postExec", "server down");
-				Toast.makeText(con, con.getString(R.string.diag_server_down), Toast.LENGTH_LONG).show();
+//				Toast.makeText(con, con.getString(R.string.diag_server_down), Toast.LENGTH_LONG).show();
 			}
 		}
 	}

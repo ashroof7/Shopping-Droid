@@ -188,7 +188,7 @@
     <string name="title_activity_scanned">ScannedActivity</string>
 	
     <!-- general -->
-    <string name="host">192.168.1.3</string>
+    <string name="host">shopdroid.hostzi.com</string>
     <string name="router">shoppingdroid.php</string>
     <string name="barcode">barcode</string>
     
@@ -199,7 +199,7 @@
     <string name="diag_server_down">Could not download data, Server problem</string>
     <string name="diag_no_data">Could not download data, Server problem</string>
     <string name="diag_no_stores">Could not get current store</string>
-    <string name="diag_prod_not_found">Oops !! the product you scanned is not found</string>
+    <string name="diag_prod_not_found">Oops !! the product you scanned is not found in current store. Check other stores</string>
     <!-- buttons text -->
     <string name="btn_main_scan">Scan Barcode</string>
     <string name="btn_main_fav">Saved</string>

@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.shoppingDriod.main.R;
 import com.shoppingDroid.onlineDB.DBDispatcher;
@@ -102,7 +101,7 @@ public class DataFetcher {
 		try {
 			jOb = dbDispatcher.stores();
 			if (jOb == null || !jOb.has(mainTag)){
-				Toast.makeText(context, context.getString(R.string.diag_no_connection), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, context.getString(R.string.diag_no_connection), Toast.LENGTH_SHORT).show();
 				return null;
 			}
 
@@ -133,7 +132,7 @@ public class DataFetcher {
 		try {
 			
 			if (store==null){
-				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
 			}
 			
@@ -142,7 +141,7 @@ public class DataFetcher {
 					R.string.DB_product);
 
 			if (jOb == null || !jOb.has(mainTag)){
-				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
 			}
 
@@ -188,7 +187,7 @@ public class DataFetcher {
 
 			jOb = dbDispatcher.productGlobal(barcode);
 			if (jOb == null || !jOb.has(mainTag)){
-				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
 			}
 			
@@ -236,14 +235,14 @@ public class DataFetcher {
 		try {
 			
 			if (store==null){
-				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
 			}
 			
 			jOb = dbDispatcher.productRange(barcode, store.getId(),
 					diffAmount);
 			if (jOb == null || !jOb.has(mainTag)){
-				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
 			}
 
@@ -279,14 +278,14 @@ public class DataFetcher {
 		try {
 			
 			if (store==null){
-				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
 			}
 			
 			jOb = dbDispatcher.productRangeGlobal(barcode, store.getId(),
 					diffAmount);
 			if (jOb == null || !jOb.has(mainTag)){
-				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, context.getString(R.string.diag_no_data), Toast.LENGTH_SHORT).show();
 				return null;
 			}
 			JSONArray elements = jOb.getJSONArray(mainTag);

@@ -94,6 +94,16 @@ public class Database extends SQLiteOpenHelper {
 		SQLiteDatabase Rdb2 = this.getReadableDatabase();
 		ContentValues values = new ContentValues();
 
+		
+		// added by Ashraf (quick and dirty fix to duplicate row in history)
+		Cursor cntCur = Rdb2.rawQuery("SELECT COUNT(*) FROM " + table_history 
+				+" WHERE "+bar_code+" = "+product.getBarcode(),	null);
+		cntCur.moveToFirst();
+		if (cntCur.getInt(0)>0){
+			Rdb2.close();
+			return;
+		}
+		
 		Cursor s = Rdb2.query(table_stores, new String[] { store_name },
 				store_id + "=?",
 				new String[] { String.valueOf(product.getStoreId()) }, null,
