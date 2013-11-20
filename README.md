@@ -69,3 +69,5 @@ SQLite database
 ### Location Manager ###
 > + Getting current user location based on GPS. 
 > + Switching to network provided locaiton if GPS is not available
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/leonardo7/shopping-droid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
