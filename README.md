@@ -1,10 +1,11 @@
 Shopping-Droid 0.1
-==============
+==================
 
 Database integrated, and barcode reader android app that provides location based information about scanned item
 
 This project is under [GPL3](http://www.gnu.org/licenses/gpl.html) License
 
+please check [screen shots](#screen-shots)
 
 Feature List
 ============
@@ -69,5 +70,14 @@ SQLite database
 ### Location Manager ###
 > + Getting current user location based on GPS. 
 > + Switching to network provided locaiton if GPS is not available
+
+Screen Shots
+============
+![main menu](screenshots/main_menu.png) 
+![scan barcode](screenshots/read_barcode.png)
+![item view](screenshots/barcode.png)
+![similar everywhere](screenshots/similar_everywhere.png)
+![maps](screenshots/maps2.png) 
+![favotites](screenshots/favorites.png)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/leonardo7/shopping-droid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
