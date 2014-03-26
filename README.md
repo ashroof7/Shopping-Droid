@@ -3,7 +3,7 @@ Shopping-Droid 0.1
 
 Database integrated, and barcode reader android app that provides location based information about scanned item
 
-This project is under [GPL3](http://www.gnu.org/licenses/gpl.html) License
+This project is under [GPL3](http://www.gnu.org/licenses/gpl.html) License except that commercial use is not allowed.
 
 please check [screen shots](#screen-shots)
 
